@@ -1,7 +1,7 @@
 from typing import List
 import requests
 
-from model import *
+from .model import *
 
 
 class NeonAPI:
