@@ -18,7 +18,7 @@ from .openapi_models import (
     Database2,
     DatabaseCreateRequest,
 )
-from .utils import validate_with_model
+from .utils import validate_obj_model
 
 
 class Resource:
@@ -172,8 +172,36 @@ class ProjectResource(Resource):
 
 
 class DatabaseResource(Resource):
+    path = "databases"
+    response_model = DatabasesResponse
+    response_model_single = DatabaseResponse
+
+    CreateRequest = DatabaseCreateRequest
+    UpdateRequest = DatabaseUpdateRequest
+    Database = Database
+
+    def _extract_database(self, obj):
+        """Extract a database from the specified object."""
+
+        assert isinstance(obj, (DatabaseCreateRequest, Database1, Database2, Database))
+
+        # Object mappings.
+        if isinstance(obj, DatabaseCreateRequest):
+            obj = obj.database.model_dump()
+        if isinstance(obj, Database1):
+            obj = obj.database.model_dump()
+        if isinstance(obj, Database2):
+            obj = obj.database.model_dump()
+        if isinstance(obj, Database):
+            obj = obj.model_dump()
+
+        return obj
+
     def get_databases(self, project_id: str, branch_id: str):
-        """Get a list of databases."""
+        """Get a list of databases.
+
+        See also: https://api-docs.neon.tech/reference/listprojectbranchdatabases
+        """
 
         databases_response = self.api.request(
             method="GET",
@@ -185,48 +213,65 @@ class DatabaseResource(Resource):
 
         return databases_response.databases
 
-    def get_database(self, project_id: str, database_id: str):
+    def get_database(
+        self,
+        project_id: str,
+        branch_id: str,
+        database_name: str,
+    ):
         """Get a database."""
 
         database_response = self.api.request(
             method="GET",
-            path=self.api.url_join("projects", project_id, "databases", database_id),
+            path=self.api.url_join(
+                "projects",
+                project_id,
+                "branches",
+                branch_id,
+                "databases",
+                database_name,
+            ),
             response_model=DatabaseResponse,
         )
         return database_response.database
 
-    @validate_with_model(DatabaseCreateRequest)
     def create_database(
-        self, project_id: str, branch_id: str, *, obj: DatabaseCreateRequest, **kwargs
+        self,
+        project_id: str,
+        branch_id: str,
+        db: DatabaseCreateRequest | Database1 | Database2 | Database,
     ):
         """Create a new database."""
-        # TODO: untested.
+
+        db = self._extract_database(db)
 
         database_create_response = self.api.request(
             method="POST",
             path=self.api.url_join(
                 "projects", project_id, "branches", branch_id, "databases"
             ),
-            json=obj.model_dump(),
+            json=DatabaseCreateRequest(database=db).model_dump(),
             response_model=DatabaseResponse,
         )
         return database_create_response.database
 
-    def update_database(self, project_id: str, database: Database2):
+    def update_database(
+        self,
+        project_id: str,
+        branch_id: str,
+        database_id: str,
+        db: DatabaseUpdateRequest | Database2,
+    ):
         """Update a database."""
-        # TODO: This is not working yet.
 
-        payload = DatabaseUpdateRequest(database=database.model_dump())
+        db = self._extract_database(db)
 
-        return self.api.request(
+        database_update_response = self.api.request(
             method="PATCH",
-            path=self.api.url_join("projects", project_id, "databases", database.id),
-            json=payload.model_dump(),
+            path=self.api.url_join(
+                "projects", project_id, "branches", branch_id, "databases", database_id
+            ),
+            json=DatabaseUpdateRequest(database=db).model_dump(),
             response_model=DatabaseResponse,
         )
-
-    def new(self, name, **kwargs):
-        """Create a new database."""
-
-        db = Database1.model_construct(name=name, **kwargs)
-        return db
+        return database_update_response.database

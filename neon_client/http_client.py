@@ -3,6 +3,7 @@ import requests
 from pydantic import BaseModel
 
 from .openapi_models import *
+from .exceptions import NeonClientException
 from .__version__ import __version__
 
 
@@ -52,7 +53,10 @@ class Neon_API_V2:
 
         if check_status_code:
             # TODO: add custom exception classes here.
-            r.raise_for_status()
+            try:
+                r.raise_for_status()
+            except:
+                raise NeonClientException(r.text)
 
         if response_model:
             if response_is_array:
