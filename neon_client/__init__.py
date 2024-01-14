@@ -1,1 +1,1 @@
-from .client import NeonClient
+from .v2_client import NeonClient
