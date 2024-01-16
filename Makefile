@@ -17,7 +17,7 @@ gen-model: fetch-v2-schema
   	--allow-population-by-field-name \
   	--use-title-as-name \
 	--reuse-model \
-	--field-constraints \
+	# --field-constraints \
 	--disable-appending-item-suffix \
 	--allow-extra-fields \
 	--use-annotated \

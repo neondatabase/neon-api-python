@@ -2,44 +2,17 @@ from typing import List
 from fastapi.encoders import jsonable_encoder
 
 from .http_client import Neon_API_V2
-from .openapi_models import (
-    ApiKeyCreateRequest,
-    ApiKeyCreateResponse,
-    ApiKeyRevokeResponse,
-    ApiKeysListResponseItem,
-    CurrentUserInfoResponse,
-    Project,
-    ProjectResponse,
-    ProjectUpdateRequest,
-    ProjectsResponse,
-    DatabaseResponse,
-    DatabasesResponse,
-    DatabaseUpdateRequest,
-    Database,
-    Database1,
-    Database2,
-    DatabaseCreateRequest,
-    BranchesResponse,
-    BranchResponse,
-    OperationResponse,
-    OperationsResponse,
-    PaginationResponse,
-    Branch,
-    Branch2,
-    Branch3,
-    BranchCreateRequestEndpointOptions,
-    BranchCreateRequest,
-)
+from . import models
 from .utils import validate_obj_model
 
 
-class PagedOperationsResponse(OperationsResponse, PaginationResponse):
+class PagedOperationsResponse(models.OperationsResponse, models.PaginationResponse):
     """A response containing a list of operations and pagination information."""
 
     pass
 
 
-class PagedProjectsResponse(ProjectsResponse, PaginationResponse):
+class PagedProjectsResponse(models.ProjectsResponse, models.PaginationResponse):
     """A response containing a list of projects and pagination information."""
 
     pass
@@ -63,7 +36,7 @@ class UserResource(Resource):
         return self.api.request(
             method="GET",
             path=self.api.url_join(self.base_path, "me"),
-            response_model=CurrentUserInfoResponse,
+            response_model=models.CurrentUserInfoResponse,
         )
 
 
@@ -78,7 +51,7 @@ class APIKeyResource(Resource):
         return self.api.request(
             method="GET",
             path=self.base_path,
-            response_model=ApiKeysListResponseItem,
+            response_model=models.ApiKeysListResponseItem,
             response_is_array=True,
         )
 
@@ -88,8 +61,8 @@ class APIKeyResource(Resource):
         return self.api.request(
             method="POST",
             path=self.base_path,
-            json=ApiKeyCreateRequest(key_name=key_name).model_dump(),
-            response_model=ApiKeyCreateResponse,
+            json=models.ApiKeyCreateRequest(key_name=key_name).model_dump(),
+            response_model=models.ApiKeyCreateResponse,
         )
 
     def revoke(self, key_id: str):
@@ -98,7 +71,7 @@ class APIKeyResource(Resource):
         return self.api.request(
             method="DELETE",
             path=self.api.url_join(self.base_path, str(key_id)),
-            response_model=ApiKeyRevokeResponse,
+            response_model=models.ApiKeyRevokeResponse,
         )
 
 
@@ -139,29 +112,29 @@ class ProjectResource(Resource):
         return self.api.request(
             method="GET",
             path=self.api.url_join(self.base_path, project_id),
-            response_model=ProjectResponse,
+            response_model=models.ProjectResponse,
         )
 
-    # def create(self, name: str, **kwargs):
-    #     """Create a new project."""
+    def create(self, **kwargs):
+        """Create a new project."""
 
-    #     return self.api.request(
-    #         method="POST",
-    #         path=self.base_path,
-    #         json={"project": {"name": name, **kwargs}},
-    #         response_model=ProjectResponse,
-    #     ).model_dump()
+        return self.api.request(
+            method="POST",
+            path=self.base_path,
+            json={"project": kwargs},
+            response_model=models.ProjectResponse,
+        ).model_dump()
 
-    def update(self, project: Project):
+    def update(self, project: models.Project):
         """Update a project."""
 
-        payload = ProjectUpdateRequest(project=project.model_dump())
+        payload = models.ProjectUpdateRequest(project=project.model_dump())
 
         return self.api.request(
             method="PATCH",
             path=self.api.url_join(self.base_path, project.id),
             json={"project": payload.model_dump()},
-            response_model=ProjectResponse,
+            response_model=models.ProjectResponse,
         )
 
     def delete(self, project_id: str):
@@ -170,7 +143,7 @@ class ProjectResource(Resource):
         return self.api.request(
             method="DELETE",
             path=self.api.url_join(self.base_path, project_id),
-            response_model=ProjectResponse,
+            response_model=models.ProjectResponse,
         )
 
 
@@ -180,16 +153,24 @@ class DatabaseResource(Resource):
     def _extract_database(self, obj):
         """Extract a database from the specified object."""
 
-        assert isinstance(obj, (DatabaseCreateRequest, Database1, Database2, Database))
+        assert isinstance(
+            obj,
+            (
+                models.DatabaseCreateRequest,
+                models.Database1,
+                models.Database2,
+                models.Database,
+            ),
+        )
 
         # Object mappings.
-        if isinstance(obj, DatabaseCreateRequest):
+        if isinstance(obj, models.DatabaseCreateRequest):
             obj = obj.database.model_dump()
-        if isinstance(obj, Database1):
+        if isinstance(obj, models.Database1):
             obj = obj.database.model_dump()
-        if isinstance(obj, Database2):
+        if isinstance(obj, models.Database2):
             obj = obj.database.model_dump()
-        if isinstance(obj, Database):
+        if isinstance(obj, models.Database):
             obj = obj.model_dump()
 
         return obj
@@ -233,7 +214,10 @@ class DatabaseResource(Resource):
         self,
         project_id: str,
         branch_id: str,
-        db: DatabaseCreateRequest | Database1 | Database2 | Database,
+        db: models.DatabaseCreateRequest
+        | models.Database1
+        | models.Database2
+        | models.Database,
     ):
         """Create a new database."""
 
@@ -253,7 +237,7 @@ class DatabaseResource(Resource):
         project_id: str,
         branch_id: str,
         database_id: str,
-        db: DatabaseUpdateRequest | Database2,
+        db: models.DatabaseUpdateRequest | models.Database2,
     ):
         """Update a database."""
 
@@ -264,8 +248,8 @@ class DatabaseResource(Resource):
             path=self.api.url_join(
                 "projects", project_id, "branches", branch_id, "databases", database_id
             ),
-            json=DatabaseUpdateRequest(database=db).model_dump(),
-            response_model=DatabaseResponse,
+            json=models.DatabaseUpdateRequest(database=db).model_dump(),
+            response_model=models.DatabaseResponse,
         )
 
 
@@ -280,7 +264,7 @@ class BranchResource(Resource):
         return self.api.request(
             method="GET",
             path=self.api.url_join("projects", project_id, "branches"),
-            response_model=BranchesResponse,
+            response_model=models.BranchesResponse,
         )
 
     def get(self, project_id: str, branch_id: str):
@@ -289,17 +273,17 @@ class BranchResource(Resource):
         return self.api.request(
             method="GET",
             path=self.api.url_join("projects", project_id, "branches", branch_id),
-            response_model=BranchResponse,
+            response_model=models.BranchResponse,
         )
 
-    def create(self, project_id: str, request: BranchCreateRequest):
+    def create(self, project_id: str, request: models.BranchCreateRequest):
         """Create a new branch."""
 
         return self.api.request(
             method="POST",
             path=self.api.url_join("projects", project_id, "branches"),
             json=request.model_dump(),
-            response_model=BranchResponse,
+            response_model=models.BranchResponse,
         )
 
 
@@ -335,7 +319,7 @@ class OperationResource(Resource):
         return self.api.request(
             method="GET",
             path=self.api.url_join("projects", project_id, "operations", operation_id),
-            response_model=OperationResponse,
+            response_model=models.OperationResponse,
         )
 
 

@@ -2,7 +2,7 @@ from typing import List
 import requests
 from pydantic import BaseModel
 
-from .openapi_models import *
+from .models import *
 from .exceptions import NeonClientException
 from .__version__ import __version__
 
