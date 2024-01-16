@@ -4,58 +4,6 @@ from .resources import ResourceCollection
 from . import models
 
 
-class BaseNeonItem:
-    def install_neon_client(self, neon):
-        self.neon = neon
-
-    def __repr__(self):
-        return str(self)
-
-
-class NeonUser(BaseNeonItem, models.CurrentUserAuthAccount):
-    @classmethod
-    def from_get_response(cls, r):
-        """Create a NeonUser from an API response."""
-
-        # TODO: is this the right way to do this?
-        me = r.auth_accounts[0]
-
-        return cls.model_validate(me.model_dump())
-
-    def __str__(self):
-        return f"<NeonUser email={self.email}>"
-
-
-class NeonProject(BaseNeonItem, models.ProjectListItem):
-    """A Neon project."""
-
-    @classmethod
-    def from_list_response(cls, r):
-        """Create a list of NeonProjects from an API response."""
-
-        def gen():
-            for project in r.projects:
-                p = cls.model_validate(project.model_dump())
-
-                yield p
-
-        return [g for g in gen()]
-
-    @classmethod
-    def from_get_response(cls, r):
-        """Create a NeonProject from an API response."""
-
-        return cls.model_validate(r.model_dump())
-
-    def __str__(self):
-        return f"<NeonProject id={self.id} name={self.name}>"
-
-    def delete(self):
-        """Delete this project."""
-
-        return bool(self.neon.resources.projects.delete(self.id))
-
-
 class ItemView:
     """A view into a single item."""
 
@@ -112,7 +60,11 @@ class CollectionView:
         self._key_ids = key_ids
         if collection_id:
             self._collection = getattr(collection, collection_id)
-            self.pagination = collection.pagination
+            try:
+                self.pagination = collection.pagination
+            except AttributeError:
+                pass
+
         else:
             self._collection = collection
 
@@ -165,13 +117,17 @@ class NeonClient:
         )
 
     def project(self, project_id: str, **kwargs):
-        return self.resources.projects.get(project_id, **kwargs)
+        return ItemView(
+            self.resources.projects.get(project_id, **kwargs), key_id="project"
+        )
 
     def project_create(self, **kwargs):
-        return self.resources.projects.create(**kwargs)
+        return ItemView(self.resources.projects.create(**kwargs), key_id="project")
 
     def project_delete(self, project_id: str, **kwargs):
-        return self.resources.projects.delete(project_id, **kwargs)
+        return ItemView(
+            self.resources.projects.delete(project_id, **kwargs), key_id="project"
+        )
 
     def databases(self, project_id: str, branch_id: str, **kwargs):
         return CollectionView(
@@ -181,13 +137,26 @@ class NeonClient:
         )
 
     def database(self, project_id: str, database_id: str, **kwargs):
-        return self.resources.databases.get(project_id, database_id, **kwargs)
+        return ItemView(
+            self.resources.databases.get(project_id, database_id, **kwargs),
+            key_id="database",
+        )
 
     def branches(self, project_id: str, **kwargs):
         return CollectionView(
             self.resources.branches.get_list(project_id, **kwargs),
             key_ids=["id", "name"],
+            collection_id="branches",
         )
 
     def branch(self, project_id: str, branch_id: str):
-        return self.resources.branches.get(project_id, branch_id)
+        return ItemView(
+            self.resources.branches.get(project_id, branch_id),
+            key_id="branch",
+        )
+
+    # def branch_create(self, project_id: str, **kwargs):
+    #     return ItemView(
+    #         self.resources.branches.create(project_id, **kwargs),
+    #         key_id="branch",
+    #     )
