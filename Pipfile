@@ -8,6 +8,7 @@ openapi-python-client = "*"
 pip = "*"
 datamodel-code-generator = {extras = ["http"], version = "*"}
 requests = "*"
+fastapi = "*"
 
 [dev-packages]
 

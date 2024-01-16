@@ -1,4 +1,5 @@
 from typing import List
+from fastapi.encoders import jsonable_encoder
 
 from .http_client import Neon_API_V2
 from .openapi_models import (
@@ -23,12 +24,23 @@ from .openapi_models import (
     OperationResponse,
     OperationsResponse,
     PaginationResponse,
+    Branch,
+    Branch2,
+    Branch3,
+    BranchCreateRequestEndpointOptions,
+    BranchCreateRequest,
 )
 from .utils import validate_obj_model
 
 
 class PagedOperationsResponse(OperationsResponse, PaginationResponse):
     """A response containing a list of operations and pagination information."""
+
+    pass
+
+
+class PagedProjectsResponse(ProjectsResponse, PaginationResponse):
+    """A response containing a list of projects and pagination information."""
 
     pass
 
@@ -44,15 +56,14 @@ class UserResource(Resource):
     """A resource for interacting with users."""
 
     base_path = "users"
-    response_model = CurrentUserInfoResponse
 
     def get_current_user_info(self):
         """Get information about the user."""
 
         return self.api.request(
             method="GET",
-            path=self.api.url_join(self.path, "me"),
-            response_model=self.response_model,
+            path=self.api.url_join(self.base_path, "me"),
+            response_model=CurrentUserInfoResponse,
         )
 
 
@@ -95,43 +106,51 @@ class ProjectResource(Resource):
     """A resource for interacting with projects."""
 
     base_path = "projects"
-    response_model = ProjectsResponse
-    response_model_single = ProjectResponse
 
-    def get_list(self, *, shared=False):
+    def get_list(
+        self,
+        *,
+        cursor: int | None = None,
+        limit: int | None = None,
+        shared: bool = False
+    ):
         """Get a list of projects."""
 
-        project_response = self.api.request(
+        project_params = {}
+        if cursor is not None:
+            project_params["cursor"] = cursor
+        if limit is not None:
+            project_params["limit"] = limit
+
+        return self.api.request(
             method="GET",
             path=(
                 self.api.url_join(self.base_path, "shared")
                 if shared
                 else self.base_path
             ),
-            response_model=self.response_model,
+            params=project_params,
+            response_model=PagedProjectsResponse,
         )
-        return project_response.projects
 
     def get(self, project_id: str):
         """Get a project."""
 
-        project_response = self.api.request(
+        return self.api.request(
             method="GET",
             path=self.api.url_join(self.base_path, project_id),
-            response_model=self.response_model_single,
+            response_model=ProjectResponse,
         )
-        return project_response.project
 
-    def create(self, name: str, **kwargs):
-        """Create a new project."""
+    # def create(self, name: str, **kwargs):
+    #     """Create a new project."""
 
-        project_create_response = self.api.request(
-            method="POST",
-            path=self.base_path,
-            json={"project": {"name": name, **kwargs}},
-            response_model=self.response_model_single,
-        )
-        return project_create_response.project
+    #     return self.api.request(
+    #         method="POST",
+    #         path=self.base_path,
+    #         json={"project": {"name": name, **kwargs}},
+    #         response_model=ProjectResponse,
+    #     ).model_dump()
 
     def update(self, project: Project):
         """Update a project."""
@@ -142,7 +161,7 @@ class ProjectResource(Resource):
             method="PATCH",
             path=self.api.url_join(self.base_path, project.id),
             json={"project": payload.model_dump()},
-            response_model=self.response_model_single,
+            response_model=ProjectResponse,
         )
 
     def delete(self, project_id: str):
@@ -151,14 +170,12 @@ class ProjectResource(Resource):
         return self.api.request(
             method="DELETE",
             path=self.api.url_join(self.base_path, project_id),
-            response_model=self.response_model_single,
+            response_model=ProjectResponse,
         )
 
 
 class DatabaseResource(Resource):
     base_path = "databases"
-    response_model = DatabasesResponse
-    response_model_single = DatabaseResponse
 
     def _extract_database(self, obj):
         """Extract a database from the specified object."""
@@ -189,7 +206,7 @@ class DatabaseResource(Resource):
                 "projects", project_id, "branches", branch_id, "databases"
             ),
             response_model=DatabasesResponse,
-        ).model_dump()
+        )
 
     def get(
         self,
@@ -210,7 +227,7 @@ class DatabaseResource(Resource):
                 database_name,
             ),
             response_model=DatabaseResponse,
-        ).model_dump()
+        )
 
     def create(
         self,
@@ -227,9 +244,9 @@ class DatabaseResource(Resource):
             path=self.api.url_join(
                 "projects", project_id, "branches", branch_id, "databases"
             ),
-            json=DatabaseCreateRequest(database=db).model_dump(),
+            json=jsonable_encoder(DatabaseCreateRequest(database=db)),
             response_model=DatabaseResponse,
-        ).model_dump()
+        )
 
     def update(
         self,
@@ -249,15 +266,13 @@ class DatabaseResource(Resource):
             ),
             json=DatabaseUpdateRequest(database=db).model_dump(),
             response_model=DatabaseResponse,
-        ).model_dump()
+        )
 
 
 class BranchResource(Resource):
     """A resource for interacting with branches."""
 
     path = "branches"
-    response_model = BranchesResponse
-    response_model_single = BranchResponse
 
     def get_list(self, project_id: str):
         """Get a list of branches."""
@@ -265,8 +280,8 @@ class BranchResource(Resource):
         return self.api.request(
             method="GET",
             path=self.api.url_join("projects", project_id, "branches"),
-            response_model=self.response_model,
-        ).model_dump()
+            response_model=BranchesResponse,
+        )
 
     def get(self, project_id: str, branch_id: str):
         """Get a branch."""
@@ -274,8 +289,18 @@ class BranchResource(Resource):
         return self.api.request(
             method="GET",
             path=self.api.url_join("projects", project_id, "branches", branch_id),
-            response_model=self.response_model_single,
-        ).model_dump()
+            response_model=BranchResponse,
+        )
+
+    def create(self, project_id: str, request: BranchCreateRequest):
+        """Create a new branch."""
+
+        return self.api.request(
+            method="POST",
+            path=self.api.url_join("projects", project_id, "branches"),
+            json=request.model_dump(),
+            response_model=BranchResponse,
+        )
 
 
 class OperationResource(Resource):
@@ -302,7 +327,7 @@ class OperationResource(Resource):
             path=self.api.url_join("projects", project_id, "operations"),
             params=operations_params,
             response_model=PagedOperationsResponse,
-        ).model_dump()
+        )
 
     def get(self, project_id: str, operation_id: str):
         """Get an operation."""
@@ -311,13 +336,15 @@ class OperationResource(Resource):
             method="GET",
             path=self.api.url_join("projects", project_id, "operations", operation_id),
             response_model=OperationResponse,
-        ).model_dump()
+        )
 
 
 class ResourceCollection:
     """A collection of resources."""
 
     def __init__(self, api: Neon_API_V2):
+        """Initialize the collection."""
+
         # Initialize resources.
         self.api_keys = APIKeyResource(api)
         self.users = UserResource(api)

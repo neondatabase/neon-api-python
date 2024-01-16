@@ -1,5 +1,9 @@
 gen-model: fetch-v2-schema
-	datamodel-codegen --input v2.json --output model.py --use-standard-collections --output models.py \
+	datamodel-codegen \
+	--input v2.json \
+	--collapse-root-models \
+	--output neon_client/openapi_models.py \
+	--use-standard-collections \
 	--output-model-type pydantic_v2.BaseModel \
 	--input-file-type openapi \
 	--use-standard-collections \
@@ -8,12 +12,17 @@ gen-model: fetch-v2-schema
 	--use-schema-description \
 	--snake-case-field \
 	--enable-version-header \
-	--enum-field-as-literal one \
   	--use-double-quotes \
   	--field-constraints \
   	--allow-population-by-field-name \
-  	--strict-nullable \
-  	--use-title-as-name
+  	--use-title-as-name \
+	--reuse-model \
+	--field-constraints \
+	--disable-appending-item-suffix \
+	--allow-extra-fields \
+	--use-annotated \
+	--capitalise-enum-members \
+	--use-unique-items-as-set
 
 fetch-v2-schema:
 	curl -O https://neon.tech/api_spec/release/v2.json

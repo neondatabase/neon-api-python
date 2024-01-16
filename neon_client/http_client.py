@@ -24,7 +24,7 @@ class Neon_API_V2:
         response_model: BaseModel = None,
         response_is_array=False,
         check_status_code=True,
-        include_pagination=False,
+        _debug_pagination=False,
         **kwargs,
     ):
         """
@@ -71,9 +71,8 @@ class Neon_API_V2:
             else:
                 response_parsed = response_model(**r.json())
 
-            if include_pagination:
-                pagination = PaginationResponse(**r.json()).pagination
-                response_parsed.pagination = pagination
+            if _debug_pagination:
+                print(r.json())
 
             return response_parsed
         else:
