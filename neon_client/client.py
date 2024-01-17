@@ -202,7 +202,28 @@ class Branch(NeonResource):
 
 
 class Operation(NeonResource):
-    pass
+    @classmethod
+    def list(
+        cls,
+        client,
+        project_id: str,
+        *,
+        cursor: int | None = None,
+        limit: int | None = None,
+    ):
+        """Get a list of operations."""
+
+        r_path = client.url_join("projects", project_id, "operations")
+        r_params = compact_mapping({"cursor": cursor, "limit": limit})
+
+        # Make the request.
+        r = client.request("GET", r_path, params=r_params)
+        r = schema.OperationsResponse(**r).model_dump()
+
+        return [
+            cls(client=client, obj=o, data_model=schema.Operation)
+            for o in r["operations"]
+        ]
 
 
 class NeonAPI:
