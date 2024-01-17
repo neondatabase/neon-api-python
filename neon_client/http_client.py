@@ -1,4 +1,5 @@
 from typing import List
+
 import requests
 from pydantic import BaseModel
 
@@ -24,7 +25,7 @@ class Neon_API_V2:
         response_model: BaseModel = None,
         response_is_array=False,
         check_status_code=True,
-        _debug_pagination=False,
+        _debug=False,
         **kwargs,
     ):
         """
@@ -56,7 +57,7 @@ class Neon_API_V2:
             # TODO: add custom exception classes here.
             try:
                 r.raise_for_status()
-            except:
+            except requests.exceptions.HTTPError:
                 raise NeonClientException(r.text)
 
         if response_model:
@@ -64,14 +65,17 @@ class Neon_API_V2:
                 # Shortcut for when the response is a list of items.
                 if type(response_is_array) == "str":
                     response_parsed = [
-                        response_model(**item) for item in r.json()[response_is_array]
+                        response_model.model_construct(**item)
+                        for item in r.json()[response_is_array]
                     ]
                 elif response_is_array == True:
-                    response_parsed = [response_model(**item) for item in r.json()]
+                    response_parsed = [
+                        response_model.model_construct(**item) for item in r.json()
+                    ]
             else:
-                response_parsed = response_model(**r.json())
+                response_parsed = response_model.model_construct(**r.json())
 
-            if _debug_pagination:
+            if _debug:
                 print(r.json())
 
             return response_parsed

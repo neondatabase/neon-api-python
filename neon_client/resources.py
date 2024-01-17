@@ -121,9 +121,9 @@ class ProjectResource(Resource):
         return self.api.request(
             method="POST",
             path=self.base_path,
-            json={"project": kwargs},
+            json=kwargs,
             response_model=models.ProjectResponse,
-        ).model_dump()
+        )
 
     def update(self, project: models.Project):
         """Update a project."""
@@ -250,6 +250,24 @@ class DatabaseResource(Resource):
             ),
             json=models.DatabaseUpdateRequest(database=db).model_dump(),
             response_model=models.DatabaseResponse,
+        )
+
+    def get_connection_string(self, project_id: str, branch_id: str, database_id: str):
+        """Get a database connection string."""
+
+        # TODO: this isn't correct.
+        return self.api.request(
+            method="GET",
+            path=self.api.url_join(
+                "projects",
+                project_id,
+                "branches",
+                branch_id,
+                "databases",
+                database_id,
+                "connection_string",
+            ),
+            response_model=models.DatabaseConnectionStringResponse,
         )
 
 

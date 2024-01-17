@@ -7,8 +7,7 @@ from . import models
 class ItemView:
     """A view into a single item."""
 
-    def __init__(self, item, key_id=None, neon=None):
-        self.neon = neon
+    def __init__(self, item, key_id=None):
         self._item = item
         self._key_id = key_id
 
@@ -44,14 +43,7 @@ class ItemView:
 class CollectionView:
     """A view into a collection of items."""
 
-    def __init__(
-        self,
-        collection,
-        key_ids=None,
-        collection_id=None,
-        neon=None,
-    ):
-        self.neon = neon
+    def __init__(self, collection, key_ids=None, collection_id=None):
         self.pagination = None
 
         if not key_ids:
@@ -107,16 +99,26 @@ class NeonClient:
         return self.resources.users.get_current_user_info()
 
     def api_keys(self):
+        """Get a list of API keys."""
+
         return CollectionView(self.resources.api_keys.get_list(), key_ids=["id"])
 
-    def projects(self, **kwargs):
+    def projects(self, shared=False, **kwargs):
+        """Get a list of projects."""
+
+        a = self.resources.projects.get_list(shared=shared, **kwargs)
+        print(a)
+        exit()
+
         return CollectionView(
-            self.resources.projects.get_list(**kwargs),
+            self.resources.projects.get_list(shared=shared, **kwargs),
             key_ids=["id", "name"],
             collection_id="projects",
         )
 
     def project(self, project_id: str, **kwargs):
+        """Get a single project."""
+
         return ItemView(
             self.resources.projects.get(project_id, **kwargs), key_id="project"
         )
@@ -153,6 +155,61 @@ class NeonClient:
         return ItemView(
             self.resources.branches.get(project_id, branch_id),
             key_id="branch",
+        )
+
+    def branch_create(self, project_id: str, **kwargs):
+        return ItemView(
+            self.resources.branches.create(project_id, **kwargs),
+            key_id="branch",
+        )
+
+    def branch_delete(self, project_id: str, branch_id: str, **kwargs):
+        return ItemView(
+            self.resources.branches.delete(project_id, branch_id, **kwargs),
+            key_id="branch",
+        )
+
+    def branch_update(self, project_id: str, branch_id: str, **kwargs):
+        # TODO: untested.
+        return ItemView(
+            self.resources.branches.update(project_id, branch_id, **kwargs),
+            key_id="branch",
+        )
+
+    def branch_rename(self, project_id: str, branch_id: str, **kwargs):
+        # TODO: untested.
+        return ItemView(
+            self.resources.branches.rename(project_id, branch_id, **kwargs),
+            key_id="branch",
+        )
+
+    def branch_add_compute(self, project_id: str, branch_id: str, **kwargs):
+        # TODO: untested.
+        return ItemView(
+            self.resources.branches.add_compute(project_id, branch_id, **kwargs),
+            key_id="branch",
+        )
+
+    def branch_remove_compute(self, project_id: str, branch_id: str, **kwargs):
+        # TODO: untested.
+        return ItemView(
+            self.resources.branches.remove_compute(project_id, branch_id, **kwargs),
+            key_id="branch",
+        )
+
+    def branch_set_primary(self, project_id: str, branch_id: str, **kwargs):
+        # TODO: untested.
+        return ItemView(
+            self.resources.branches.set_primary(project_id, branch_id, **kwargs),
+            key_id="branch",
+        )
+
+    def get_connection_string(self, project_id: str, branch_id: str, database_id: str):
+        # TODO: implement this.
+        return self.resources.databases.get_connection_string(
+            project_id,
+            branch_id,
+            database_id,
         )
 
     # def branch_create(self, project_id: str, **kwargs):
