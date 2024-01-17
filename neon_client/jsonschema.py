@@ -590,11 +590,11 @@ class Branch1(BaseModel):
 
 class BranchCreateRequestEndpointOptions(BaseModel):
     type: EndpointType
-    autoscaling_limit_min_cu: Optional[confloat(ge=0.25)] = Field(
+    autoscaling_limit_min_cu: Optional[confloat()] = Field(
         None,
         description="The minimum number of Compute Units. The minimum value is `0.25`.\n    See [Compute size and Autoscaling configuration](https://neon.tech/docs/manage/endpoints#compute-size-and-autoscaling-configuration)\n    for more information.\n",
     )
-    autoscaling_limit_max_cu: Optional[confloat(ge=0.25)] = Field(
+    autoscaling_limit_max_cu: Optional[confloat()] = Field(
         None,
         description="The maximum number of Compute Units.\n    See [Compute size and Autoscaling configuration](https://neon.tech/docs/manage/endpoints#compute-size-and-autoscaling-configuration)\n    for more information.\n",
     )
@@ -664,7 +664,7 @@ class CurrentUserInfoResponse(BaseModel):
     last_name: str
     projects_limit: int
     branches_limit: int
-    max_autoscaling_limit: confloat(ge=0.25)
+    max_autoscaling_limit: confloat()
     compute_seconds_limit: Optional[int] = None
     plan: str
 
@@ -677,11 +677,11 @@ class EndpointSettingsData(BaseModel):
 class DefaultEndpointSettings(BaseModel):
     pg_settings: Optional[dict[str, str]] = None
     pgbouncer_settings: Optional[dict[str, str]] = None
-    autoscaling_limit_min_cu: Optional[confloat(ge=0.25)] = Field(
+    autoscaling_limit_min_cu: Optional[confloat()] = Field(
         None,
         description="The minimum number of Compute Units. The minimum value is `0.25`.\nSee [Compute size and Autoscaling configuration](https://neon.tech/docs/manage/endpoints#compute-size-and-autoscaling-configuration)\nfor more information.\n",
     )
-    autoscaling_limit_max_cu: Optional[confloat(ge=0.25)] = Field(
+    autoscaling_limit_max_cu: Optional[confloat()] = Field(
         None,
         description="The maximum number of Compute Units. See [Compute size and Autoscaling configuration](https://neon.tech/docs/manage/endpoints#compute-size-and-autoscaling-configuration)\nfor more information.\n",
     )
@@ -865,11 +865,11 @@ class Project1(BaseModel):
     settings: Optional[ProjectSettingsData] = None
     name: Optional[str] = Field(None, description="The project name")
     branch: Optional[Branch] = None
-    autoscaling_limit_min_cu: Optional[confloat(ge=0.25)] = Field(
+    autoscaling_limit_min_cu: Optional[confloat()] = Field(
         None,
         description="DEPRECATED, use default_endpoint_settings.autoscaling_limit_min_cu instead.\n\nThe minimum number of Compute Units. The minimum value is `0.25`.\nSee [Compute size and Autoscaling configuration](https://neon.tech/docs/manage/endpoints#compute-size-and-autoscaling-configuration)\nfor more information.\n",
     )
-    autoscaling_limit_max_cu: Optional[confloat(ge=0.25)] = Field(
+    autoscaling_limit_max_cu: Optional[confloat()] = Field(
         None,
         description="DEPRECATED, use default_endpoint_settings.autoscaling_limit_max_cu instead.\n\nThe maximum number of Compute Units. See [Compute size and Autoscaling configuration](https://neon.tech/docs/manage/endpoints#compute-size-and-autoscaling-configuration)\nfor more information.\n",
     )
@@ -935,10 +935,10 @@ class Endpoint(BaseModel):
         ...,
         description="The ID of the branch that the compute endpoint is associated with\n",
     )
-    autoscaling_limit_min_cu: confloat(ge=0.25) = Field(
+    autoscaling_limit_min_cu: confloat() = Field(
         ..., description="The minimum number of Compute Units\n"
     )
-    autoscaling_limit_max_cu: confloat(ge=0.25) = Field(
+    autoscaling_limit_max_cu: confloat() = Field(
         ..., description="The maximum number of Compute Units\n"
     )
     region_id: str = Field(..., description="The region identifier\n")
@@ -995,11 +995,11 @@ class Endpoint1(BaseModel):
     )
     type: EndpointType
     settings: Optional[EndpointSettingsData] = None
-    autoscaling_limit_min_cu: Optional[confloat(ge=0.25)] = Field(
+    autoscaling_limit_min_cu: Optional[confloat()] = Field(
         None,
         description="The minimum number of Compute Units. The minimum value is `0.25`.\nSee [Compute size and Autoscaling configuration](https://neon.tech/docs/manage/endpoints#compute-size-and-autoscaling-configuration)\nfor more information.\n",
     )
-    autoscaling_limit_max_cu: Optional[confloat(ge=0.25)] = Field(
+    autoscaling_limit_max_cu: Optional[confloat()] = Field(
         None,
         description="The maximum number of Compute Units.\nSee [Compute size and Autoscaling configuration](https://neon.tech/docs/manage/endpoints#compute-size-and-autoscaling-configuration)\nfor more information.\n",
     )
@@ -1032,11 +1032,11 @@ class Endpoint2(BaseModel):
         None,
         description="The destination branch ID. The destination branch must not have an exsiting read-write endpoint.\n",
     )
-    autoscaling_limit_min_cu: Optional[confloat(ge=0.25)] = Field(
+    autoscaling_limit_min_cu: Optional[confloat()] = Field(
         None,
         description="The minimum number of Compute Units. The minimum value is `0.25`.\nSee [Compute size and Autoscaling configuration](https://neon.tech/docs/manage/endpoints#compute-size-and-autoscaling-configuration)\nfor more information.\n",
     )
-    autoscaling_limit_max_cu: Optional[confloat(ge=0.25)] = Field(
+    autoscaling_limit_max_cu: Optional[confloat()] = Field(
         None,
         description="The maximum number of Compute Units.\nSee [Compute size and Autoscaling configuration](https://neon.tech/docs/manage/endpoints#compute-size-and-autoscaling-configuration)\nfor more information.\n",
     )
