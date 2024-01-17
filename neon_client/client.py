@@ -23,6 +23,8 @@ class NeonClientException(requests.exceptions.HTTPError):
     pass
 
 
+
+
 class APIKey:
     """A Neon API key."""
 
@@ -47,12 +49,24 @@ class APIKey:
 
     @property
     def obj(self):
+        """The API key object."""
+
         if not self.__cached_obj:
             self.__cached_obj = self._data_model(**self._data)
 
         return self.__cached_obj
 
+    def __getattribute__(self, name):
+        """Get an attribute from the API key object or the API key data."""
+
+        try:
+            return super().__getattribute__(name)
+        except AttributeError:
+            return getattr(self.obj, name)
+
     def __repr__(self):
+        """Return a string representation of the API key."""
+
         return repr(self.obj)
 
     @classmethod
