@@ -3,6 +3,16 @@ from typing import List, Dict, Any, Union, Optional
 from pydantic import BaseModel
 
 
+def squash(obj):
+    new_obj = {}
+    for k, v in obj.items():
+        if isinstance(v, dict):
+            new_obj.update(squash(v))
+        else:
+            if v:
+                new_obj[k] = v
+
+
 def validate_obj_model(parameter_name: str, model: BaseModel):
     """A decorator that validates the 'obj' argument against the specified model."""
 

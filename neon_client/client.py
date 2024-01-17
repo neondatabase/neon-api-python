@@ -1,219 +1,125 @@
-from .http_client import Neon_API_V2
-from .resources import ResourceCollection
+import os
+from collections.abc import Sequence
 
-from . import models
+import requests
+from pydantic import BaseModel, ValidationError
+
+from .jsonschema import (
+    ApiKeysListResponseItem,
+    ApiKeyCreateRequest,
+    ApiKeyCreateResponse,
+    ApiKeyRevokeResponse,
+)
+from .jsonschema import CurrentUserInfoResponse
 
 
-class ItemView:
-    """A view into a single item."""
+__VERSION__ = "0.1.0"
 
-    def __init__(self, item, key_id=None):
-        self._item = item
-        self._key_id = key_id
+NEON_API_KEY_ENVIRON = "NEON_API_KEY"
+NEON_API_BASE_URL = "https://console.neon.tech/api/v2/"
+
+
+class NeonClientException(requests.exceptions.HTTPError):
+    pass
+
+
+class APIKey:
+    """A Neon API key."""
+
+    def __init__(
+        self,
+        client,
+        obj,
+        data_model: BaseModel,
+        **kwargs,
+    ):
+        """A Neon API key.
+
+        Args:
+            client (NeonAPI): The Neon API client.
+            obj (dict): The API key data.
+            data_model (BaseModel, optional): The data model to use for deserialization. Defaults to None.
+        """
+        self._client = client
+        self._data = obj
+        self._data_model = data_model
+        self.__cached_obj = None
 
     @property
-    def item(self):
-        if self._key_id:
-            return getattr(self._item, self._key_id)
+    def obj(self):
+        if not self.__cached_obj:
+            self.__cached_obj = self._data_model(**self._data)
 
-        return self._item
-
-    def __getattr__(self, name):
-        return getattr(self.item, name)
-
-    def __setattr__(self, name, value):
-        if name == "_item":
-            return super().__setattr__(name, value)
-
-        return setattr(self.item, name, value)
-
-    def __str__(self):
-        return str(self.item)
+        return self.__cached_obj
 
     def __repr__(self):
-        return repr(self.item)
+        return repr(self.obj)
 
-    def __eq__(self, other):
-        return self.item == other
+    @classmethod
+    def create(cls, client, key_name: str):
+        """Create a new API key."""
 
-    def __ne__(self, other):
-        return self.item != other
+        obj = ApiKeyCreateRequest(key_name=key_name)
+        r = client.request("POST", "api_keys", json=obj.model_dump())
+        return cls(
+            client=client,
+            obj=r,
+            data_model=ApiKeyCreateResponse,
+        )
 
+        # ApiKeyCreateResponse(**r)
 
-class CollectionView:
-    """A view into a collection of items."""
-
-    def __init__(self, collection, key_ids=None, collection_id=None):
-        self.pagination = None
-
-        if not key_ids:
-            key_ids = []
-
-        self._key_ids = key_ids
-        if collection_id:
-            self._collection = getattr(collection, collection_id)
-            try:
-                self.pagination = collection.pagination
-            except AttributeError:
-                pass
-
-        else:
-            self._collection = collection
-
-    def __iter__(self):
-        return iter(self._collection)
-
-    def __getitem__(self, key):
-        for k in self._key_ids:
-            for item in self._collection:
-                if str(getattr(item, k)) == str(key):
-                    return item
-
-        return self._collection[key]
-
-    def __len__(self):
-        return len(self._collection)
-
-    def __repr__(self):
-        return repr(self._collection)
-
-    def __str__(self):
-        return str(self._collection)
-
-    def __contains__(self, item):
-        return item in self._collection
-
-    def __eq__(self, other):
-        return self._collection == other
-
-    def __ne__(self, other):
-        return self._collection != other
-
-
-class NeonClient:
-    def __init__(self, api_key: str, **kwargs):
-        self.api = Neon_API_V2(api_key, **kwargs)
-        self.resources = ResourceCollection(self.api)
-
-    def me(self):
-        return self.resources.users.get_current_user_info()
-
-    def api_keys(self):
+    @classmethod
+    def list(cls, client):
         """Get a list of API keys."""
 
-        return CollectionView(self.resources.api_keys.get_list(), key_ids=["id"])
+        r = client.request("GET", "api_keys")
+        return [
+            cls(client=client, obj=x, data_model=ApiKeysListResponseItem) for x in r
+        ]
 
-    def projects(self, shared=False, **kwargs):
-        """Get a list of projects."""
+    @classmethod
+    def revoke(cls, client, api_key):
+        """Revoke an API key."""
 
-        a = self.resources.projects.get_list(shared=shared, **kwargs)
-        print(a)
-        exit()
+        r = client.request("DELETE", f"api_keys/{ api_key.obj.id }")
+        return cls(client=client, obj=r, data_model=ApiKeyRevokeResponse)
 
-        return CollectionView(
-            self.resources.projects.get_list(shared=shared, **kwargs),
-            key_ids=["id", "name"],
-            collection_id="projects",
+
+class NeonAPI:
+    def __init__(self, api_key, *, base_url=None):
+        if not base_url:
+            base_url = NEON_API_BASE_URL
+
+        # Private attributes.
+        self._api_key = api_key
+        self._session = requests.Session()
+
+        # Public attributes.
+        self.base_url = base_url
+        self.user_agent = f"neon-client/{__VERSION__}"
+
+    def request(self, method, path, **kwargs):
+        """Send an HTTP request to the specified path using the specified method."""
+        # Set HTTP headers for outgoing requests.
+        headers = kwargs.pop("headers", {})
+        headers["Authorization"] = f"Bearer {self._api_key}"
+        headers["Accept"] = "application/json"
+        headers["Content-Type"] = "application/json"
+        headers["User-Agent"] = self.user_agent
+
+        r = self._session.request(
+            method, self.base_url + path, headers=headers, **kwargs
         )
+        try:
+            r.raise_for_status()
+        except requests.exceptions.HTTPError:
+            raise NeonClientException(r.text)
 
-    def project(self, project_id: str, **kwargs):
-        """Get a single project."""
+        return r.json()
 
-        return ItemView(
-            self.resources.projects.get(project_id, **kwargs), key_id="project"
-        )
+    @classmethod
+    def from_environ(cls):
+        """Create a new Neon API client from the NEON_API_KEY environment variable."""
 
-    def project_create(self, **kwargs):
-        return ItemView(self.resources.projects.create(**kwargs), key_id="project")
-
-    def project_delete(self, project_id: str, **kwargs):
-        return ItemView(
-            self.resources.projects.delete(project_id, **kwargs), key_id="project"
-        )
-
-    def databases(self, project_id: str, branch_id: str, **kwargs):
-        return CollectionView(
-            self.resources.databases.get_list(project_id, branch_id, **kwargs),
-            key_ids=["id"],
-            collection_id="databases",
-        )
-
-    def database(self, project_id: str, database_id: str, **kwargs):
-        return ItemView(
-            self.resources.databases.get(project_id, database_id, **kwargs),
-            key_id="database",
-        )
-
-    def branches(self, project_id: str, **kwargs):
-        return CollectionView(
-            self.resources.branches.get_list(project_id, **kwargs),
-            key_ids=["id", "name"],
-            collection_id="branches",
-        )
-
-    def branch(self, project_id: str, branch_id: str):
-        return ItemView(
-            self.resources.branches.get(project_id, branch_id),
-            key_id="branch",
-        )
-
-    def branch_create(self, project_id: str, **kwargs):
-        return ItemView(
-            self.resources.branches.create(project_id, **kwargs),
-            key_id="branch",
-        )
-
-    def branch_delete(self, project_id: str, branch_id: str, **kwargs):
-        return ItemView(
-            self.resources.branches.delete(project_id, branch_id, **kwargs),
-            key_id="branch",
-        )
-
-    def branch_update(self, project_id: str, branch_id: str, **kwargs):
-        # TODO: untested.
-        return ItemView(
-            self.resources.branches.update(project_id, branch_id, **kwargs),
-            key_id="branch",
-        )
-
-    def branch_rename(self, project_id: str, branch_id: str, **kwargs):
-        # TODO: untested.
-        return ItemView(
-            self.resources.branches.rename(project_id, branch_id, **kwargs),
-            key_id="branch",
-        )
-
-    def branch_add_compute(self, project_id: str, branch_id: str, **kwargs):
-        # TODO: untested.
-        return ItemView(
-            self.resources.branches.add_compute(project_id, branch_id, **kwargs),
-            key_id="branch",
-        )
-
-    def branch_remove_compute(self, project_id: str, branch_id: str, **kwargs):
-        # TODO: untested.
-        return ItemView(
-            self.resources.branches.remove_compute(project_id, branch_id, **kwargs),
-            key_id="branch",
-        )
-
-    def branch_set_primary(self, project_id: str, branch_id: str, **kwargs):
-        # TODO: untested.
-        return ItemView(
-            self.resources.branches.set_primary(project_id, branch_id, **kwargs),
-            key_id="branch",
-        )
-
-    def get_connection_string(self, project_id: str, branch_id: str, database_id: str):
-        # TODO: implement this.
-        return self.resources.databases.get_connection_string(
-            project_id,
-            branch_id,
-            database_id,
-        )
-
-    # def branch_create(self, project_id: str, **kwargs):
-    #     return ItemView(
-    #         self.resources.branches.create(project_id, **kwargs),
-    #         key_id="branch",
-    #     )
+        return cls(os.environ[NEON_API_KEY_ENVIRON])
