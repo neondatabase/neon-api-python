@@ -17,6 +17,12 @@ $ pip install neon-client
 
 >>> neon = NeonClient(api_key='your_api_key')
 
+>>> # List all the API keys.
+>>> api_keys = neon.api_keys()
+
+>>> # Get a specific API key.
+>>> api_key = neon.api_key(api_key_id='your_api_key_id')
+
 >>> # Get all the projects
 >>> projects = neon.projects()
 
