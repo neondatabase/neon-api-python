@@ -5,20 +5,21 @@ import os
 import requests
 from pydantic import BaseModel
 
-from .jsonschema import (
-    ApiKeysListResponseItem,
-    ApiKeyCreateRequest,
-    ApiKeyCreateResponse,
-    ApiKeyRevokeResponse,
-)
-from .jsonschema import ProjectListItem
-from .jsonschema import CurrentUserInfoResponse
+from . import jsonschema
+
+import typing as t
 
 
 __VERSION__ = "0.1.0"
 
 NEON_API_KEY_ENVIRON = "NEON_API_KEY"
 NEON_API_BASE_URL = "https://console.neon.tech/api/v2/"
+
+
+def compact_mapping(obj):
+    """Compact a mapping by removing None values."""
+
+    return {k: v for k, v in obj.items() if v is not None}
 
 
 class NeonClientException(requests.exceptions.HTTPError):
@@ -79,10 +80,10 @@ class APIKey(NeonResource):
     def create(cls, client, key_name: str):
         """Create a new API key."""
 
-        obj = ApiKeyCreateRequest(key_name=key_name)
+        obj = jsonschema.ApiKeyCreateRequest(key_name=key_name)
         r = client.request("POST", "api_keys", json=obj.model_dump())
 
-        return cls(client=client, obj=r, data_model=ApiKeyCreateResponse)
+        return cls(client=client, obj=r, data_model=jsonschema.ApiKeyCreateResponse)
 
     @classmethod
     def list(cls, client):
@@ -90,7 +91,8 @@ class APIKey(NeonResource):
 
         r = client.request("GET", "api_keys")
         return [
-            cls(client=client, obj=x, data_model=ApiKeysListResponseItem) for x in r
+            cls(client=client, obj=x, data_model=jsonschema.ApiKeysListResponseItem)
+            for x in r
         ]
 
     @classmethod
@@ -99,7 +101,7 @@ class APIKey(NeonResource):
 
         r = client.request("DELETE", f"api_keys/{ api_key.obj.id }")
 
-        return cls(client=client, obj=r, data_model=ApiKeyRevokeResponse)
+        return cls(client=client, obj=r, data_model=jsonschema.ApiKeyRevokeResponse)
 
     def revoke(self):
         """Revoke the API key."""
@@ -119,7 +121,7 @@ class User(NeonResource):
         return cls(
             client=client,
             obj=r,
-            data_model=CurrentUserInfoResponse,
+            data_model=jsonschema.CurrentUserInfoResponse,
         )
 
 
@@ -129,9 +131,9 @@ class Project(NeonResource):
         cls,
         client,
         *,
+        shared: bool = False,
         cursor: int | None = None,
         limit: int | None = None,
-        shared: bool = False,
     ):
         """Get a list of projects."""
 
@@ -141,7 +143,8 @@ class Project(NeonResource):
         r = client.request("GET", r_path, params=r_params)
 
         return [
-            cls(client=client, obj=x, data_model=ProjectListItem) for x in r["projects"]
+            cls(client=client, obj=x, data_model=jsonschema.ProjectListItem)
+            for x in r["projects"]
         ]
 
 
@@ -154,18 +157,44 @@ class Branch(NeonResource):
         *,
         cursor: int | None = None,
         limit: int | None = None,
-        shared: bool = False,
     ):
         """Get a list of projects."""
 
         r_path = "/".join(["projects", project_id, "branches"])
-        r_params = {"cursor": cursor, "limit": limit}
+        r_params = compact_mapping({"cursor": cursor, "limit": limit})
 
+        # Make the request.
         r = client.request("GET", r_path, params=r_params)
 
         return [
-            cls(client=client, obj=x, data_model=ProjectListItem) for x in r["branches"]
+            cls(client=client, obj=x, data_model=jsonschema.ProjectListItem)
+            for x in r["branches"]
         ]
+
+    @classmethod
+    def create(
+        cls,
+        client,
+        project_id: str,
+        *,
+        endpoints: t.List[jsonschema.Endpoint1] | None = None,
+        branch: jsonschema.Branch2 | None = None,
+        **kwargs,
+    ):
+        """Create a new branch."""
+
+        # Construct the request object.
+        kwargs.setdefault("endpoints", endpoints)
+        kwargs.setdefault("branch", branch)
+
+        # Validate and prepare the request body.
+        obj = jsonschema.BranchCreateRequest(**kwargs)
+
+        # Make the request.
+        r_path = client.url_join("projects", project_id, "branches")
+        r = client.request("POST", r_path, json=obj.model_dump())
+
+        return cls(client=client, obj=r, data_model=jsonschema.BranchesResponse)
 
 
 class Operation(NeonResource):
@@ -174,6 +203,8 @@ class Operation(NeonResource):
 
 class NeonAPI:
     def __init__(self, api_key: str, *, base_url=None):
+        """A Neon API client."""
+
         if not base_url:
             base_url = NEON_API_BASE_URL
 
@@ -184,6 +215,9 @@ class NeonAPI:
         # Public attributes.
         self.base_url = base_url
         self.user_agent = f"neon-client/{__VERSION__}"
+
+    def __repr__(self):
+        return f"<NeonAPI base_url={self.base_url!r}>"
 
     def request(self, method: str, path: str, **kwargs):
         """Send an HTTP request to the specified path using the specified method."""
@@ -208,6 +242,11 @@ class NeonAPI:
 
         # Deserialize the response.
         return r.json()
+
+    def url_join(self, *args):
+        """Join multiple URL path components."""
+
+        return "/".join(args)
 
     @classmethod
     def from_environ(cls):
