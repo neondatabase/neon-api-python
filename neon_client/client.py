@@ -5,7 +5,7 @@ import os
 import requests
 from pydantic import BaseModel
 
-from . import jsonschema
+from . import schema
 
 import typing as t
 
@@ -80,10 +80,10 @@ class APIKey(NeonResource):
     def create(cls, client, key_name: str):
         """Create a new API key."""
 
-        obj = jsonschema.ApiKeyCreateRequest(key_name=key_name)
+        obj = schema.ApiKeyCreateRequest(key_name=key_name)
         r = client.request("POST", "api_keys", json=obj.model_dump())
 
-        return cls(client=client, obj=r, data_model=jsonschema.ApiKeyCreateResponse)
+        return cls(client=client, obj=r, data_model=schema.ApiKeyCreateResponse)
 
     @classmethod
     def list(cls, client):
@@ -91,7 +91,7 @@ class APIKey(NeonResource):
 
         r = client.request("GET", "api_keys")
         return [
-            cls(client=client, obj=x, data_model=jsonschema.ApiKeysListResponseItem)
+            cls(client=client, obj=x, data_model=schema.ApiKeysListResponseItem)
             for x in r
         ]
 
@@ -101,7 +101,7 @@ class APIKey(NeonResource):
 
         r = client.request("DELETE", f"api_keys/{ api_key.obj.id }")
 
-        return cls(client=client, obj=r, data_model=jsonschema.ApiKeyRevokeResponse)
+        return cls(client=client, obj=r, data_model=schema.ApiKeyRevokeResponse)
 
     def revoke(self):
         """Revoke the API key."""
@@ -121,7 +121,7 @@ class User(NeonResource):
         return cls(
             client=client,
             obj=r,
-            data_model=jsonschema.CurrentUserInfoResponse,
+            data_model=schema.CurrentUserInfoResponse,
         )
 
 
@@ -143,7 +143,7 @@ class Project(NeonResource):
         r = client.request("GET", r_path, params=r_params)
 
         return [
-            cls(client=client, obj=x, data_model=jsonschema.ProjectListItem)
+            cls(client=client, obj=x, data_model=schema.ProjectListItem)
             for x in r["projects"]
         ]
 
@@ -167,7 +167,7 @@ class Branch(NeonResource):
         r = client.request("GET", r_path, params=r_params)
 
         return [
-            cls(client=client, obj=x, data_model=jsonschema.ProjectListItem)
+            cls(client=client, obj=x, data_model=schema.ProjectListItem)
             for x in r["branches"]
         ]
 
@@ -177,8 +177,8 @@ class Branch(NeonResource):
         client,
         project_id: str,
         *,
-        endpoints: t.List[jsonschema.Endpoint1] | None = None,
-        branch: jsonschema.Branch2 | None = None,
+        endpoints: t.List[schema.BranchCreateRequestEndpointOptions] | None = None,
+        branch: schema.Branch2 | None = None,
         **kwargs,
     ):
         """Create a new branch."""
@@ -188,13 +188,17 @@ class Branch(NeonResource):
         kwargs.setdefault("branch", branch)
 
         # Validate and prepare the request body.
-        obj = jsonschema.BranchCreateRequest(**kwargs)
+        obj = schema.BranchCreateRequest(**kwargs)
 
         # Make the request.
         r_path = client.url_join("projects", project_id, "branches")
-        r = client.request("POST", r_path, json=obj.model_dump())
 
-        return cls(client=client, obj=r, data_model=jsonschema.BranchesResponse)
+        if obj.endpoints or obj.branch:
+            r = client.request("POST", r_path, json=obj.model_dump())
+        else:
+            r = client.request("POST", r_path)
+
+        return cls(client=client, obj=r, data_model=schema.BranchResponse)
 
 
 class Operation(NeonResource):
