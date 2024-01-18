@@ -20,6 +20,7 @@ Remember that you should never expose your api_key and handle it carefully since
 Please note that this is a hypothetical example and might not work without proper implementation considering neon.tech's actual API documentation. 
 
 ## Installation
+
 ```bash
 $ pip install neon-client
 ```
