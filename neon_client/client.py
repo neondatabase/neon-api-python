@@ -8,6 +8,9 @@ from . import schema
 from .utils import compact_mapping
 from .exceptions import NeonClientException
 
+from fastapi.encoders import jsonable_encoder
+
+
 __VERSION__ = "0.1.0"
 
 NEON_API_KEY_ENVIRON = "NEON_API_KEY"
@@ -34,7 +37,12 @@ class NeonResource:
 
         # Cache the object.
         if not self.__cached_obj:
-            self.__cached_obj = self._data_model(**self._data)
+            # Deserialize the object. Fallback to the model constructor if the
+            # data model is not a Pydantic model.
+            try:
+                self.__cached_obj = self._data_model(**self._data)
+            except TypeError:
+                self.__cached_obj = self._data_model.model_construct(**self._data)
 
         # Return the cached object.
         return self.__cached_obj
@@ -68,12 +76,12 @@ class APIKey(NeonResource):
         """Create a new API key."""
 
         obj = schema.ApiKeyCreateRequest(key_name=key_name)
-        r = client.request("POST", "api_keys", json=obj.model_dump())
+        r = client.request("POST", "api_keys", json=jsonable_encoder(obj))
 
         return cls(client=client, obj=r, data_model=schema.ApiKeyCreateResponse)
 
     @classmethod
-    def list(cls, client):
+    def get_list(cls, client):
         """Get a list of API keys."""
 
         obj = client.request("GET", "api_keys")
@@ -83,17 +91,17 @@ class APIKey(NeonResource):
         ]
 
     @classmethod
-    def revoke_with(cls, client, api_key):
+    def revoke_with_id(cls, client, api_key_id):
         """Revoke an API key, via object instance."""
 
-        obj = client.request("DELETE", f"api_keys/{ api_key.obj.id }")
+        obj = client.request("DELETE", f"api_keys/{ api_key_id }")
 
         return cls(client=client, obj=obj, data_model=schema.ApiKeyRevokeResponse)
 
     def revoke(self):
         """Revoke the API key."""
 
-        return self.revoke_with(self._client, self)
+        return self.revoke_with(self._client, self.id)
 
 
 class User(NeonResource):
@@ -116,7 +124,7 @@ class User(NeonResource):
 
 class Project(NeonResource):
     @classmethod
-    def list(
+    def get_list(
         cls,
         client,
         *,
@@ -153,6 +161,40 @@ class Project(NeonResource):
             data_model=schema.ProjectListItem,
         )
 
+    @classmethod
+    def create(
+        cls, client, *, project: schema.ProjectCreateItem | None = None, **kwargs
+    ):
+        """Create a new project."""
+
+        kwargs.setdefault("project", project)
+        obj = schema.ProjectCreateRequest(**kwargs)
+
+        r = client.request("POST", "projects", json=jsonable_encoder(obj))
+
+        return cls(
+            client=client,
+            obj=r,
+            data_model=schema.ProjectResponse,
+        )
+
+    @classmethod
+    def delete_with_id(cls, client, project_id: str):
+        """Delete a project."""
+
+        r = client.request("DELETE", f"projects/{ project_id }")
+
+        return cls(
+            client=client,
+            obj=r,
+            data_model=schema.ProjectResponse,
+        )
+
+    def delete(self):
+        """Delete the project."""
+
+        return self.delete_with_id(self._client, self.id)
+
 
 class Branch(NeonResource):
     @classmethod
@@ -164,7 +206,7 @@ class Branch(NeonResource):
         cursor: str | None = None,
         limit: int | None = None,
     ):
-        """Get a list of projects."""
+        """Get a list of branches."""
 
         # Construct the request path and parameters.
         r_path = "/".join(["projects", project_id, "branches"])
@@ -181,7 +223,7 @@ class Branch(NeonResource):
 
     @classmethod
     def get(cls, client, project_id: str, branch_id: str):
-        """Get a list of projects."""
+        """Get a list of branches."""
 
         # Construct the request path.
         r_path = client.url_join("projects", project_id, "branches", branch_id)
@@ -191,7 +233,7 @@ class Branch(NeonResource):
 
         # Deserialize the response.
         return cls(
-            client=client, obj=obj.branch.model_dump(), data_model=schema.Project
+            client=client, obj=jsonable_encoder(obj.branch), data_model=schema.Project
         )
 
     @classmethod
@@ -218,7 +260,7 @@ class Branch(NeonResource):
 
         # Skip the request body if there are no endpoints or branch.
         if obj.endpoints or obj.branch:
-            r = client.request("POST", r_path, json=obj.model_dump())
+            r = client.request("POST", r_path, json=jsonable_encoder(obj))
         else:
             r = client.request("POST", r_path)
 
@@ -356,11 +398,11 @@ class NeonAPI:
 
     def api_keys(self):
         """Get a list of API keys."""
-        return APIKey.list(client=self)
+        return APIKey.get_list(client=self)
 
     def projects(self, *, shared: bool = False, **kwargs):
         """Get a list of projects."""
-        return Project.list(client=self, shared=shared, **kwargs)
+        return Project.get_list(client=self, shared=shared, **kwargs)
 
     def project(self, project_id: str):
         """Get a project."""
@@ -379,10 +421,3 @@ class NeonAPI:
         return Operation.get(
             client=self, project_id=project_id, operation_id=operation_id
         )
-
-    def connection_string(self, project_id: str, branch_id: str):
-        """Get a connection string for a branch."""
-        raise NotImplementedError
-        # return Branch.get_connection_string(
-        #     client=self, project_id=project_id, branch_id=branch_id
-        # )
