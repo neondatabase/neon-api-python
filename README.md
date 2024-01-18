@@ -29,7 +29,7 @@ $ pip install neon-client
 
 ## Usage
 
-```pycon
+```python
 >>> from neon_client import NeonClient
 
 >>> neon = NeonClient(api_key='your_api_key')
@@ -42,7 +42,6 @@ $ pip install neon-client
 
 >>> # Get all the projects
 >>> projects = neon.projects()
-
 
 >>> # Get a specific project
 >>> project = neon.project(project_id='your_project_id')
