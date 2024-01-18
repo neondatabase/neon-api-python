@@ -16,7 +16,7 @@
 
 ## General
 
-- [ ] review naming conventions
+- [x] review naming conventions  [completion:: 2024-01-18]
 - [ ] add tests
 - [ ] add ci/cd
 - [ ] add documentation
