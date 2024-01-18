@@ -77,19 +77,19 @@ class APIKey(NeonResource):
     def list(cls, client):
         """Get a list of API keys."""
 
-        r = client.request("GET", "api_keys")
+        obj = client.request("GET", "api_keys")
         return [
-            cls(client=client, obj=x, data_model=schema.ApiKeysListResponseItem)
-            for x in r
+            cls(client=client, obj=obj, data_model=schema.ApiKeysListResponseItem)
+            for obj in obj
         ]
 
     @classmethod
     def revoke_request(cls, client, api_key):
         """Revoke an API key, via object instance."""
 
-        r = client.request("DELETE", f"api_keys/{ api_key.obj.id }")
+        obj = client.request("DELETE", f"api_keys/{ api_key.obj.id }")
 
-        return cls(client=client, obj=r, data_model=schema.ApiKeyRevokeResponse)
+        return cls(client=client, obj=obj, data_model=schema.ApiKeyRevokeResponse)
 
     def revoke(self):
         """Revoke the API key."""
@@ -225,18 +225,22 @@ class Branch(NeonResource):
 
         return cls(client=client, obj=r, data_model=schema.BranchResponse)
 
-    # @classmethod
-    # def get_connection_string(cls, client, project_id: str, branch_id: str):
-    #     """Get a connection string for a branch."""
+    @classmethod
+    def get_connection_string(cls, client, project_id: str, branch_id: str):
+        """Get a connection string for a branch."""
 
-    #     # Construct the request path.
-    #     r_path = client.url_join("projects", project_id, "branches", branch_id, "connection_string")
+        # Construct the request path.
+        r_path = client.url_join(
+            "projects", project_id, "branches", branch_id, "connection_string"
+        )
 
-    #     # Make the request.
-    #     obj = client.request("GET", r_path, response_model=schema.BranchConnectionStringResponse)
+        # Make the request.
+        obj = client.request(
+            "GET", r_path, response_model=schema.BranchConnectionStringResponse
+        )
 
-    #     # Deserialize the response.
-    #     return obj.connection_string
+        # Deserialize the response.
+        return obj.connection_string
 
 
 class Operation(NeonResource):
