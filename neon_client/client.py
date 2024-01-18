@@ -380,3 +380,10 @@ class NeonAPI:
         return Operation.get(
             client=self, project_id=project_id, operation_id=operation_id
         )
+
+    def connection_string(self, project_id: str, branch_id: str):
+        """Get a connection string for a branch."""
+        raise NotImplementedError
+        # return Branch.get_connection_string(
+        #     client=self, project_id=project_id, branch_id=branch_id
+        # )
