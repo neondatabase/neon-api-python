@@ -138,7 +138,7 @@ class Project(NeonResource):
         """Get a list of projects."""
 
         r_path = "projects" if not shared else "projects/shared"
-        r_params = {"cursor": cursor, "limit": limit}
+        r_params = compact_mapping({"cursor": cursor, "limit": limit})
 
         r = client.request("GET", r_path, params=r_params)
 
@@ -146,6 +146,21 @@ class Project(NeonResource):
             cls(client=client, obj=x, data_model=schema.ProjectListItem)
             for x in r["projects"]
         ]
+
+    @classmethod
+    def get(cls, client, project_id: str):
+        """Get a project."""
+
+        r = client.request("GET", client.url_join("projects", project_id))
+        # TODO: add response_model to client.request
+
+        r = schema.ProjectResponse(**r)
+
+        return cls(
+            client=client,
+            obj=r.project.model_dump(),
+            data_model=schema.ProjectListItem,
+        )
 
 
 class Branch(NeonResource):
@@ -160,16 +175,33 @@ class Branch(NeonResource):
     ):
         """Get a list of projects."""
 
+        # Construct the request path and parameters.
         r_path = "/".join(["projects", project_id, "branches"])
         r_params = compact_mapping({"cursor": cursor, "limit": limit})
 
         # Make the request.
         r = client.request("GET", r_path, params=r_params)
 
+        # Deserialize the response.
         return [
             cls(client=client, obj=x, data_model=schema.ProjectListItem)
             for x in r["branches"]
         ]
+
+    @classmethod
+    def get(cls, client, project_id: str, branch_id: str):
+        """Get a list of projects."""
+
+        # Construct the request path.
+        r_path = client.url_join("projects", project_id, "branches", branch_id)
+
+        # Make the request.
+        obj = client.request("GET", r_path, response_model=schema.ProjectResponse)
+
+        # Deserialize the response.
+        return cls(
+            client=client, obj=obj.branch.model_dump(), data_model=schema.Project
+        )
 
     @classmethod
     def create(
@@ -193,6 +225,7 @@ class Branch(NeonResource):
         # Make the request.
         r_path = client.url_join("projects", project_id, "branches")
 
+        # Skip the request body if there are no endpoints or branch.
         if obj.endpoints or obj.branch:
             r = client.request("POST", r_path, json=obj.model_dump())
         else:
@@ -213,17 +246,38 @@ class Operation(NeonResource):
     ):
         """Get a list of operations."""
 
+        # Construct the request path and parameters.
         r_path = client.url_join("projects", project_id, "operations")
         r_params = compact_mapping({"cursor": cursor, "limit": limit})
 
         # Make the request.
-        r = client.request("GET", r_path, params=r_params)
-        r = schema.OperationsResponse(**r).model_dump()
+        obj = client.request(
+            "GET", r_path, params=r_params, response_model=schema.OperationsResponse
+        )
 
+        # Deserialize the response.
         return [
             cls(client=client, obj=o, data_model=schema.Operation)
-            for o in r["operations"]
+            for o in obj.operations
         ]
+
+    @classmethod
+    def get(
+        cls,
+        client,
+        project_id: str,
+        operation_id: str,
+    ):
+        """Get a list of operations."""
+
+        # Construct the request path and parameters.
+        r_path = client.url_join("projects", project_id, "operations", operation_id)
+
+        # Make the request.
+        obj = client.request("GET", r_path, response_model=schema.OperationResponse)
+
+        # Deserialize the response.
+        return cls(client=client, obj=obj.operation, data_model=schema.Operation)
 
 
 class NeonAPI:
@@ -244,7 +298,13 @@ class NeonAPI:
     def __repr__(self):
         return f"<NeonAPI base_url={self.base_url!r}>"
 
-    def request(self, method: str, path: str, **kwargs):
+    def request(
+        self,
+        method: str,
+        path: str,
+        response_model: BaseModel | None = None,
+        **kwargs,
+    ):
         """Send an HTTP request to the specified path using the specified method."""
 
         # Set HTTP headers for outgoing requests.
@@ -266,7 +326,10 @@ class NeonAPI:
             raise NeonClientException(r.text)
 
         # Deserialize the response.
-        return r.json()
+        if response_model:
+            return response_model.model_construct(**r.json())
+        else:
+            return r.json()
 
     def url_join(self, *args):
         """Join multiple URL path components."""
@@ -286,3 +349,25 @@ class NeonAPI:
     def api_keys(self):
         """Get a list of API keys."""
         return APIKey.list(client=self)
+
+    def projects(self, *, shared: bool = False, **kwargs):
+        """Get a list of projects."""
+        return Project.list(client=self, shared=shared, **kwargs)
+
+    def project(self, project_id: str):
+        """Get a project."""
+        return Project.get(client=self, project_id=project_id)
+
+    def branches(self, project_id: str):
+        """Get a list of branches."""
+        return Branch.list(client=self, project_id=project_id)
+
+    def operations(self, project_id: str):
+        """Get a list of operations."""
+        return Operation.list(client=self, project_id=project_id)
+
+    def operation(self, project_id: str, operation_id: str):
+        """Get an operation."""
+        return Operation.get(
+            client=self, project_id=project_id, operation_id=operation_id
+        )
