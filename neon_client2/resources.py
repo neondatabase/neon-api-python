@@ -85,7 +85,7 @@ class ProjectResource(Resource):
         *,
         cursor: int | None = None,
         limit: int | None = None,
-        shared: bool = False
+        shared: bool = False,
     ):
         """Get a list of projects."""
 
