@@ -2,11 +2,12 @@
 
 ## Technical Implementation
 
-- [x] `kiota` is not a good fit for the project
-- [x] review `openapi-codegen` and `openapi-generator` for Pydantic model generation
+- [x] review `openapi-codegen` and `openapi-generator` for Pydantic model generation  [completion:: 2024-01-18]
 	- `openapi-codegen` is a good fit for the project (supports pydantic, etc.)
 - [ ] look for more lessons learned with `kiota`
 	- [ ] httx abstraction (can be added later)
+	- [x] request adapters (overkill)  [completion:: 2024-01-18]
+	- [ ] 
 
 ## Endpoints
 
