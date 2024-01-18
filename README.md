@@ -1,9 +1,25 @@
-# neon_client: an api wrapper for neon.tech v2 api
+# `neon_client`: an api wrapper for [neon.tech v2 api](https://api-docs.neon.tech/reference/getting-started-with-neon-api)
 
+This Python wrapper would allow developers to interact with the Neon API with ease. Instead of directly making HTTP requests and handling responses, developers can use this wrapper to call simple functions that return Python objects. 
 
+```python
+from neon_client import NeonAPI
 
-## Future Installation
+# Initialize the client.
+client = NeonApi(api_key='your_api_key')
+```
 
+Methods of `NeonClient`:
+
+- `me()`: Returns the current user.
+- `project(project_id)`: Returns a specific project.
+- 
+
+Remember that you should never expose your api_key and handle it carefully since it gives access to sensitive data. It's better to set it as an environment variable (e.g. `NEON_API_KEY` + accompanying `neon_client.from_environ()`).
+
+Please note that this is a hypothetical example and might not work without proper implementation considering neon.tech's actual API documentation. 
+
+## Installation
 ```bash
 $ pip install neon-client
 ```
@@ -42,5 +58,11 @@ $ pip install neon-client
 >>> # Get a specific branch
 >>> branch = neon.branch(database_id='your_database_id', branch_id='your_branch_id')
 
-
 ```
+## Development
+
+[to be written]
+
+## License & Copyright
+
+[MIT licensed](./LICENSE).
