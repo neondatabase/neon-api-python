@@ -105,7 +105,7 @@ class OperationStatus(Enum):
     scheduling = "scheduling"
 
 
-class Branch(BaseModel):
+class BranchUpdateItem(BaseModel):
     name: Optional[str] = Field(
         None,
         description="The branch name. If not specified, the default branch name will be used.\n",
@@ -367,7 +367,7 @@ class PaymentSource(BaseModel):
     card: Optional[PaymentSourceBankCard] = None
 
 
-class BillingAccount1(BaseModel):
+class BillingAccountUpdateItem(BaseModel):
     email: Optional[str] = Field(
         None,
         description="Billing email, to receive emails related to invoices and subscriptions.\n",
@@ -375,7 +375,7 @@ class BillingAccount1(BaseModel):
 
 
 class BillingAccountUpdateRequest(BaseModel):
-    billing_account: BillingAccount1
+    billing_account: BillingAccountUpdateItem
 
 
 class BillingSubscriptionType(Enum):
@@ -403,7 +403,7 @@ class Database(BaseModel):
     )
 
 
-class Database1(BaseModel):
+class DatabaseCreateItem(BaseModel):
     name: str = Field(..., description="The name of the datbase\n")
     owner_name: str = Field(
         ..., description="The name of the role that owns the database\n"
@@ -411,10 +411,10 @@ class Database1(BaseModel):
 
 
 class DatabaseCreateRequest(BaseModel):
-    database: Database1
+    database: DatabaseCreateItem
 
 
-class Database2(BaseModel):
+class DatabaseUpdateItem(BaseModel):
     name: Optional[str] = Field(None, description="The name of the database\n")
     owner_name: Optional[str] = Field(
         None, description="The name of the role that owns the database\n"
@@ -422,7 +422,7 @@ class Database2(BaseModel):
 
 
 class DatabaseUpdateRequest(BaseModel):
-    database: Database2
+    database: DatabaseUpdateItem
 
 
 class DatabaseResponse(BaseModel):
@@ -540,7 +540,7 @@ class ProjectsConsumptionResponse(BaseModel):
     periods_in_response: int
 
 
-class Branch1(BaseModel):
+class Branch(BaseModel):
     id: str = Field(
         ...,
         description="The branch ID. This value is generated when a branch is created. A `branch_id` value has a `br` prefix. For example: `br-small-term-683261`.\n",
@@ -611,11 +611,11 @@ class BranchCreateRequest(BaseModel):
 
 
 class BranchResponse(BaseModel):
-    branch: Branch1
+    branch: Branch
 
 
 class BranchesResponse(BaseModel):
-    branches: list[Branch1]
+    branches: list[Branch]
 
 
 class StatementResult(BaseModel):
@@ -861,10 +861,10 @@ class Project(BaseModel):
     )
 
 
-class Project1(BaseModel):
+class ProjectCreateItem(BaseModel):
     settings: Optional[ProjectSettingsData] = None
     name: Optional[str] = Field(None, description="The project name")
-    branch: Optional[Branch] = None
+    branch: Optional[BranchUpdateItem] = None
     autoscaling_limit_min_cu: Optional[confloat()] = Field(
         None,
         description="DEPRECATED, use default_endpoint_settings.autoscaling_limit_min_cu instead.\n\nThe minimum number of Compute Units. The minimum value is `0.25`.\nSee [Compute size and Autoscaling configuration](https://neon.tech/docs/manage/endpoints#compute-size-and-autoscaling-configuration)\nfor more information.\n",
@@ -894,10 +894,10 @@ class Project1(BaseModel):
 
 
 class ProjectCreateRequest(BaseModel):
-    project: Project1
+    project: ProjectCreateItem
 
 
-class Project2(BaseModel):
+class ProjectUpdateItem(BaseModel):
     settings: Optional[ProjectSettingsData] = None
     name: Optional[str] = Field(None, description="The project name")
     default_endpoint_settings: Optional[DefaultEndpointSettings] = None
@@ -908,7 +908,7 @@ class Project2(BaseModel):
 
 
 class ProjectUpdateRequest(BaseModel):
-    project: Project2
+    project: ProjectUpdateItem
 
 
 class ProjectResponse(BaseModel):
@@ -984,7 +984,7 @@ class Endpoint(BaseModel):
     provisioner: Provisioner
 
 
-class Endpoint1(BaseModel):
+class EndpointCreateItem(BaseModel):
     branch_id: str = Field(
         ...,
         description="The ID of the branch the compute endpoint will be associated with\n",
@@ -1024,7 +1024,7 @@ class Endpoint1(BaseModel):
 
 
 class EndpointCreateRequest(BaseModel):
-    endpoint: Endpoint1
+    endpoint: EndpointCreateItem
 
 
 class Endpoint2(BaseModel):
