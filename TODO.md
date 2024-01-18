@@ -11,6 +11,8 @@ This document is a list of things to do for the project.
 - [ ] add support for 
 - [ ] determine if httx is a good fit for the project
 
+- [ ] saved queries? proceed without for now. 
+
 - [ ] add tests
 - [ ] add ci/cd
 - [ ] add documentation
