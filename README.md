@@ -58,8 +58,8 @@ $ pip install neon-client
 
 >>> # Get a specific branch
 >>> branch = neon.branch(database_id='your_database_id', branch_id='your_branch_id')
-
 ```
+
 ## Development
 
 [to be written]
