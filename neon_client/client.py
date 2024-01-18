@@ -302,7 +302,7 @@ class NeonAPI:
 
         # Public attributes.
         self.base_url = base_url
-        self.user_agent = f"neon-client/{__VERSION__}"
+        self.user_agent = f"neon-client/python version=({__VERSION__})"
 
     def __repr__(self):
         return f"<NeonAPI base_url={self.base_url!r}>"
