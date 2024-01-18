@@ -21,7 +21,7 @@ class NeonResource:
         obj,
         data_model: BaseModel,
     ):
-        """A Neon API key.
+        """A Neon Resource.  Used to wrap API responses, and deserialize them.
 
         Args:
             client (NeonAPI): The Neon API client.
@@ -35,28 +35,32 @@ class NeonResource:
 
     @property
     def obj(self):
-        """The API key object."""
+        """The object in question."""
 
+        # Cache the object.
         if not self.__cached_obj:
-            self.__cached_obj = self._data_model.model_construct(**self._data)
+            self.__cached_obj = self._data_model(**self._data)
 
+        # Return the cached object.
         return self.__cached_obj
 
     def __getattribute__(self, name):
-        """Get an attribute from the API key object or the API key data."""
+        """Get an attribute from the object."""
 
         try:
+            # Try to get the attribute from this object.
             return super().__getattribute__(name)
         except AttributeError:
+            # Try to get the attribute from the API key data.
             return getattr(self.obj, name)
 
     def __getitem__(self, key):
-        """Get an item from the API key object or the API key data."""
+        """Get an item from the object."""
 
         return getattr(self.obj, key, None) or self.obj[key]
 
     def __repr__(self):
-        """Return a string representation of the API key."""
+        """Return a string representation."""
 
         return repr(self.obj)
 
