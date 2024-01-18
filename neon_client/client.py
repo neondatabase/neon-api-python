@@ -84,7 +84,7 @@ class APIKey(NeonResource):
         ]
 
     @classmethod
-    def revoke_request(cls, client, api_key):
+    def revoke_with(cls, client, api_key):
         """Revoke an API key, via object instance."""
 
         obj = client.request("DELETE", f"api_keys/{ api_key.obj.id }")
@@ -94,7 +94,7 @@ class APIKey(NeonResource):
     def revoke(self):
         """Revoke the API key."""
 
-        return self.revoke_request(self._client, self)
+        return self.revoke_with(self._client, self)
 
 
 class User(NeonResource):
