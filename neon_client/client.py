@@ -5,22 +5,13 @@ import requests
 from pydantic import BaseModel
 
 from . import schema
-
+from .utils import compact_mapping
+from .exceptions import NeonClientException
 
 __VERSION__ = "0.1.0"
 
 NEON_API_KEY_ENVIRON = "NEON_API_KEY"
 NEON_API_BASE_URL = "https://console.neon.tech/api/v2/"
-
-
-def compact_mapping(obj):
-    """Compact a mapping by removing None values."""
-
-    return {k: v for k, v in obj.items() if v is not None}
-
-
-class NeonClientException(requests.exceptions.HTTPError):
-    pass
 
 
 class NeonResource:
