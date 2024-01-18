@@ -142,8 +142,8 @@ class Project(NeonResource):
         r = client.request("GET", r_path, params=r_params)
 
         return [
-            cls(client=client, obj=x, data_model=schema.ProjectListItem)
-            for x in r["projects"]
+            cls(client=client, obj=obj, data_model=schema.ProjectListItem)
+            for obj in r["projects"]
         ]
 
     @classmethod
@@ -185,8 +185,8 @@ class Branch(NeonResource):
 
         # Deserialize the response.
         return [
-            cls(client=client, obj=x, data_model=schema.ProjectListItem)
-            for x in r["branches"]
+            cls(client=client, obj=obj, data_model=schema.ProjectListItem)
+            for obj in r["branches"]
         ]
 
     @classmethod
