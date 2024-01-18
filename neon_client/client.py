@@ -94,7 +94,7 @@ class APIKey(NeonResource):
 
     @classmethod
     def revoke_request(cls, client, api_key):
-        """Revoke an API key."""
+        """Revoke an API key, via object instance."""
 
         r = client.request("DELETE", f"api_keys/{ api_key.obj.id }")
 
@@ -113,8 +113,10 @@ class User(NeonResource):
     def get_current_user_info(cls, client):
         """Get the current user."""
 
+        # Make the Request.
         r = client.request("GET", "users/me")
 
+        # Deserialize the response.
         return cls(
             client=client,
             obj=r,
@@ -148,14 +150,16 @@ class Project(NeonResource):
     def get(cls, client, project_id: str):
         """Get a project."""
 
-        r = client.request("GET", client.url_join("projects", project_id))
-        # TODO: add response_model to client.request
-
-        r = schema.ProjectResponse(**r)
+        r_path = client.url_join("projects", project_id)
+        r = client.request(
+            "GET",
+            r_path,
+            response_model=schema.ProjectResponse,
+        )
 
         return cls(
             client=client,
-            obj=r.project.model_dump(),
+            obj=r.project,
             data_model=schema.ProjectListItem,
         )
 
