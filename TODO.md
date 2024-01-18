@@ -8,4 +8,9 @@ This document is a list of things to do for the project.
 - [ ] look for more lessons learned with `kiota`
 - [ ] review naming conventions
 - [ ] add support for roles, etc. 
+- [ ] add support for 
 - [ ] determine if httx is a good fit for the project
+
+- [ ] add tests
+- [ ] add ci/cd
+- [ ] add documentation
