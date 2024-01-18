@@ -34,28 +34,28 @@ $ pip install neon-client
 
 >>> neon = NeonClient(api_key='your_api_key')
 
->>> # List all the API keys.
+# List all the API keys.
 >>> api_keys = neon.api_keys()
 
->>> # Get a specific API key.
+# Get a specific API key.
 >>> api_key = neon.api_key(api_key_id='your_api_key_id')
 
->>> # Get all the projects
+# Get all the projects
 >>> projects = neon.projects()
 
->>> # Get a specific project
+# Get a specific project
 >>> project = neon.project(project_id='your_project_id')
 
->>> # Get all the databases
+# Get all the databases
 >>> databases = neon.databases()
 
->>> # Get a specific database
+# Get a specific database
 >>> database = neon.database(database_id='your_database_id')
 
->>> # Get all the branches for a given database.
+# Get all the branches for a given database.
 >>> branches = neon.branches(database_id='your_database_id')
 
->>> # Get a specific branch
+# Get a specific branch
 >>> branch = neon.branch(database_id='your_database_id', branch_id='your_branch_id')
 ```
 
