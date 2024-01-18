@@ -1,13 +1,10 @@
 import os
-
-# from collections.abc import Sequence
+import typing as t
 
 import requests
 from pydantic import BaseModel
 
 from . import schema
-
-import typing as t
 
 
 __VERSION__ = "0.1.0"
@@ -132,7 +129,7 @@ class Project(NeonResource):
         client,
         *,
         shared: bool = False,
-        cursor: int | None = None,
+        cursor: str | None = None,
         limit: int | None = None,
     ):
         """Get a list of projects."""
@@ -170,7 +167,7 @@ class Branch(NeonResource):
         client,
         project_id: str,
         *,
-        cursor: int | None = None,
+        cursor: str | None = None,
         limit: int | None = None,
     ):
         """Get a list of projects."""
@@ -241,7 +238,7 @@ class Operation(NeonResource):
         client,
         project_id: str,
         *,
-        cursor: int | None = None,
+        cursor: str | None = None,
         limit: int | None = None,
     ):
         """Get a list of operations."""
