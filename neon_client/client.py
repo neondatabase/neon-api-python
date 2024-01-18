@@ -15,12 +15,7 @@ NEON_API_BASE_URL = "https://console.neon.tech/api/v2/"
 
 
 class NeonResource:
-    def __init__(
-        self,
-        client,
-        obj,
-        data_model: BaseModel,
-    ):
+    def __init__(self, client, obj, data_model: BaseModel):
         """A Neon Resource.  Used to wrap API responses, and deserialize them.
 
         Args:
