@@ -4,7 +4,7 @@ gen-model: fetch-v2-schema
 	--input-file-type jsonschema \
 	--collapse-root-models \
 	--output-model-type pydantic_v2.BaseModel \
-	--output neon_client/jsonschema.py \
+	--output neon_client/schema.py \
 	--use-standard-collections \
 	--output-model-type pydantic_v2.BaseModel \
 	--input-file-type openapi \
