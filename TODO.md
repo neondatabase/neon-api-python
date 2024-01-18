@@ -1,0 +1,5 @@
+- [ ] review naming conventions
+- [ ] decide upon 
+- [x] experiment with `openapi-codegen`
+- [ ] 
+- [ ] look for more lessons learned with `kiota`
