@@ -152,20 +152,21 @@ class NeonAPI:
     def branch_update(
         self, project_id: str, branch_id: str, **json: dict
     ) -> t.Dict[str, t.Any]:
-        """Update a branch. Accepts all keyword arguments for json body."""
+        """Update a branch by branch_id. Accepts all keyword arguments for json body."""
 
         return self.request(
             "PATCH", f"projects/{ project_id }/branches/{ branch_id }", json=json
         )
 
     def branch_delete(self, project_id: str, branch_id: str) -> t.Dict[str, t.Any]:
-        """Delete a branch."""
+        """Delete a branch by branch_id."""
         return self.request("DELETE", f"projects/{ project_id }/branches/{ branch_id }")
 
     def branch_set_as_primary(
         self, project_id: str, branch_id: str
     ) -> t.Dict[str, t.Any]:
-        """Set a branch as primary."""
+        """Set a branch as primary by branch_id."""
+
         return self.request(
             "POST", f"projects/{ project_id }/branches/{ branch_id }/set_as_primary"
         )
