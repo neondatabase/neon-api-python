@@ -78,7 +78,7 @@ class NeonAPI:
         """Get a list of API keys."""
         return self.request("GET", "api_keys")
 
-    def api_key_create(self, key_name: str):
+    def api_key_create(self, key_name: str) -> t.Dict[str, t.Any]:
         """Create a new API key."""
         return self.request("POST", "api_keys", json={"name": key_name})
 
@@ -147,13 +147,28 @@ class NeonAPI:
 
     def branch_create(self, project_id: str, **json: dict) -> t.Dict[str, t.Any]:
         """Create a new branch. Accepts all keyword arguments for json body."""
-
         return self.request("POST", f"projects/{ project_id }/branches", json=json)
+
+    def branch_update(
+        self, project_id: str, branch_id: str, **json: dict
+    ) -> t.Dict[str, t.Any]:
+        """Update a branch. Accepts all keyword arguments for json body."""
+
+        return self.request(
+            "PATCH", f"projects/{ project_id }/branches/{ branch_id }", json=json
+        )
 
     def branch_delete(self, project_id: str, branch_id: str) -> t.Dict[str, t.Any]:
         """Delete a branch."""
-
         return self.request("DELETE", f"projects/{ project_id }/branches/{ branch_id }")
+
+    def branch_set_as_primary(
+        self, project_id: str, branch_id: str
+    ) -> t.Dict[str, t.Any]:
+        """Set a branch as primary."""
+        return self.request(
+            "POST", f"projects/{ project_id }/branches/{ branch_id }/set_as_primary"
+        )
 
     def databases(
         self,
@@ -212,12 +227,17 @@ class NeonAPI:
     def database_delete(
         self, project_id: str, branch_id: str, database_id: str
     ) -> t.Dict[str, t.Any]:
-        """Delete a database."""
+        """Delete a database by database_id."""
 
         return self.request(
             "DELETE",
             f"projects/{ project_id }/branches/{ branch_id }/databases/{ database_id }",
         )
+    
+    def endpoints(self, project_id: str, branch_id: str) -> t.List[t.Dict[str, t.Any]]:
+        """Get a list of endpoints for a given branch."""
+        return self.request("GET", f"projects/{ project_id }/branches/{ branch_id }/endpoints")
+    )
 
     def operations(self, project_id: str) -> t.List[t.Dict[str, t.Any]]:
         """Get a list of operations."""
