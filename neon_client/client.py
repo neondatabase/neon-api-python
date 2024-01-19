@@ -2,7 +2,7 @@ import os
 import typing as t
 
 import requests
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 
 from . import schema
 from .utils import compact_mapping
@@ -35,17 +35,22 @@ class NeonResource:
     def obj(self):
         """The object in question."""
 
-        # Cache the object.
-        if not self.__cached_obj:
-            # Deserialize the object. Fallback to the model constructor if the
-            # data model is not a Pydantic model.
-            try:
+        if self._data_model:
+            # Cache the object.
+            if not self.__cached_obj:
+                # Deserialize the object. Fallback to the model constructor if the
+                # data model is not a Pydantic model.
                 self.__cached_obj = self._data_model(**self._data)
-            except TypeError:
-                self.__cached_obj = self._data_model.model_construct(**self._data)
+                # try:
+                #     self.__cached_obj = self._data_model(**self._data)
+                # except ValidationError:
+                #     self.__cached_obj = self._data_model.model_construct(**self._data)
 
-        # Return the cached object.
-        return self.__cached_obj
+            # Return the cached object.
+            return self.__cached_obj
+        else:
+            # Return the raw data.
+            return self._data
 
     def __getattribute__(self, name):
         """Get an attribute from the object."""
@@ -54,7 +59,7 @@ class NeonResource:
             # Try to get the attribute from this object.
             return super().__getattribute__(name)
         except AttributeError:
-            # Try to get the attribute from the API key data.
+            # Try to get the attribute from the object data.
             return getattr(self.obj, name)
 
     def __getitem__(self, key):
@@ -162,15 +167,10 @@ class Project(NeonResource):
         )
 
     @classmethod
-    def create(
-        cls, client, *, project: schema.ProjectCreateItem | None = None, **kwargs
-    ):
-        """Create a new project."""
+    def create(cls, client, **json: dict):
+        """Create a new project. Accepts all keyword arguments from ProjectCreateRequest."""
 
-        kwargs.setdefault("project", project)
-        obj = schema.ProjectCreateRequest(**kwargs)
-
-        r = client.request("POST", "projects", json=jsonable_encoder(obj))
+        r = client.request("POST", "projects", json=jsonable_encoder(json))
 
         return cls(
             client=client,
