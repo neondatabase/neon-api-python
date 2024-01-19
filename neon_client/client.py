@@ -126,7 +126,7 @@ class NeonAPI:
         *,
         cursor: str | None = None,
         limit: int | None = None,
-    ):
+    ) -> t.Dict[str, t.Any]:
         """Get a list of branches."""
 
         # Construct the request path and parameters.
@@ -177,7 +177,7 @@ class NeonAPI:
         *,
         cursor: str | None = None,
         limit: int | None = None,
-    ) -> t.List[t.Dict[str, t.Any]]:
+    ) -> t.Dict[str, t.Any]:
         """Get a list of databases."""
 
         # Construct the request path and parameters.
@@ -233,13 +233,141 @@ class NeonAPI:
             "DELETE",
             f"projects/{ project_id }/branches/{ branch_id }/databases/{ database_id }",
         )
-    
-    def endpoints(self, project_id: str, branch_id: str) -> t.List[t.Dict[str, t.Any]]:
-        """Get a list of endpoints for a given branch."""
-        return self.request("GET", f"projects/{ project_id }/branches/{ branch_id }/endpoints")
-    )
 
-    def operations(self, project_id: str) -> t.List[t.Dict[str, t.Any]]:
+    def endpoints(self, project_id: str, branch_id: str) -> t.Dict[str, t.Any]:
+        """Get a list of endpoints for a given branch."""
+        return self.request(
+            "GET", f"projects/{ project_id }/branches/{ branch_id }/endpoints"
+        )
+
+    def endpoint(
+        self, project_id: str, branch_id: str, endpoint_id: str
+    ) -> t.Dict[str, t.Any]:
+        """Get an endpoint for a given branch."""
+        return self.request(
+            "GET",
+            f"projects/{ project_id }/branches/{ branch_id }/endpoints/{ endpoint_id }",
+        )
+
+    def endpoint_create(
+        self,
+        project_id: str,
+        branch_id: str,
+        **json: dict,
+    ) -> t.Dict[str, t.Any]:
+        """Create a new endpoint. Accepts all keyword arguments for json body."""
+
+        return self.request(
+            "POST",
+            f"projects/{ project_id }/branches/{ branch_id }/endpoints",
+            json=json,
+        )
+
+    def endpoint_delete(
+        self, project_id: str, branch_id: str, endpoint_id: str
+    ) -> t.Dict[str, t.Any]:
+        """Delete an endpoint by endpoint_id."""
+
+        return self.request(
+            "DELETE",
+            f"projects/{ project_id }/branches/{ branch_id }/endpoints/{ endpoint_id }",
+        )
+
+    def endpoint_update(
+        self, project_id: str, branch_id: str, endpoint_id: str, **json: dict
+    ) -> t.Dict[str, t.Any]:
+        """Update an endpoint. Accepts all keyword arguments for json body."""
+
+        return self.request(
+            "PATCH",
+            f"projects/{ project_id }/branches/{ branch_id }/endpoints/{ endpoint_id }",
+            json=json,
+        )
+
+    def endpoint_start(self, project_id: str, branch_id: str, endpoint_id: str):
+        """Start an endpoint by endpoint_id."""
+
+        return self.request(
+            "POST",
+            f"projects/{ project_id }/branches/{ branch_id }/endpoints/{ endpoint_id }/start",
+        )
+
+    def endpoint_suspend(self, project_id: str, branch_id: str, endpoint_id: str):
+        """Suspend an endpoint by endpoint_id."""
+
+        return self.request(
+            "POST",
+            f"projects/{ project_id }/branches/{ branch_id }/endpoints/{ endpoint_id }/suspend",
+        )
+
+    def roles(self, project_id: str, branch_id: str) -> t.Dict[str, t.Any]:
+        """Get a list of roles for a given branch."""
+        return self.request(
+            "GET", f"projects/{ project_id }/branches/{ branch_id }/roles"
+        )
+
+    def role(
+        self, project_id: str, branch_id: str, role_name: str
+    ) -> t.Dict[str, t.Any]:
+        """Get a role for a given branch."""
+        return self.request(
+            "GET", f"projects/{ project_id }/branches/{ branch_id }/roles/{ role_name }"
+        )
+
+    def role_create(
+        self,
+        project_id: str,
+        branch_id: str,
+        role_name: str,
+    ) -> t.Dict[str, t.Any]:
+        """Create a new role. Accepts all keyword arguments for json body."""
+
+        return self.request(
+            "POST",
+            f"projects/{ project_id }/branches/{ branch_id }/roles",
+            json={"role": {"name": role_name}},
+        )
+
+    def role_delete(
+        self,
+        project_id: str,
+        branch_id: str,
+        role_name: str,
+    ) -> t.Dict[str, t.Any]:
+        """Delete a role by given role name."""
+
+        return self.request(
+            "DELETE",
+            f"projects/{ project_id }/branches/{ branch_id }/roles/{ role_name }",
+        )
+
+    def role_password_reveal(
+        self,
+        project_id: str,
+        branch_id: str,
+        role_name: str,
+    ) -> t.Dict[str, t.Any]:
+        """Get a role password."""
+
+        return self.request(
+            "POST",
+            f"projects/{ project_id }/branches/{ branch_id }/roles/{ role_name }/reveal_password",
+        )
+
+    def role_password_reset(
+        self,
+        project_id: str,
+        branch_id: str,
+        role_name: str,
+    ) -> t.Dict[str, t.Any]:
+        """Reset a role password."""
+
+        return self.request(
+            "POST",
+            f"projects/{ project_id }/branches/{ branch_id }/roles/{ role_name }/reset_password",
+        )
+
+    def operations(self, project_id: str) -> t.Dict[str, t.Any]:
         """Get a list of operations."""
         return self.request("GET", f"projects/{ project_id }/operations")
 
