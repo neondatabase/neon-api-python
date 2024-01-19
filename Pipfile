@@ -4,11 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-openapi-python-client = "*"
-pip = "*"
-datamodel-code-generator = {extras = ["http"], version = "*"}
 requests = "*"
-fastapi = "*"
 
 [dev-packages]
 

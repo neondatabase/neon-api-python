@@ -2,13 +2,9 @@ import os
 import typing as t
 
 import requests
-from pydantic import BaseModel, ValidationError
 
-from . import schema
 from .utils import compact_mapping
 from .exceptions import NeonClientException
-
-from fastapi.encoders import jsonable_encoder
 
 
 __VERSION__ = "0.1.0"
@@ -18,7 +14,7 @@ NEON_API_BASE_URL = "https://console.neon.tech/api/v2/"
 
 
 class NeonAPI:
-    def __init__(self, api_key: str, *, base_url=None):
+    def __init__(self, api_key: str, *, base_url: str = None):
         """A Neon API client."""
 
         if not base_url:
@@ -39,8 +35,6 @@ class NeonAPI:
         self,
         method: str,
         path: str,
-        response_model: BaseModel | None = None,
-        response_is_array=False,
         **kwargs,
     ):
         """Send an HTTP request to the specified path using the specified method."""
@@ -82,13 +76,11 @@ class NeonAPI:
 
     def api_keys(self) -> t.List[t.Dict[str, t.Any]]:
         """Get a list of API keys."""
-        return self.request("GET", "api_keys", response_is_array=True)
+        return self.request("GET", "api_keys")
 
     def api_key_create(self, key_name: str):
         """Create a new API key."""
-        return self.request(
-            "POST", "api_keys", json=jsonable_encoder({"name": key_name})
-        )
+        return self.request("POST", "api_keys", json={"name": key_name})
 
     def api_key_revoke(self, api_key_id: str) -> t.Dict[str, t.Any]:
         """Revoke an API key."""
@@ -106,7 +98,7 @@ class NeonAPI:
         r_path = "projects" if not shared else "projects/shared"
         r_params = compact_mapping({"cursor": cursor, "limit": limit})
 
-        return self.request("GET", r_path, params=r_params, response_is_array=True)
+        return self.request("GET", r_path, params=r_params)
 
     def project(self, project_id: str) -> t.Dict[str, t.Any]:
         """Get a project."""
@@ -116,13 +108,12 @@ class NeonAPI:
         return self.request(
             "GET",
             r_path,
-            response_model=schema.ProjectResponse,
         )
 
     def project_create(self, **json: dict) -> t.Dict[str, t.Any]:
         """Create a new project. Accepts all keyword arguments for json body."""
 
-        return self.request("POST", "projects", json=jsonable_encoder(json))
+        return self.request("POST", "projects", json=json)
 
     def project_delete(self, project_id: str) -> t.Dict[str, t.Any]:
         """Delete a project."""
@@ -157,9 +148,7 @@ class NeonAPI:
     def branch_create(self, project_id: str, **json: dict) -> t.Dict[str, t.Any]:
         """Create a new branch. Accepts all keyword arguments for json body."""
 
-        return self.request(
-            "POST", f"projects/{ project_id }/branches", json=jsonable_encoder(json)
-        )
+        return self.request("POST", f"projects/{ project_id }/branches", json=json)
 
     def branch_delete(self, project_id: str, branch_id: str) -> t.Dict[str, t.Any]:
         """Delete a branch."""
@@ -206,7 +195,7 @@ class NeonAPI:
         return self.request(
             "POST",
             f"projects/{ project_id }/branches/{ branch_id }/databases",
-            json=jsonable_encoder(json),
+            json=json,
         )
 
     def database_update(
@@ -217,7 +206,7 @@ class NeonAPI:
         return self.request(
             "PUT",
             f"projects/{ project_id }/branches/{ branch_id }/databases/{ database_id }",
-            json=jsonable_encoder(json),
+            json=json,
         )
 
     def database_delete(
@@ -232,12 +221,10 @@ class NeonAPI:
 
     def operations(self, project_id: str) -> t.List[t.Dict[str, t.Any]]:
         """Get a list of operations."""
-
         return self.request("GET", f"projects/{ project_id }/operations")
 
     def operation(self, project_id: str, operation_id: str) -> t.Dict[str, t.Any]:
         """Get an operation."""
-
         return self.request(
             "GET", f"projects/{ project_id }/operations/{ operation_id }"
         )
