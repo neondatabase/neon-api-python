@@ -131,7 +131,7 @@ class NeonAPI:
         """
         return self.request("DELETE", f"api_keys/{ api_key_id }")
 
-    @returns_subkey("projects")
+    # @returns_subkey("projects")
     @returns_model(schema.ProjectsResponse)
     def projects(
         self,
