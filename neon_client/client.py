@@ -13,7 +13,7 @@ __VERSION__ = "0.1.0"
 
 NEON_API_KEY_ENVIRON = "NEON_API_KEY"
 NEON_API_BASE_URL = "https://console.neon.tech/api/v2/"
-ENABLE_PYDANTIC = True
+ENABLE_PYDANTIC = False
 
 
 def returns_model(model, is_array=False):
@@ -53,6 +53,7 @@ class NeonAPI:
     def __init__(self, api_key: str, *, base_url: str = None):
         """A Neon API client."""
 
+        # Set the base URL.
         if not base_url:
             base_url = NEON_API_BASE_URL
 
@@ -130,7 +131,7 @@ class NeonAPI:
         """
         return self.request("DELETE", f"api_keys/{ api_key_id }")
 
-    # @returns_subkey("projects")
+    @returns_subkey("projects")
     @returns_model(schema.ProjectsResponse)
     def projects(
         self,
@@ -448,9 +449,19 @@ class NeonAPI:
         )
 
     @returns_model(schema.OperationsResponse)
-    def operations(self, project_id: str) -> t.Dict[str, t.Any]:
+    def operations(
+        self,
+        project_id: str,
+        *,
+        cursor: str | None = None,
+        limit: int | None = None,
+    ) -> t.Dict[str, t.Any]:
         """Get a list of operations."""
-        return self.request("GET", f"projects/{ project_id }/operations")
+
+        r_params = compact_mapping({"cursor": cursor, "limit": limit})
+        return self.request(
+            "GET", f"projects/{ project_id }/operations", params=r_params
+        )
 
     @returns_model(schema.OperationResponse)
     def operation(self, project_id: str, operation_id: str) -> t.Dict[str, t.Any]:
