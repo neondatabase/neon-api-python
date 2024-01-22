@@ -716,7 +716,7 @@ class ProjectListItem(BaseModel):
     )
     region_id: str = Field(..., description="The region identifier\n")
     name: str = Field(..., description="The project name\n")
-    provisioner: Provisioner
+    provisioner: Optional[Provisioner]
     default_endpoint_settings: Optional[DefaultEndpointSettings] = None
     settings: Optional[ProjectSettingsData] = None
     pg_version: conint(ge=14, le=16) = Field(
