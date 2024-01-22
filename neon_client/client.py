@@ -2,6 +2,7 @@ import os
 import typing as t
 
 import requests
+from pydantic import ValidationError
 
 from . import schema
 from .utils import compact_mapping
@@ -12,6 +13,7 @@ __VERSION__ = "0.1.0"
 
 NEON_API_KEY_ENVIRON = "NEON_API_KEY"
 NEON_API_BASE_URL = "https://console.neon.tech/api/v2/"
+ENABLE_PYDANTIC = True
 
 
 def returns_model(model, is_array=False):
@@ -19,10 +21,28 @@ def returns_model(model, is_array=False):
 
     def decorator(func):
         def wrapper(*args, **kwargs):
+            if not ENABLE_PYDANTIC:
+                return func(*args, **kwargs)
+
             if is_array:
-                return [model.model_construct(**item) for item in func(*args, **kwargs)]
+                return [model(**item) for item in func(*args, **kwargs)]
             else:
-                return model.model_construct(**func(*args, **kwargs))
+                return model(**func(*args, **kwargs))
+
+        return wrapper
+
+    return decorator
+
+
+def returns_subkey(key):
+    """Decorator that returns a subkey."""
+
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            try:
+                return getattr(func(*args, **kwargs), key)
+            except AttributeError:
+                return func(*args, **kwargs)[key]
 
         return wrapper
 
@@ -82,7 +102,7 @@ class NeonAPI:
 
     @classmethod
     def from_environ(cls):
-        """Create a new Neon API client from the NEON_API_KEY environment variable."""
+        """Create a new Neon API client from the `NEON_API_KEY` environment variable."""
 
         return cls(os.environ[NEON_API_KEY_ENVIRON])
 
@@ -103,9 +123,14 @@ class NeonAPI:
 
     @returns_model(schema.ApiKeyRevokeResponse)
     def api_key_revoke(self, api_key_id: str) -> t.Dict[str, t.Any]:
-        """Revoke an API key."""
+        """Revoke an API key.
+
+        :param api_key_id: The ID of the API key to revoke.
+        :return: A dictionary representing the API key.
+        """
         return self.request("DELETE", f"api_keys/{ api_key_id }")
 
+    # @returns_subkey("projects")
     @returns_model(schema.ProjectsResponse)
     def projects(
         self,
