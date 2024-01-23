@@ -1,0 +1,40 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - neon-client/python version=(0.1.0)
+    method: GET
+    uri: https://console.neon.tech/api/v2/users/me
+  response:
+    body:
+      string: '{"active_seconds_limit":360000,"billing_account":{"payment_source":{"type":""},"subscription_type":"free","quota_reset_at_last":"2024-01-01T00:00:00Z","email":"me@kennethreitz.org","address_city":"","address_country":"","address_line1":"","address_line2":"","address_postal_code":"","address_state":"","orb_portal_url":"https://portal.withorb.com/view?token=Imh4aFpBa1pLNXBUV1BlY0Mi.yPns-bwJIFrQ0Bex_wunQaeVKi0"},"auth_accounts":[{"email":"me@kennethreitz.org","image":"https://avatars.githubusercontent.com/u/119893?v=4","login":"kennethreitz","name":"Kenneth
+        Reitz","provider":"github"}],"email":"me@kennethreitz.org","id":"838386f6-b5f1-4c3b-89a2-4f5a130ef3de","image":"https://avatars.githubusercontent.com/u/119893?v=4","login":"kennethreitz","name":"Kenneth
+        Reitz","last_name":"","projects_limit":1,"branches_limit":10,"max_autoscaling_limit":0.25,"plan":"free"}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '868'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 23 Jan 2024 22:17:08 GMT
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Vary:
+      - Origin
+      X-Neon-Ret-Request-Id:
+      - 5713f0995389212ecfbededa7a5da67b
+    status:
+      code: 200
+      message: OK
+version: 1

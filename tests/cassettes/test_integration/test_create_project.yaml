@@ -1,0 +1,77 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - neon-client/python version=(0.1.0)
+    method: GET
+    uri: https://console.neon.tech/api/v2/projects
+  response:
+    body:
+      string: '{"projects":[]}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '15'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 23 Jan 2024 21:49:05 GMT
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Vary:
+      - Origin
+      X-Neon-Ret-Request-Id:
+      - e8e9ff2417bc4c10a2ae697216d03779
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - neon-client/python version=(0.1.0)
+    method: POST
+    uri: https://console.neon.tech/api/v2/projects
+  response:
+    body:
+      string: '{"code":"","message":"invalid request: decode application/json: invalid:
+        project (field required)"}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '99'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 23 Jan 2024 21:49:05 GMT
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Vary:
+      - Origin
+      X-Neon-Ret-Request-Id:
+      - b5bb915e7fd45cd3d196e266edd268a2
+    status:
+      code: 400
+      message: Bad Request
+version: 1

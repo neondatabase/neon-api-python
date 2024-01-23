@@ -13,7 +13,7 @@ __VERSION__ = "0.1.0"
 
 NEON_API_KEY_ENVIRON = "NEON_API_KEY"
 NEON_API_BASE_URL = "https://console.neon.tech/api/v2/"
-ENABLE_PYDANTIC = False
+ENABLE_PYDANTIC = True
 
 
 def returns_model(model, is_array=False):
@@ -118,9 +118,9 @@ class NeonAPI:
         return self.request("GET", "api_keys")
 
     @returns_model(schema.ApiKeyCreateResponse)
-    def api_key_create(self, key_name: str) -> t.Dict[str, t.Any]:
+    def api_key_create(self, **json: dict) -> t.Dict[str, t.Any]:
         """Create a new API key."""
-        return self.request("POST", "api_keys", json={"name": key_name})
+        return self.request("POST", "api_keys", json=json)
 
     @returns_model(schema.ApiKeyRevokeResponse)
     def api_key_revoke(self, api_key_id: str) -> t.Dict[str, t.Any]:
@@ -169,6 +169,12 @@ class NeonAPI:
         """Create a new project. Accepts all keyword arguments for json body."""
 
         return self.request("POST", "projects", json=json)
+
+    @returns_model(schema.ProjectResponse)
+    def project_update(self, project_id: str, **json: dict) -> t.Dict[str, t.Any]:
+        """Updates a project. Accepts all keyword arguments for json body."""
+
+        return self.request("PATCH", f"projects/{ project_id }", json=json)
 
     @returns_model(schema.ProjectResponse)
     def project_delete(self, project_id: str) -> t.Dict[str, t.Any]:

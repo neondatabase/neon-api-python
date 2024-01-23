@@ -1,0 +1,114 @@
+interactions:
+- request:
+    body: '{"key_name": "pytest-211"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '26'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - neon-client/python version=(0.1.0)
+    method: POST
+    uri: https://console.neon.tech/api/v2/api_keys
+  response:
+    body:
+      string: '{"id":768698,"key":"v6z8swftqg5gy5m4ft79qhk4wmfminqw146fgb735cmg84iknyqg06jxit5d6iey","name":"pytest-211","created_at":"2024-01-23T22:17:08Z"}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '142'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 23 Jan 2024 22:17:08 GMT
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Vary:
+      - Origin
+      X-Neon-Ret-Request-Id:
+      - e1c23f388eb0cfbdac073b1def25c27c
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - neon-client/python version=(0.1.0)
+    method: GET
+    uri: https://console.neon.tech/api/v2/api_keys
+  response:
+    body:
+      string: '[{"id":768698,"name":"pytest-211","created_at":"2024-01-23T22:17:08Z","last_used_at":null,"last_used_from_addr":""},{"id":768657,"name":"pytest-330","created_at":"2024-01-23T22:04:59Z","last_used_at":null,"last_used_from_addr":""},{"id":768620,"name":"neon_client","created_at":"2024-01-23T21:56:07Z","last_used_at":"2024-01-23T22:17:08Z","last_used_from_addr":"204.111.161.156"}]'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '380'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 23 Jan 2024 22:17:08 GMT
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Vary:
+      - Origin
+      X-Neon-Ret-Request-Id:
+      - a01651498a31e4c084ebb995e8e5cc96
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - neon-client/python version=(0.1.0)
+    method: DELETE
+    uri: https://console.neon.tech/api/v2/api_keys/768698
+  response:
+    body:
+      string: '{"id":768698,"name":"pytest-211","revoked":true,"last_used_at":null,"last_used_from_addr":""}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '93'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 23 Jan 2024 22:17:08 GMT
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Vary:
+      - Origin
+      X-Neon-Ret-Request-Id:
+      - 6b2ed486535a6cfb467e8b9fbc8a6373
+    status:
+      code: 200
+      message: OK
+version: 1
