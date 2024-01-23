@@ -10,7 +10,3 @@ neon-client = {file = ".", editable = true}
 pytest = "*"
 pytest-recording = "*"
 pytest-ordering = "*"
-
-
-[requires]
-python_version = "3.12"
