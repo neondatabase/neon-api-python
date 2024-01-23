@@ -1,4 +1,7 @@
 test:
+	pytest --record-mode=none tests/
+
+test-build:
 	pytest --record-mode=rewrite tests/
 
 gen-model: fetch-v2-schema

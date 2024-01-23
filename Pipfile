@@ -4,12 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-requests = "*"
-pytest = "*"
 
 [dev-packages]
 neon-client = {file = ".", editable = true}
+pytest = "*"
 pytest-recording = "*"
+pytest-ordering = "*"
+
 
 [requires]
 python_version = "3.12"
