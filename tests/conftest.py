@@ -11,20 +11,17 @@ def neon():
 
 
 @pytest.fixture
-def ensure_project(find_existing=True, *, neon):
-    def new_project():
-        # Return main project if it exists.
-        if neon.projects().projects:
-            return neon.projects().projects[0]
+def random_name(*, neon):
+    def random_name():
+        return f"pytest-{randint(0, 10000)}"
 
-        return neon.project_create(project={"name": f"pytest-{randint(0, 1000)}"})
-
-    return new_project
+    return random_name
 
 
 @pytest.fixture
-def ensure_new_api_key(*, neon):
-    def new_api_key():
-        return neon.api_key_create(key_name=f"pytest-{randint(0, 1000)}")
+def ensure_no_projects(*, neon):
+    def no_projects():
+        for project in neon.projects().projects:
+            neon.project_delete(project.id)
 
-    return new_api_key
+    return no_projects

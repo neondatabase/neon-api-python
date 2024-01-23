@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"key_name": "pytest-211"}'
+    body: '{"key_name": "pytest-5482"}'
     headers:
       Accept:
       - application/json
@@ -9,7 +9,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '26'
+      - '27'
       Content-Type:
       - application/json
       User-Agent:
@@ -18,22 +18,22 @@ interactions:
     uri: https://console.neon.tech/api/v2/api_keys
   response:
     body:
-      string: '{"id":768698,"key":"v6z8swftqg5gy5m4ft79qhk4wmfminqw146fgb735cmg84iknyqg06jxit5d6iey","name":"pytest-211","created_at":"2024-01-23T22:17:08Z"}'
+      string: '{"id":768745,"key":"8b9ezkgcm46nk5fgdg84b31tw2smoojxcakymrvq46x4i0fis7puto9ad81o7d4c","name":"pytest-5482","created_at":"2024-01-23T22:34:47Z"}'
     headers:
       Connection:
       - keep-alive
       Content-Length:
-      - '142'
+      - '143'
       Content-Type:
       - application/json
       Date:
-      - Tue, 23 Jan 2024 22:17:08 GMT
+      - Tue, 23 Jan 2024 22:34:47 GMT
       Strict-Transport-Security:
       - max-age=15724800; includeSubDomains
       Vary:
       - Origin
       X-Neon-Ret-Request-Id:
-      - e1c23f388eb0cfbdac073b1def25c27c
+      - 534aa267d9215c4a9906eb1ecdecfbf1
     status:
       code: 200
       message: OK
@@ -54,22 +54,22 @@ interactions:
     uri: https://console.neon.tech/api/v2/api_keys
   response:
     body:
-      string: '[{"id":768698,"name":"pytest-211","created_at":"2024-01-23T22:17:08Z","last_used_at":null,"last_used_from_addr":""},{"id":768657,"name":"pytest-330","created_at":"2024-01-23T22:04:59Z","last_used_at":null,"last_used_from_addr":""},{"id":768620,"name":"neon_client","created_at":"2024-01-23T21:56:07Z","last_used_at":"2024-01-23T22:17:08Z","last_used_from_addr":"204.111.161.156"}]'
+      string: '[{"id":768745,"name":"pytest-5482","created_at":"2024-01-23T22:34:47Z","last_used_at":null,"last_used_from_addr":""},{"id":768657,"name":"pytest-330","created_at":"2024-01-23T22:04:59Z","last_used_at":null,"last_used_from_addr":""},{"id":768620,"name":"neon_client","created_at":"2024-01-23T21:56:07Z","last_used_at":"2024-01-23T22:34:47Z","last_used_from_addr":"204.111.161.156"}]'
     headers:
       Connection:
       - keep-alive
       Content-Length:
-      - '380'
+      - '381'
       Content-Type:
       - application/json
       Date:
-      - Tue, 23 Jan 2024 22:17:08 GMT
+      - Tue, 23 Jan 2024 22:34:47 GMT
       Strict-Transport-Security:
       - max-age=15724800; includeSubDomains
       Vary:
       - Origin
       X-Neon-Ret-Request-Id:
-      - a01651498a31e4c084ebb995e8e5cc96
+      - b1d947c8facb4874741524eb128f8839
     status:
       code: 200
       message: OK
@@ -89,25 +89,25 @@ interactions:
       User-Agent:
       - neon-client/python version=(0.1.0)
     method: DELETE
-    uri: https://console.neon.tech/api/v2/api_keys/768698
+    uri: https://console.neon.tech/api/v2/api_keys/768745
   response:
     body:
-      string: '{"id":768698,"name":"pytest-211","revoked":true,"last_used_at":null,"last_used_from_addr":""}'
+      string: '{"id":768745,"name":"pytest-5482","revoked":true,"last_used_at":null,"last_used_from_addr":""}'
     headers:
       Connection:
       - keep-alive
       Content-Length:
-      - '93'
+      - '94'
       Content-Type:
       - application/json
       Date:
-      - Tue, 23 Jan 2024 22:17:08 GMT
+      - Tue, 23 Jan 2024 22:34:47 GMT
       Strict-Transport-Security:
       - max-age=15724800; includeSubDomains
       Vary:
       - Origin
       X-Neon-Ret-Request-Id:
-      - 6b2ed486535a6cfb467e8b9fbc8a6373
+      - 865a6f80f3ce504a56c9f422ec7ecae9
     status:
       code: 200
       message: OK

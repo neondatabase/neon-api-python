@@ -16,27 +16,27 @@ interactions:
     uri: https://console.neon.tech/api/v2/projects
   response:
     body:
-      string: '{"projects":[]}'
+      string: '{"projects":[{"id":"yellow-bar-04969948","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-852","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0,"autoscaling_limit_max_cu":0,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"primary_branch_only":false},"enable_logical_replication":false},"pg_version":15,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":3072,"branch_logical_size_limit_bytes":3221225472,"store_passwords":true,"active_time":0,"cpu_used_sec":0,"creation_source":"console","created_at":"2024-01-23T22:24:44Z","updated_at":"2024-01-23T22:24:50Z","synthetic_storage_size":0,"quota_reset_at":"2024-02-01T00:00:00Z","owner_id":"838386f6-b5f1-4c3b-89a2-4f5a130ef3de"}],"pagination":{"cursor":"yellow-bar-04969948"}}'
     headers:
       Connection:
       - keep-alive
       Content-Length:
-      - '15'
+      - '798'
       Content-Type:
       - application/json
       Date:
-      - Tue, 23 Jan 2024 21:49:05 GMT
+      - Tue, 23 Jan 2024 22:26:03 GMT
       Strict-Transport-Security:
       - max-age=15724800; includeSubDomains
       Vary:
       - Origin
       X-Neon-Ret-Request-Id:
-      - e8e9ff2417bc4c10a2ae697216d03779
+      - 7f400c82ef94c07c9e1270607f54873c
     status:
       code: 200
       message: OK
 - request:
-    body: '{}'
+    body: null
     headers:
       Accept:
       - application/json
@@ -45,7 +45,45 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '2'
+      - '0'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - neon-client/python version=(0.1.0)
+    method: DELETE
+    uri: https://console.neon.tech/api/v2/projects/yellow-bar-04969948
+  response:
+    body:
+      string: '{"project":{"data_storage_bytes_hour":0,"data_transfer_bytes":0,"written_data_bytes":0,"compute_time_seconds":0,"active_time_seconds":0,"cpu_used_sec":0,"id":"yellow-bar-04969948","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-852","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"ips":[],"primary_branch_only":false},"enable_logical_replication":false},"pg_version":15,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":3072,"branch_logical_size_limit_bytes":3221225472,"store_passwords":true,"creation_source":"console","history_retention_seconds":604800,"created_at":"2024-01-23T22:24:44Z","updated_at":"2024-01-23T22:24:50Z","synthetic_storage_size":0,"consumption_period_start":"0001-01-01T00:00:00Z","consumption_period_end":"0001-01-01T00:00:00Z","owner_id":"838386f6-b5f1-4c3b-89a2-4f5a130ef3de"}}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '965'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 23 Jan 2024 22:26:03 GMT
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Vary:
+      - Origin
+      X-Neon-Ret-Request-Id:
+      - db7bf26ea50193f792ad222fb26e33f8
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"project": {"name": "pytest-148"}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '35'
       Content-Type:
       - application/json
       User-Agent:
@@ -54,24 +92,61 @@ interactions:
     uri: https://console.neon.tech/api/v2/projects
   response:
     body:
-      string: '{"code":"","message":"invalid request: decode application/json: invalid:
-        project (field required)"}'
+      string: '{"project":{"data_storage_bytes_hour":0,"data_transfer_bytes":0,"written_data_bytes":0,"compute_time_seconds":0,"active_time_seconds":0,"cpu_used_sec":0,"id":"cold-bonus-61650555","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-148","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"ips":[],"primary_branch_only":false},"enable_logical_replication":false},"pg_version":15,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":3072,"branch_logical_size_limit_bytes":3221225472,"store_passwords":true,"creation_source":"console","history_retention_seconds":604800,"created_at":"2024-01-23T22:26:03Z","updated_at":"2024-01-23T22:26:03Z","consumption_period_start":"0001-01-01T00:00:00Z","consumption_period_end":"0001-01-01T00:00:00Z","owner_id":"838386f6-b5f1-4c3b-89a2-4f5a130ef3de"},"connection_uris":[{"connection_uri":"postgres://kennethreitz:Ke98dQHnJOcA@ep-delicate-glitter-a53ow19g.us-east-2.aws.neon.tech/neondb","connection_parameters":{"database":"neondb","password":"Ke98dQHnJOcA","role":"kennethreitz","host":"ep-delicate-glitter-a53ow19g.us-east-2.aws.neon.tech","pooler_host":"ep-delicate-glitter-a53ow19g-pooler.us-east-2.aws.neon.tech"}}],"roles":[{"branch_id":"br-raspy-sound-a54diuwm","name":"kennethreitz","password":"Ke98dQHnJOcA","protected":false,"created_at":"2024-01-23T22:26:03Z","updated_at":"2024-01-23T22:26:03Z"}],"databases":[{"id":32625886,"branch_id":"br-raspy-sound-a54diuwm","name":"neondb","owner_name":"kennethreitz","created_at":"2024-01-23T22:26:03Z","updated_at":"2024-01-23T22:26:03Z"}],"operations":[{"id":"7fda088f-8f28-41c2-9700-085b6d8e5378","project_id":"cold-bonus-61650555","branch_id":"br-raspy-sound-a54diuwm","action":"create_timeline","status":"running","failures_count":0,"created_at":"2024-01-23T22:26:03Z","updated_at":"2024-01-23T22:26:03Z","total_duration_ms":0},{"id":"c8e18275-6549-4dae-bac6-64ffa5589e9b","project_id":"cold-bonus-61650555","branch_id":"br-raspy-sound-a54diuwm","endpoint_id":"ep-delicate-glitter-a53ow19g","action":"start_compute","status":"scheduling","failures_count":0,"created_at":"2024-01-23T22:26:03Z","updated_at":"2024-01-23T22:26:03Z","total_duration_ms":0}],"branch":{"id":"br-raspy-sound-a54diuwm","project_id":"cold-bonus-61650555","name":"main","current_state":"init","pending_state":"ready","creation_source":"console","primary":true,"cpu_used_sec":0,"compute_time_seconds":0,"active_time_seconds":0,"written_data_bytes":0,"data_transfer_bytes":0,"created_at":"2024-01-23T22:26:03Z","updated_at":"2024-01-23T22:26:03Z"},"endpoints":[{"host":"ep-delicate-glitter-a53ow19g.us-east-2.aws.neon.tech","id":"ep-delicate-glitter-a53ow19g","project_id":"cold-bonus-61650555","branch_id":"br-raspy-sound-a54diuwm","autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"region_id":"aws-us-east-2","type":"read_write","current_state":"init","pending_state":"active","settings":{},"pooler_enabled":false,"pooler_mode":"transaction","disabled":false,"passwordless_access":true,"creation_source":"console","created_at":"2024-01-23T22:26:03Z","updated_at":"2024-01-23T22:26:03Z","proxy_host":"us-east-2.aws.neon.tech","suspend_timeout_seconds":0,"provisioner":"k8s-neonvm"}]}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 23 Jan 2024 22:26:03 GMT
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Neon-Ret-Request-Id:
+      - dee16f249e57ca07d14194d02e29e051
+    status:
+      code: 201
+      message: Created
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - neon-client/python version=(0.1.0)
+    method: DELETE
+    uri: https://console.neon.tech/api/v2/projects/cold-bonus-61650555
+  response:
+    body:
+      string: '{"project":{"data_storage_bytes_hour":0,"data_transfer_bytes":0,"written_data_bytes":0,"compute_time_seconds":0,"active_time_seconds":0,"cpu_used_sec":0,"id":"cold-bonus-61650555","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-148","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"ips":[],"primary_branch_only":false},"enable_logical_replication":false},"pg_version":15,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":3072,"branch_logical_size_limit_bytes":3221225472,"store_passwords":true,"creation_source":"console","history_retention_seconds":604800,"created_at":"2024-01-23T22:26:03Z","updated_at":"2024-01-23T22:26:03Z","synthetic_storage_size":0,"consumption_period_start":"0001-01-01T00:00:00Z","consumption_period_end":"0001-01-01T00:00:00Z","owner_id":"838386f6-b5f1-4c3b-89a2-4f5a130ef3de"}}'
     headers:
       Connection:
       - keep-alive
       Content-Length:
-      - '99'
+      - '965'
       Content-Type:
       - application/json
       Date:
-      - Tue, 23 Jan 2024 21:49:05 GMT
+      - Tue, 23 Jan 2024 22:26:03 GMT
       Strict-Transport-Security:
       - max-age=15724800; includeSubDomains
       Vary:
       - Origin
       X-Neon-Ret-Request-Id:
-      - b5bb915e7fd45cd3d196e266edd268a2
+      - 1cbe267907ecfafe2d806b68efe399d5
     status:
-      code: 400
-      message: Bad Request
+      code: 200
+      message: OK
 version: 1
