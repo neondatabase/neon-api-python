@@ -11,7 +11,7 @@
 
 ## Endpoints
 - [x] continue refactoring names of models in schema.py to remove `Model1` pattern.
-- [ ] add support for roles, endpoints, compute, etc. 
+- [x] add support for roles, endpoints, compute, etc.
 - [ ] saved queries? proceed without for now. 
 
 ## General

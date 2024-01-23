@@ -9,6 +9,7 @@ pytest = "*"
 
 [dev-packages]
 neon-client = {file = ".", editable = true}
+pytest-recording = "*"
 
 [requires]
 python_version = "3.12"
