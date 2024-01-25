@@ -13,7 +13,7 @@ Methods of `NeonClient`:
 
 - `me()`: Returns the current user.
 - `api_keys()`: Returns a list of API keys.
-- `api_key_create(key_name)`: Creates an API key.
+- `api_key_create(**json)`: Creates an API key.
 - `api_key_delete(key_id)`: Deletes a given API key.
 - `projects()`: Returns a list of projects.
 - `project(project_id)`: Returns a specific project.
