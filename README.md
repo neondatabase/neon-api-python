@@ -1,6 +1,9 @@
 # `neon_client`: an api wrapper for [neon.tech v2 api](https://api-docs.neon.tech/reference/getting-started-with-neon-api)
 
-This Python wrapper would allow developers to interact with the Neon API with ease. Instead of directly making HTTP requests and handling responses, developers can use this wrapper to call simple functions that return Python objects. 
+`neon_client` is a Python wrapper designed to simplify interactions with the [Neon v2 REST API](https://api-docs.neon.tech/reference/getting-started-with-neon-api). It provides a convenient way for developers to integrate their Python applications with the Neon platform, offering methods to manage API keys, projects, branches, databases, endpoints, roles, and operations programmatically. 
+
+With `neon_client`, you can automate tasks, streamline workflows, and build powerful integrations with ease.
+
 
 ```python
 from neon_client import NeonAPI
