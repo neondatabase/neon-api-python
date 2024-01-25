@@ -1,6 +1,9 @@
 test:
 	pytest --record-mode=none tests/
 
+ci: 
+	pytest --cov=neon_client --record-mode=none tests/
+
 test-build:
 	pytest --record-mode=rewrite tests/
 

@@ -22,6 +22,6 @@ jobs:
         run: pipenv install --dev && pip install pytest
       # You can test your matrix by printing the current Python version
       - name: Run the tests with pytest
-        run: pipenv run make test
+        run: pipenv run make ci
         env:
           NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
