@@ -155,6 +155,7 @@ def test_endpoints(neon, ensure_no_projects, random_name):
     project = neon.project_create(project={"name": random_name()}).project
     assert project.id
 
+
     # List endpoints.
     endpoints = neon.endpoints(project.id).endpoints
     assert len(endpoints)
