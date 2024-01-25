@@ -19,7 +19,7 @@ jobs:
       - name: Install pipenv
         run: pip install pipenv
       - name: Install dependencies
-        run: pipenv install --dev --deploy --ignore-pipfile
+        run: pipenv install --dev
       # You can test your matrix by printing the current Python version
       - name: Run the tests with pytest
         run: make test
