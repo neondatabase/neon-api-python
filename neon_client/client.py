@@ -2,7 +2,6 @@ import os
 import typing as t
 
 import requests
-from pydantic import ValidationError
 
 from . import schema
 from .utils import compact_mapping
