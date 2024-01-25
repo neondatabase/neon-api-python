@@ -309,76 +309,65 @@ class NeonAPI:
         )
 
     @returns_model(schema.EndpointsResponse)
-    def endpoints(self, project_id: str, branch_id: str) -> t.Dict[str, t.Any]:
+    def endpoints(self, project_id: str) -> t.Dict[str, t.Any]:
         """Get a list of endpoints for a given branch."""
-        return self.request(
-            "GET", f"projects/{ project_id }/branches/{ branch_id }/endpoints"
-        )
+        return self.request("GET", f"projects/{ project_id }/endpoints")
 
     @returns_model(schema.EndpointResponse)
-    def endpoint(
-        self, project_id: str, branch_id: str, endpoint_id: str
-    ) -> t.Dict[str, t.Any]:
+    def endpoint(self, project_id: str, endpoint_id: str) -> t.Dict[str, t.Any]:
         """Get an endpoint for a given branch."""
         return self.request(
             "GET",
-            f"projects/{ project_id }/branches/{ branch_id }/endpoints/{ endpoint_id }",
+            f"projects/{ project_id }/endpoints/{ endpoint_id }",
         )
 
     @returns_model(schema.EndpointOperations)
     def endpoint_create(
         self,
         project_id: str,
-        branch_id: str,
         **json: dict,
     ) -> t.Dict[str, t.Any]:
         """Create a new endpoint. Accepts all keyword arguments for json body."""
 
-        return self.request(
-            "POST",
-            f"projects/{ project_id }/branches/{ branch_id }/endpoints",
-            json=json,
-        )
+        return self.request("POST", f"projects/{ project_id }/endpoints", json=json)
 
     @returns_model(schema.EndpointOperations)
-    def endpoint_delete(
-        self, project_id: str, branch_id: str, endpoint_id: str
-    ) -> t.Dict[str, t.Any]:
+    def endpoint_delete(self, project_id: str, endpoint_id: str) -> t.Dict[str, t.Any]:
         """Delete an endpoint by endpoint_id."""
 
         return self.request(
             "DELETE",
-            f"projects/{ project_id }/branches/{ branch_id }/endpoints/{ endpoint_id }",
+            f"projects/{ project_id }/endpoints/{ endpoint_id }",
         )
 
     @returns_model(schema.EndpointOperations)
     def endpoint_update(
-        self, project_id: str, branch_id: str, endpoint_id: str, **json: dict
+        self, project_id: str, endpoint_id: str, **json: dict
     ) -> t.Dict[str, t.Any]:
         """Update an endpoint. Accepts all keyword arguments for json body."""
 
         return self.request(
             "PATCH",
-            f"projects/{ project_id }/branches/{ branch_id }/endpoints/{ endpoint_id }",
+            f"projects/{ project_id }/endpoints/{ endpoint_id }",
             json=json,
         )
 
     @returns_model(schema.EndpointOperations)
-    def endpoint_start(self, project_id: str, branch_id: str, endpoint_id: str):
+    def endpoint_start(self, project_id: str, endpoint_id: str):
         """Start an endpoint by endpoint_id."""
 
         return self.request(
             "POST",
-            f"projects/{ project_id }/branches/{ branch_id }/endpoints/{ endpoint_id }/start",
+            f"projects/{ project_id }/endpoints/{ endpoint_id }/start",
         )
 
     @returns_model(schema.EndpointOperations)
-    def endpoint_suspend(self, project_id: str, branch_id: str, endpoint_id: str):
+    def endpoint_suspend(self, project_id: str, endpoint_id: str):
         """Suspend an endpoint by endpoint_id."""
 
         return self.request(
             "POST",
-            f"projects/{ project_id }/branches/{ branch_id }/endpoints/{ endpoint_id }/suspend",
+            f"projects/{ project_id }/endpoints/{ endpoint_id }/suspend",
         )
 
     @returns_model(schema.RolesResponse)

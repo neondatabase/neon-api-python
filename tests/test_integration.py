@@ -133,6 +133,7 @@ def test_operations(neon, ensure_no_projects, random_name):
     project = neon.project_create(project={"name": random_name()}).project
     assert project.id
 
+    # Find the associated branch.
     branch = neon.branches(project.id).branches[0]
 
     # List operations.
@@ -143,3 +144,44 @@ def test_operations(neon, ensure_no_projects, random_name):
     operation = operations[0]
     operation = neon.operation(project.id, operation.id).operation
     assert operation.id
+
+
+@pytest.mark.vcr
+def test_endpoints(neon, ensure_no_projects, random_name):
+    # Ensure there are no projects.
+    ensure_no_projects()
+
+    # Create a project.
+    project = neon.project_create(project={"name": random_name()}).project
+    assert project.id
+
+    # List endpoints.
+    endpoints = neon.endpoints(project.id).endpoints
+    assert len(endpoints)
+
+    # Get the endpoint.
+    endpoint = endpoints[0]
+    endpoint = neon.endpoint(project.id, endpoint.id).endpoint
+    assert endpoint.id
+
+
+@pytest.mark.vcr
+def test_roles(neon, ensure_no_projects, random_name):
+    # Ensure there are no projects.
+    ensure_no_projects()
+
+    # Create a project.
+    project = neon.project_create(project={"name": random_name()}).project
+    assert project.id
+
+    # Find the associated branch.
+    branch = neon.branches(project.id).branches[0]
+
+    # List roles.
+    roles = neon.roles(project.id, branch.id).roles
+    assert len(roles)
+
+    # Get the role.
+    role = roles[0]
+    role = neon.role(project.id, branch.id, role.name).role
+    assert role.name
