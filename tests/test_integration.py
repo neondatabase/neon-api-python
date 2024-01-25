@@ -46,8 +46,12 @@ def test_project(neon, ensure_no_projects, random_name):
     # Ensure that the names are different.
     assert project1.name != project2.name
 
-    # Ensure that the IDs are present.
+    # Test Projects, ensure each project has an id.
     for project in neon.projects().projects:
+        assert hasattr(project, "id")
+
+    # Test Shared Projects, ensure each project has an id.
+    for project in neon.projects(shared=True).projects:
         assert hasattr(project, "id")
 
     # Delete the project.
@@ -154,7 +158,6 @@ def test_endpoints(neon, ensure_no_projects, random_name):
     # Create a project.
     project = neon.project_create(project={"name": random_name()}).project
     assert project.id
-
 
     # List endpoints.
     endpoints = neon.endpoints(project.id).endpoints

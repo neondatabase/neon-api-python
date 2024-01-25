@@ -10,3 +10,4 @@ neon-client = {file = ".", editable = true}
 pytest = "*"
 pytest-recording = "*"
 pytest-ordering = "*"
+ruff = "*"
