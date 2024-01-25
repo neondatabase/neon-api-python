@@ -17,8 +17,8 @@ Methods of `NeonClient`:
 - `api_key_delete(key_id)`: Deletes a given API key.
 - `projects()`: Returns a list of projects.
 - `project(project_id)`: Returns a specific project.
-- `project_create(project_id, json)`: Creates a new project. 
-- `project_update(project_id, json)`: Updates a given project.
+- `project_create(project_id, **json)`: Creates a new project. 
+- `project_update(project_id, **json)`: Updates a given project.
 - `project_delete(project_id)`: Deletes a given project.
 - `branches(project_id)`: Returns a list of branches for a given project.
 - `branch(project_id, branch_id)`: Returns a specific branch.
