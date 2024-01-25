@@ -17,5 +17,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       # You can test your matrix by printing the current Python version
-      - name: Display Python version
-        run: python -c "import sys; print(sys.version)"
+      - name: Run the tests with pytest
+        run: make test
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
