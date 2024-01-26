@@ -96,7 +96,7 @@ class NeonAPI:
         return r.json()
 
     def url_join(self, *args):
-        """Join multiple URL path components."""
+        """Join a list of URL components into a single URL."""
 
         return "/".join(args)
 
@@ -156,12 +156,9 @@ class NeonAPI:
     def project(self, project_id: str) -> t.Dict[str, t.Any]:
         """Get a project."""
 
-        r_path = self.url_join("projects", project_id)
+        r_path = f"projects/{project_id}"
 
-        return self.request(
-            "GET",
-            r_path,
-        )
+        return self.request("GET", r_path)
 
     @returns_model(schema.ProjectResponse)
     def project_create(self, **json: dict) -> t.Dict[str, t.Any]:
