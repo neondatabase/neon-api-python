@@ -12,7 +12,7 @@ from neon_client import NeonAPI
 client = NeonApi(api_key='your_api_key')
 ```
 
-Methods of `NeonClient`:
+Methods of the `NeonAPI` class:
 
 - `me()`: Returns the current user.
 - `api_keys()`: Returns a list of API keys.
