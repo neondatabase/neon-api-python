@@ -17,7 +17,7 @@ Remember that you should never expose your api_key and handle it carefully since
 
 -------
 
-Methods of the `NeonAPI` class:
+### Methods of the `NeonAPI` class:
 
 - `me()`: Returns the current user.
 
