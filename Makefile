@@ -4,7 +4,7 @@ test:
 fmt:
 	ruff format .
 ci: 
-	pytest --cov=neon_client --record-mode=none tests/
+	pytest --record-mode=none tests/
 
 record:
 	pytest --record-mode=rewrite tests/
