@@ -4,6 +4,7 @@
 
 With `neon_client`, you can automate tasks, streamline workflows, and build powerful integrations with ease.
 
+## Usage
 
 ```python
 from neon_client import NeonAPI
