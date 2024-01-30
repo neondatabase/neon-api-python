@@ -13,7 +13,7 @@ from setuptools import find_packages, setup, Command
 
 # Package meta-data.
 NAME = "neon-client"
-DESCRIPTION = "An API Client for Neon's Rest API."
+DESCRIPTION = "An API Client for the Neon API."
 URL = "https://github.com/kennethreitz/neon-client"
 EMAIL = "me@kennethreitz.org"
 AUTHOR = "Kenneth Reitz"
