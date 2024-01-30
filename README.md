@@ -4,6 +4,16 @@
 
 With `neon_client`, you can automate tasks, streamline workflows, and build powerful integrations with ease.
 
+
+## Installation
+
+```bash
+$ pip install neon-client
+```
+
+**Please Note**: this repository is a work in progress.  The package is not yet available on PyPi.  The above command will not work.
+
+
 ## Usage
 
 ```python
@@ -78,14 +88,6 @@ Remember that you should never expose your api_key and handle it carefully since
 
 View the [Neon API documentation](https://api-docs.neon.tech/reference/getting-started-with-neon-api) for more information on the available endpoints and their parameters.
 
-
-## Installation
-
-```bash
-$ pip install neon-client
-```
-
-**Please Note**: this repository is a work in progress.  The package is not yet available on PyPi.  The above command will not work.
 
 ## Development
 
