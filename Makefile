@@ -14,6 +14,7 @@ gen-model: fetch-v2-schema
 	--input v2.json \
 	--collapse-root-models \
 	--output neon_client/schema.py \
+	--additional-imports datetime.datetime,pydantic.dataclasses.dataclass \
 	--use-standard-collections \
 	--output-model-type dataclasses.dataclass \
 	# --input-file-type openapi \
