@@ -9,7 +9,7 @@ With `neon_client`, you can automate tasks, streamline workflows, and build powe
 from neon_client import NeonAPI
 
 # Initialize the client.
-neon = NeonApi(api_key='your_api_key')
+neon = NeonAPI(api_key='your_api_key')
 ```
 
 Methods of the `NeonAPI` class:
