@@ -898,8 +898,7 @@
                 "summary": "Return project's permissions",
                 "description": "Return project's permissions",
                 "tags": [
-                    "Project",
-                    "Permissions"
+                    "Project"
                 ],
                 "operationId": "listProjectPermissions",
                 "responses": {
@@ -922,8 +921,7 @@
                 "summary": "Grant project permission to the user",
                 "description": "Grant project permission to the user",
                 "tags": [
-                    "Project",
-                    "Permissions"
+                    "Project"
                 ],
                 "operationId": "grantPermissionToProject",
                 "requestBody": {
@@ -976,8 +974,7 @@
                 "summary": "Revoke permission from the user",
                 "description": "Revoke permission from the user",
                 "tags": [
-                    "Project",
-                    "Permissions"
+                    "Project"
                 ],
                 "operationId": "revokePermissionFromProject",
                 "responses": {
@@ -5028,7 +5025,10 @@
                     "free",
                     "pro",
                     "direct_sales",
-                    "aws_marketplace"
+                    "aws_marketplace",
+                    "free_v2",
+                    "launch",
+                    "scale"
                 ]
             },
             "Database": {
@@ -5401,13 +5401,6 @@
                     }
                 }
             },
-            "SubscriptionDowngradeNewType": {
-                "type": "string",
-                "enum": [
-                    "free",
-                    "free_v2"
-                ]
-            },
             "GeneralError": {
                 "type": "object",
                 "description": "General Error",
@@ -5475,13 +5468,6 @@
                     "normal",
                     "high",
                     "critical"
-                ]
-            },
-            "SubscriptionUpgradeNewType": {
-                "type": "string",
-                "enum": [
-                    "launch",
-                    "scale"
                 ]
             }
         }

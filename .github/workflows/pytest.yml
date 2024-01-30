@@ -16,12 +16,10 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install pipenv
-        run: pip install pipenv
       - name: Install dependencies
-        run: pipenv install --dev && pip install pytest
+        run: pip install -r requirements.txt
       # You can test your matrix by printing the current Python version
       - name: Run the tests with pytest
-        run: pipenv run make ci
+        run: make ci
         env:
           NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
