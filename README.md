@@ -13,6 +13,10 @@ from neon_client import NeonAPI
 neon = NeonAPI(api_key='your_api_key')
 ```
 
+Remember that you should never expose your api_key and handle it carefully since it gives access to sensitive data. It's better to set it as an environment variable (e.g. `NEON_API_KEY` + accompanying `neon_client.from_environ()`).
+
+-------
+
 Methods of the `NeonAPI` class:
 
 - `me()`: Returns the current user.
@@ -74,7 +78,6 @@ Methods of the `NeonAPI` class:
 
 View the [Neon API documentation](https://api-docs.neon.tech/reference/getting-started-with-neon-api) for more information on the available endpoints and their parameters.
 
-Remember that you should never expose your api_key and handle it carefully since it gives access to sensitive data. It's better to set it as an environment variable (e.g. `NEON_API_KEY` + accompanying `neon_client.from_environ()`).
 
 ## Installation
 
