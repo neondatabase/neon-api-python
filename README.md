@@ -1,6 +1,6 @@
 # `neon_client`: an api wrapper for the [Neon API](https://api-docs.neon.tech/reference/getting-started-with-neon-api).
 
-`neon_client` is a Python wrapper designed to simplify interactions with the [Neon API](https://api-docs.neon.tech/reference/getting-started-with-neon-api). It provides a convenient way for developers to integrate their Python applications with the Neon platform, offering methods to manage API keys, projects, branches, databases, endpoints, roles, and operations programmatically. 
+`neon_client` is a Python wrapper designed to simplify interactions with the [Neon API](https://api-docs.neon.tech/reference/getting-started-with-neon-api). It provides a convenient way for developers to integrate their Python applications with the Neon platform, offering methods to manage API keys, projects, branches, databases, endpoints, roles, and operations programmatically.
 
 With `neon_client`, you can automate tasks, streamline workflows, and build powerful integrations with ease.
 
@@ -9,7 +9,7 @@ With `neon_client`, you can automate tasks, streamline workflows, and build powe
 from neon_client import NeonAPI
 
 # Initialize the client.
-client = NeonApi(api_key='your_api_key')
+neon = NeonApi(api_key='your_api_key')
 ```
 
 Methods of the `NeonAPI` class:
@@ -63,9 +63,9 @@ $ pip install neon-client
 ## Usage
 
 ```python
->>> from neon_client import NeonClient
+>>> from neon_client import NeonAPI
 
->>> neon = NeonClient(api_key='your_api_key')
+>>> neon = NeonAPI(api_key='your_api_key')
 
 # List all the API keys.
 >>> api_keys = neon.api_keys()
@@ -94,7 +94,27 @@ $ pip install neon-client
 
 ## Development
 
-[to be written]
+Installation is simple with `pipenv`. Just run the following command in the root directory of the repository:
+
+```bash
+$ pipenv install --dev
+```
+
+This will install all the necessary dependencies for development.
+
+To run the tests, use the following command:
+
+```bash
+$ make test
+```
+
+The tests don't require an internet connection, as they are mocked using the `pytest-vcr` library. To record new cassettes, use the following command:
+
+```bash
+$ make record
+```
+
+This will record new cassettes for the tests. Make sure to commit these cassettes along with your changes.
 
 ## License & Copyright
 
