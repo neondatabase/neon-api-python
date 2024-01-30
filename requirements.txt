@@ -1,0 +1,8 @@
+-e .
+datamodel-code-generator
+pytest
+pytest-cov
+pytest-ordering
+pytest-recording
+ruff
+sphinx
