@@ -6,7 +6,7 @@ fmt:
 ci: 
 	pytest --cov=neon_client --record-mode=none tests/
 
-test-build:
+record:
 	pytest --record-mode=rewrite tests/
 
 gen-model: fetch-v2-schema
