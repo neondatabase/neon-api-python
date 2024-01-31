@@ -481,6 +481,7 @@ class NeonAPI:
             "GET", f"projects/{ project_id }/operations/{ operation_id }"
         )
 
+    @returns_model(schema.ProjectsConsumptionResponse)
     def consumption(
         self,
         *,

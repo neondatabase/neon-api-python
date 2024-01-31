@@ -13,8 +13,8 @@ from pydantic.dataclasses import dataclass
 
 
 class Provisioner(Enum):
-    k8s_pod = 'k8s-pod'
-    k8s_neonvm = 'k8s-neonvm'
+    k8s_pod = "k8s-pod"
+    k8s_neonvm = "k8s-neonvm"
 
 
 @dataclass
@@ -59,28 +59,28 @@ class ApiKeysListResponseItem:
 
 
 class OperationAction(Enum):
-    create_compute = 'create_compute'
-    create_timeline = 'create_timeline'
-    start_compute = 'start_compute'
-    suspend_compute = 'suspend_compute'
-    apply_config = 'apply_config'
-    check_availability = 'check_availability'
-    delete_timeline = 'delete_timeline'
-    create_branch = 'create_branch'
-    tenant_ignore = 'tenant_ignore'
-    tenant_attach = 'tenant_attach'
-    tenant_detach = 'tenant_detach'
-    tenant_reattach = 'tenant_reattach'
-    replace_safekeeper = 'replace_safekeeper'
-    disable_maintenance = 'disable_maintenance'
-    apply_storage_config = 'apply_storage_config'
+    create_compute = "create_compute"
+    create_timeline = "create_timeline"
+    start_compute = "start_compute"
+    suspend_compute = "suspend_compute"
+    apply_config = "apply_config"
+    check_availability = "check_availability"
+    delete_timeline = "delete_timeline"
+    create_branch = "create_branch"
+    tenant_ignore = "tenant_ignore"
+    tenant_attach = "tenant_attach"
+    tenant_detach = "tenant_detach"
+    tenant_reattach = "tenant_reattach"
+    replace_safekeeper = "replace_safekeeper"
+    disable_maintenance = "disable_maintenance"
+    apply_storage_config = "apply_storage_config"
 
 
 class OperationStatus(Enum):
-    running = 'running'
-    finished = 'finished'
-    failed = 'failed'
-    scheduling = 'scheduling'
+    running = "running"
+    finished = "finished"
+    failed = "failed"
+    scheduling = "scheduling"
 
 
 @dataclass
@@ -118,16 +118,16 @@ class ProjectConsumption:
     written_data_bytes: int
     compute_time_seconds: int
     active_time_seconds: int
-    updated_at: str
-    period_start: str
-    period_end: str
-    previous_period_id: str
-    data_storage_bytes_hour_updated_at: Optional[str] = None
-    synthetic_storage_size_updated_at: Optional[str] = None
-    data_transfer_bytes_updated_at: Optional[str] = None
-    written_data_bytes_updated_at: Optional[str] = None
-    compute_time_seconds_updated_at: Optional[str] = None
-    active_time_seconds_updated_at: Optional[str] = None
+    updated_at: Optional[datetime]
+    period_start: Optional[datetime]
+    period_end: Optional[datetime]
+    previous_period_id: Optional[str]
+    data_storage_bytes_hour_updated_at: Optional[datetime] = None
+    synthetic_storage_size_updated_at: Optional[datetime] = None
+    data_transfer_bytes_updated_at: Optional[datetime] = None
+    written_data_bytes_updated_at: Optional[datetime] = None
+    compute_time_seconds_updated_at: Optional[datetime] = None
+    active_time_seconds_updated_at: Optional[datetime] = None
 
 
 @dataclass
@@ -148,8 +148,8 @@ class ProjectLimits:
 
 
 class BranchState(Enum):
-    init = 'init'
-    ready = 'ready'
+    init = "init"
+    ready = "ready"
 
 
 @dataclass
@@ -186,18 +186,18 @@ class ConnectionDetails:
 
 
 class EndpointState(Enum):
-    init = 'init'
-    active = 'active'
-    idle = 'idle'
+    init = "init"
+    active = "active"
+    idle = "idle"
 
 
 class EndpointType(Enum):
-    read_only = 'read_only'
-    read_write = 'read_write'
+    read_only = "read_only"
+    read_write = "read_write"
 
 
 class EndpointPoolerMode(Enum):
-    transaction = 'transaction'
+    transaction = "transaction"
 
 
 @dataclass
@@ -272,14 +272,14 @@ class RolePasswordResponse:
 
 
 class Brand(Enum):
-    amex = 'amex'
-    diners = 'diners'
-    discover = 'discover'
-    jcb = 'jcb'
-    mastercard = 'mastercard'
-    unionpay = 'unionpay'
-    unknown = 'unknown'
-    visa = 'visa'
+    amex = "amex"
+    diners = "diners"
+    discover = "discover"
+    jcb = "jcb"
+    mastercard = "mastercard"
+    unionpay = "unionpay"
+    unknown = "unknown"
+    visa = "visa"
 
 
 @dataclass
@@ -307,14 +307,14 @@ class BillingAccountUpdateRequest:
 
 
 class BillingSubscriptionType(Enum):
-    UNKNOWN = 'UNKNOWN'
-    free = 'free'
-    pro = 'pro'
-    direct_sales = 'direct_sales'
-    aws_marketplace = 'aws_marketplace'
-    free_v2 = 'free_v2'
-    launch = 'launch'
-    scale = 'scale'
+    UNKNOWN = "UNKNOWN"
+    free = "free"
+    pro = "pro"
+    direct_sales = "direct_sales"
+    aws_marketplace = "aws_marketplace"
+    free_v2 = "free_v2"
+    launch = "launch"
+    scale = "scale"
 
 
 @dataclass
@@ -399,10 +399,10 @@ class ProjectOwnerData:
 
 
 class SupportTicketSeverity(Enum):
-    low = 'low'
-    normal = 'normal'
-    high = 'high'
-    critical = 'critical'
+    low = "low"
+    normal = "normal"
+    high = "high"
+    critical = "critical"
 
 
 @dataclass
