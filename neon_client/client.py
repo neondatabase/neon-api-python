@@ -178,6 +178,25 @@ class NeonAPI:
 
         return self.request("DELETE", f"projects/{ project_id }")
 
+    @returns_model(schema.ProjectPermissions)
+    def project_permissions(self, project_id: str) -> t.Dict[str, t.Any]:
+        """Get a project permissions."""
+        return self.request("GET", f"projects/{ project_id }/permissions")
+
+    @returns_model(schema.ProjectPermission)
+    def project_permissions_grant(
+        self, project_id: str, **json: dict
+    ) -> t.Dict[str, t.Any]:
+        """Update a project permissions. Accepts all keyword arguments for json body."""
+        return self.request("POST", f"projects/{ project_id }/permissions", json=json)
+
+    @returns_model(schema.ProjectPermission)
+    def project_permissions_revoke(
+        self, project_id: str, **json: dict
+    ) -> t.Dict[str, t.Any]:
+        """Update a project permissions. Accepts all keyword arguments for json body."""
+        return self.request("DELETE", f"projects/{ project_id }/permissions", json=json)
+
     @returns_model(schema.BranchesResponse)
     def branches(
         self,

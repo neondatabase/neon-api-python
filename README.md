@@ -44,6 +44,9 @@ Remember that you should never expose your api_key and handle it carefully since
 - `project_create(project_id, **json)`: Creates a new project. 
 - `project_update(project_id, **json)`: Updates a given project.
 - `project_delete(project_id)`: Deletes a given project.
+- `project_permissions(project_id)`: Returns a list of permissions for a given project.
+- `project_permissions_grant(project_id, **json)`: Grant permissions to a given project.
+- `project_permissions_revoke(project_id, **json)`: Revoke permissions from a given project.
 
 **Manage branches**:
 
