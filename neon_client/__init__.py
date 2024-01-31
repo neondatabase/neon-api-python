@@ -1,4 +1,5 @@
 from .client import NeonAPI
+from .__version__ import __version__
 
 
 def from_environ():
