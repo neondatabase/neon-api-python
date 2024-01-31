@@ -1,6 +1,7 @@
 import os
-from datetime import datetime
 import typing as t
+from datetime import datetime
+from functools import wraps
 
 import requests
 
@@ -20,6 +21,7 @@ def returns_model(model, is_array=False):
     """Decorator that returns a model instance."""
 
     def decorator(func):
+        @wraps(func)
         def wrapper(*args, **kwargs):
             if not ENABLE_PYDANTIC:
                 return func(*args, **kwargs)
@@ -38,6 +40,7 @@ def returns_subkey(key):
     """Decorator that returns a subkey."""
 
     def decorator(func):
+        @wraps(func)
         def wrapper(*args, **kwargs):
             try:
                 return getattr(func(*args, **kwargs), key)
@@ -68,7 +71,7 @@ class NeonAPI:
     def __repr__(self):
         return f"<NeonAPI base_url={self.base_url!r}>"
 
-    def request(
+    def _request(
         self,
         method: str,
         path: str,
@@ -96,7 +99,7 @@ class NeonAPI:
 
         return r.json()
 
-    def url_join(self, *args):
+    def _url_join(self, *args):
         """Join a list of URL components into a single URL."""
 
         return "/".join(args)
@@ -110,28 +113,37 @@ class NeonAPI:
     @returns_model(schema.CurrentUserInfoResponse)
     def me(self) -> t.Dict[str, t.Any]:
         """Get the current user."""
-        return self.request("GET", "users/me")
+
+        return self._request("GET", "users/me")
 
     @returns_model(schema.ApiKeysListResponseItem, is_array=True)
     def api_keys(self) -> t.List[t.Dict[str, t.Any]]:
         """Get a list of API keys."""
-        return self.request("GET", "api_keys")
+
+        return self._request("GET", "api_keys")
 
     @returns_model(schema.ApiKeyCreateResponse)
     def api_key_create(self, **json: dict) -> t.Dict[str, t.Any]:
-        """Create a new API key."""
-        return self.request("POST", "api_keys", json=json)
+        """Create a new API key.
+
+        Example usage:
+
+        ```python
+        >>> neon.api_key_create(name="My API Key")
+        ```
+        """
+
+        return self._request("POST", "api_keys", json=json)
 
     @returns_model(schema.ApiKeyRevokeResponse)
     def api_key_revoke(self, api_key_id: str) -> t.Dict[str, t.Any]:
         """Revoke an API key.
 
         :param api_key_id: The ID of the API key to revoke.
-        :return: A dictionary representing the API key.
+        :return: A dataclass representing the API key.
         """
-        return self.request("DELETE", f"api_keys/{ api_key_id }")
+        return self._request("DELETE", f"api_keys/{ api_key_id }")
 
-    # @returns_subkey("projects")
     @returns_model(schema.ProjectsResponse)
     def projects(
         self,
@@ -145,13 +157,13 @@ class NeonAPI:
         :param shared: Whether to retrieve shared projects (default is False).
         :param cursor: The cursor for pagination (default is None).
         :param limit: The maximum number of projects to retrieve (default is None).
-        :return: A list of dictionaries representing the projects.
+        :return: A list of dataclasses representing the projects.
         """
 
         r_path = "projects" if not shared else "projects/shared"
         r_params = compact_mapping({"cursor": cursor, "limit": limit})
 
-        return self.request("GET", r_path, params=r_params)
+        return self._request("GET", r_path, params=r_params)
 
     @returns_model(schema.ProjectResponse)
     def project(self, project_id: str) -> t.Dict[str, t.Any]:
@@ -159,44 +171,46 @@ class NeonAPI:
 
         r_path = f"projects/{project_id}"
 
-        return self.request("GET", r_path)
+        return self._request("GET", r_path)
 
     @returns_model(schema.ProjectResponse)
     def project_create(self, **json: dict) -> t.Dict[str, t.Any]:
         """Create a new project. Accepts all keyword arguments for json body."""
 
-        return self.request("POST", "projects", json=json)
+        return self._request("POST", "projects", json=json)
 
     @returns_model(schema.ProjectResponse)
     def project_update(self, project_id: str, **json: dict) -> t.Dict[str, t.Any]:
         """Updates a project. Accepts all keyword arguments for json body."""
 
-        return self.request("PATCH", f"projects/{ project_id }", json=json)
+        return self._request("PATCH", f"projects/{ project_id }", json=json)
 
     @returns_model(schema.ProjectResponse)
     def project_delete(self, project_id: str) -> t.Dict[str, t.Any]:
         """Delete a project."""
 
-        return self.request("DELETE", f"projects/{ project_id }")
+        return self._request("DELETE", f"projects/{ project_id }")
 
     @returns_model(schema.ProjectPermissions)
     def project_permissions(self, project_id: str) -> t.Dict[str, t.Any]:
         """Get a project permissions."""
-        return self.request("GET", f"projects/{ project_id }/permissions")
+        return self._request("GET", f"projects/{ project_id }/permissions")
 
     @returns_model(schema.ProjectPermission)
     def project_permissions_grant(
         self, project_id: str, **json: dict
     ) -> t.Dict[str, t.Any]:
         """Update a project permissions. Accepts all keyword arguments for json body."""
-        return self.request("POST", f"projects/{ project_id }/permissions", json=json)
+        return self._request("POST", f"projects/{ project_id }/permissions", json=json)
 
     @returns_model(schema.ProjectPermission)
     def project_permissions_revoke(
         self, project_id: str, **json: dict
     ) -> t.Dict[str, t.Any]:
         """Update a project permissions. Accepts all keyword arguments for json body."""
-        return self.request("DELETE", f"projects/{ project_id }/permissions", json=json)
+        return self._request(
+            "DELETE", f"projects/{ project_id }/permissions", json=json
+        )
 
     @returns_model(schema.BranchesResponse)
     def branches(
@@ -209,26 +223,26 @@ class NeonAPI:
         """Get a list of branches."""
 
         # Construct the request path and parameters.
-        r_path = self.url_join("projects", project_id, "branches")
+        r_path = self._url_join("projects", project_id, "branches")
         r_params = compact_mapping({"cursor": cursor, "limit": limit})
 
         # Make the request.
-        return self.request("GET", r_path, params=r_params)
+        return self._request("GET", r_path, params=r_params)
 
     @returns_model(schema.BranchResponse)
     def branch(self, project_id: str, branch_id: str) -> t.Dict[str, t.Any]:
         """Get a branch."""
 
         # Construct the request path.
-        r_path = self.url_join("projects", project_id, "branches", branch_id)
+        r_path = self._url_join("projects", project_id, "branches", branch_id)
 
         # Make the request.
-        return self.request("GET", r_path)
+        return self._request("GET", r_path)
 
     @returns_model(schema.BranchOperations)
     def branch_create(self, project_id: str, **json: dict) -> t.Dict[str, t.Any]:
         """Create a new branch. Accepts all keyword arguments for json body."""
-        return self.request("POST", f"projects/{ project_id }/branches", json=json)
+        return self._request("POST", f"projects/{ project_id }/branches", json=json)
 
     @returns_model(schema.BranchOperations)
     def branch_update(
@@ -236,14 +250,16 @@ class NeonAPI:
     ) -> t.Dict[str, t.Any]:
         """Update a branch by branch_id. Accepts all keyword arguments for json body."""
 
-        return self.request(
+        return self._request(
             "PATCH", f"projects/{ project_id }/branches/{ branch_id }", json=json
         )
 
     @returns_model(schema.BranchOperations)
     def branch_delete(self, project_id: str, branch_id: str) -> t.Dict[str, t.Any]:
         """Delete a branch by branch_id."""
-        return self.request("DELETE", f"projects/{ project_id }/branches/{ branch_id }")
+        return self._request(
+            "DELETE", f"projects/{ project_id }/branches/{ branch_id }"
+        )
 
     @returns_model(schema.BranchOperations)
     def branch_set_as_primary(
@@ -251,7 +267,7 @@ class NeonAPI:
     ) -> t.Dict[str, t.Any]:
         """Set a branch as primary by branch_id."""
 
-        return self.request(
+        return self._request(
             "POST", f"projects/{ project_id }/branches/{ branch_id }/set_as_primary"
         )
 
@@ -267,13 +283,13 @@ class NeonAPI:
         """Get a list of databases."""
 
         # Construct the request path and parameters.
-        r_path = self.url_join(
+        r_path = self._url_join(
             "projects", project_id, "branches", branch_id, "databases"
         )
         r_params = compact_mapping({"cursor": cursor, "limit": limit})
 
         # Make the request.
-        return self.request("GET", r_path, params=r_params)
+        return self._request("GET", r_path, params=r_params)
 
     @returns_model(schema.DatabaseResponse)
     def database(
@@ -282,12 +298,12 @@ class NeonAPI:
         """Get a database."""
 
         # Construct the request path.
-        r_path = self.url_join(
+        r_path = self._url_join(
             "projects", project_id, "branches", branch_id, "databases", database_id
         )
 
         # Make the request.
-        return self.request("GET", r_path)
+        return self._request("GET", r_path)
 
     @returns_model(schema.DatabaseResponse)
     def database_create(
@@ -295,7 +311,7 @@ class NeonAPI:
     ) -> t.Dict[str, t.Any]:
         """Create a new database. Accepts all keyword arguments for json body."""
 
-        return self.request(
+        return self._request(
             "POST",
             f"projects/{ project_id }/branches/{ branch_id }/databases",
             json=json,
@@ -307,7 +323,7 @@ class NeonAPI:
     ) -> t.Dict[str, t.Any]:
         """Update a database. Accepts all keyword arguments for json body."""
 
-        return self.request(
+        return self._request(
             "PUT",
             f"projects/{ project_id }/branches/{ branch_id }/databases/{ database_id }",
             json=json,
@@ -319,7 +335,7 @@ class NeonAPI:
     ) -> t.Dict[str, t.Any]:
         """Delete a database by database_id."""
 
-        return self.request(
+        return self._request(
             "DELETE",
             f"projects/{ project_id }/branches/{ branch_id }/databases/{ database_id }",
         )
@@ -327,12 +343,12 @@ class NeonAPI:
     @returns_model(schema.EndpointsResponse)
     def endpoints(self, project_id: str) -> t.Dict[str, t.Any]:
         """Get a list of endpoints for a given branch."""
-        return self.request("GET", f"projects/{ project_id }/endpoints")
+        return self._request("GET", f"projects/{ project_id }/endpoints")
 
     @returns_model(schema.EndpointResponse)
     def endpoint(self, project_id: str, endpoint_id: str) -> t.Dict[str, t.Any]:
         """Get an endpoint for a given branch."""
-        return self.request(
+        return self._request(
             "GET",
             f"projects/{ project_id }/endpoints/{ endpoint_id }",
         )
@@ -345,13 +361,13 @@ class NeonAPI:
     ) -> t.Dict[str, t.Any]:
         """Create a new endpoint. Accepts all keyword arguments for json body."""
 
-        return self.request("POST", f"projects/{ project_id }/endpoints", json=json)
+        return self._request("POST", f"projects/{ project_id }/endpoints", json=json)
 
     @returns_model(schema.EndpointOperations)
     def endpoint_delete(self, project_id: str, endpoint_id: str) -> t.Dict[str, t.Any]:
         """Delete an endpoint by endpoint_id."""
 
-        return self.request(
+        return self._request(
             "DELETE",
             f"projects/{ project_id }/endpoints/{ endpoint_id }",
         )
@@ -362,7 +378,7 @@ class NeonAPI:
     ) -> t.Dict[str, t.Any]:
         """Update an endpoint. Accepts all keyword arguments for json body."""
 
-        return self.request(
+        return self._request(
             "PATCH",
             f"projects/{ project_id }/endpoints/{ endpoint_id }",
             json=json,
@@ -372,7 +388,7 @@ class NeonAPI:
     def endpoint_start(self, project_id: str, endpoint_id: str):
         """Start an endpoint by endpoint_id."""
 
-        return self.request(
+        return self._request(
             "POST",
             f"projects/{ project_id }/endpoints/{ endpoint_id }/start",
         )
@@ -381,7 +397,7 @@ class NeonAPI:
     def endpoint_suspend(self, project_id: str, endpoint_id: str):
         """Suspend an endpoint by endpoint_id."""
 
-        return self.request(
+        return self._request(
             "POST",
             f"projects/{ project_id }/endpoints/{ endpoint_id }/suspend",
         )
@@ -389,7 +405,7 @@ class NeonAPI:
     @returns_model(schema.RolesResponse)
     def roles(self, project_id: str, branch_id: str) -> t.Dict[str, t.Any]:
         """Get a list of roles for a given branch."""
-        return self.request(
+        return self._request(
             "GET", f"projects/{ project_id }/branches/{ branch_id }/roles"
         )
 
@@ -398,7 +414,7 @@ class NeonAPI:
         self, project_id: str, branch_id: str, role_name: str
     ) -> t.Dict[str, t.Any]:
         """Get a role for a given branch."""
-        return self.request(
+        return self._request(
             "GET", f"projects/{ project_id }/branches/{ branch_id }/roles/{ role_name }"
         )
 
@@ -411,7 +427,7 @@ class NeonAPI:
     ) -> t.Dict[str, t.Any]:
         """Create a new role. Accepts all keyword arguments for json body."""
 
-        return self.request(
+        return self._request(
             "POST",
             f"projects/{ project_id }/branches/{ branch_id }/roles",
             json={"role": {"name": role_name}},
@@ -426,7 +442,7 @@ class NeonAPI:
     ) -> t.Dict[str, t.Any]:
         """Delete a role by given role name."""
 
-        return self.request(
+        return self._request(
             "DELETE",
             f"projects/{ project_id }/branches/{ branch_id }/roles/{ role_name }",
         )
@@ -440,7 +456,7 @@ class NeonAPI:
     ) -> t.Dict[str, t.Any]:
         """Get a role password."""
 
-        return self.request(
+        return self._request(
             "POST",
             f"projects/{ project_id }/branches/{ branch_id }/roles/{ role_name }/reveal_password",
         )
@@ -454,7 +470,7 @@ class NeonAPI:
     ) -> t.Dict[str, t.Any]:
         """Reset a role password."""
 
-        return self.request(
+        return self._request(
             "POST",
             f"projects/{ project_id }/branches/{ branch_id }/roles/{ role_name }/reset_password",
         )
@@ -470,14 +486,14 @@ class NeonAPI:
         """Get a list of operations."""
 
         r_params = compact_mapping({"cursor": cursor, "limit": limit})
-        return self.request(
+        return self._request(
             "GET", f"projects/{ project_id }/operations", params=r_params
         )
 
     @returns_model(schema.OperationResponse)
     def operation(self, project_id: str, operation_id: str) -> t.Dict[str, t.Any]:
         """Get an operation."""
-        return self.request(
+        return self._request(
             "GET", f"projects/{ project_id }/operations/{ operation_id }"
         )
 
@@ -504,4 +520,4 @@ class NeonAPI:
         )
 
         # Make the request.
-        return self.request("GET", "consumption/projects", params=r_params)
+        return self._request("GET", "consumption/projects", params=r_params)
