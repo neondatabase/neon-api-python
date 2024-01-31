@@ -88,6 +88,10 @@ Remember that you should never expose your api_key and handle it carefully since
 - `operations(project_id)`: Returns a list of operations for a given project.
 - `operation(project_id, operation_id)`: Returns a specific operation.
 
+**Experimental**:
+
+- `consumption()`: Returns a list of project consumption metrics.
+
 
 View the [Neon API documentation](https://api-docs.neon.tech/reference/getting-started-with-neon-api) for more information on the available endpoints and their parameters.
 
