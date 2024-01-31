@@ -1,10 +1,11 @@
 import os
+from datetime import datetime
 import typing as t
 
 import requests
 
 from . import schema
-from .utils import compact_mapping
+from .utils import compact_mapping, to_iso8601
 from .exceptions import NeonClientException
 
 
@@ -479,3 +480,28 @@ class NeonAPI:
         return self.request(
             "GET", f"projects/{ project_id }/operations/{ operation_id }"
         )
+
+    # @returns_model(schema.ProjectsConsumptionResponse)
+    def consumption(
+        self,
+        *,
+        cursor: str | None = None,
+        limit: int | None = None,
+        from_date: datetime | str | None = None,
+        to_date: datetime | str | None = None,
+    ) -> t.Dict[str, t.Any]:
+        """Get a list of consumption metrics for all projects."""
+
+        # Convert datetime objects to ISO 8601 strings.
+        from_date = (
+            to_iso8601(from_date) if isinstance(from_date, datetime) else from_date
+        )
+        to_date = to_iso8601(to_date) if isinstance(to_date, datetime) else to_date
+
+        # Construct the request parameters.
+        r_params = compact_mapping(
+            {"cursor": cursor, "limit": limit, "from": from_date, "to": to_date}
+        )
+
+        # Make the request.
+        return self.request("GET", "consumption/projects", params=r_params)

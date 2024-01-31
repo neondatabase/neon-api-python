@@ -9,7 +9,7 @@ ci:
 record:
 	pytest --record-mode=rewrite tests/
 
-gen-model: fetch-v2-schema
+schema: fetch-v2-schema
 	datamodel-codegen \
 	--input v2.json \
 	--collapse-root-models \
