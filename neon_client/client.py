@@ -481,7 +481,6 @@ class NeonAPI:
             "GET", f"projects/{ project_id }/operations/{ operation_id }"
         )
 
-    # @returns_model(schema.ProjectsConsumptionResponse)
     def consumption(
         self,
         *,
@@ -490,7 +489,7 @@ class NeonAPI:
         from_date: datetime | str | None = None,
         to_date: datetime | str | None = None,
     ) -> t.Dict[str, t.Any]:
-        """Get a list of consumption metrics for all projects."""
+        """Experimental — get a list of consumption metrics for all projects."""
 
         # Convert datetime objects to ISO 8601 strings.
         from_date = (
