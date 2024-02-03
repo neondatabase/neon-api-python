@@ -2,7 +2,6 @@ import os
 import typing as t
 from datetime import datetime
 from functools import wraps
-import urllib.parse
 
 import requests
 
