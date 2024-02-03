@@ -2,12 +2,13 @@ import os
 import typing as t
 from datetime import datetime
 from functools import wraps
+import urllib.parse
 
 import requests
 
 from . import schema
 from .utils import compact_mapping, to_iso8601
-from .exceptions import NeonClientException
+from .exceptions import NeonAPIException
 
 
 __VERSION__ = "0.1.0"
@@ -18,7 +19,10 @@ ENABLE_PYDANTIC = True
 
 
 def returns_model(model, is_array=False):
-    """Decorator that returns a model instance."""
+    """Decorator that returns a Pydantic model.
+
+    If Pydantic is not enabled, the original return value is returned.
+    """
 
     def decorator(func):
         @wraps(func)
@@ -95,14 +99,14 @@ class NeonAPI:
         try:
             r.raise_for_status()
         except requests.exceptions.HTTPError:
-            raise NeonClientException(r.text)
+            raise NeonAPIException(r.text)
 
         return r.json()
 
     def _url_join(self, *args):
         """Join a list of URL components into a single URL."""
 
-        return "/".join(args)
+        return "/".join(*args)
 
     @classmethod
     def from_environ(cls):

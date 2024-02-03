@@ -1,5 +1,5 @@
 from requests.exceptions import HTTPError
 
 
-class NeonClientException(HTTPError):
+class NeonAPIException(HTTPError):
     pass
