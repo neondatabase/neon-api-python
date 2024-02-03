@@ -19,7 +19,7 @@ ENABLE_PYDANTIC = True
 
 
 def returns_model(model, is_array=False):
-    """Decorator that returns a Pydantic model.
+    """Decorator that returns a Pydantic dataclass.
 
     If Pydantic is not enabled, the original return value is returned.
     """
