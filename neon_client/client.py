@@ -80,7 +80,7 @@ class NeonAPI:
         path: str,
         **kwargs,
     ):
-        """Send an HTTP request to the specified path using the specified method."""
+        """Send an HTTP request to the specified API path using the specified method."""
 
         # Set HTTP headers for outgoing requests.
         headers = kwargs.pop("headers", {})
@@ -115,13 +115,19 @@ class NeonAPI:
 
     @returns_model(schema.CurrentUserInfoResponse)
     def me(self) -> t.Dict[str, t.Any]:
-        """Get the current user."""
+        """Get the current user.
+
+        More info: https://api-docs.neon.tech/reference/getcurrentuserinfo
+        """
 
         return self._request("GET", "users/me")
 
     @returns_model(schema.ApiKeysListResponseItem, is_array=True)
     def api_keys(self) -> t.List[t.Dict[str, t.Any]]:
-        """Get a list of API keys."""
+        """Get a list of API keys.
+
+        More info: https://api-docs.neon.tech/reference/listapikeys
+        """
 
         return self._request("GET", "api_keys")
 
@@ -134,6 +140,8 @@ class NeonAPI:
         ```python
         >>> neon.api_key_create(name="My API Key")
         ```
+
+        More info: https://api-docs.neon.tech/reference/createapikey
         """
 
         return self._request("POST", "api_keys", json=json)
@@ -144,6 +152,8 @@ class NeonAPI:
 
         :param api_key_id: The ID of the API key to revoke.
         :return: A dataclass representing the API key.
+
+        More info: https://api-docs.neon.tech/reference/revokeapikey
         """
         return self._request("DELETE", f"api_keys/{ api_key_id }")
 
@@ -161,6 +171,8 @@ class NeonAPI:
         :param cursor: The cursor for pagination (default is None).
         :param limit: The maximum number of projects to retrieve (default is None).
         :return: A list of dataclasses representing the projects.
+
+        More info: https://api-docs.neon.tech/reference/listprojects
         """
 
         r_path = "projects" if not shared else "projects/shared"
@@ -170,7 +182,10 @@ class NeonAPI:
 
     @returns_model(schema.ProjectResponse)
     def project(self, project_id: str) -> t.Dict[str, t.Any]:
-        """Get a project."""
+        """Get a project.
+
+        More info: https://api-docs.neon.tech/reference/getproject
+        """
 
         r_path = f"projects/{project_id}"
 
@@ -178,39 +193,56 @@ class NeonAPI:
 
     @returns_model(schema.ProjectResponse)
     def project_create(self, **json: dict) -> t.Dict[str, t.Any]:
-        """Create a new project. Accepts all keyword arguments for json body."""
+        """Create a new project. Accepts all keyword arguments for json body.
+
+        More info: https://api-docs.neon.tech/reference/createproject
+        """
 
         return self._request("POST", "projects", json=json)
 
     @returns_model(schema.ProjectResponse)
     def project_update(self, project_id: str, **json: dict) -> t.Dict[str, t.Any]:
-        """Updates a project. Accepts all keyword arguments for json body."""
+        """Updates a project. Accepts all keyword arguments for json body.
+
+        More info: https://api-docs.neon.tech/reference/updateproject"""
 
         return self._request("PATCH", f"projects/{ project_id }", json=json)
 
     @returns_model(schema.ProjectResponse)
     def project_delete(self, project_id: str) -> t.Dict[str, t.Any]:
-        """Delete a project."""
+        """Delete a project.
+
+        More info: https://api-docs.neon.tech/reference/deleteproject
+        """
 
         return self._request("DELETE", f"projects/{ project_id }")
 
     @returns_model(schema.ProjectPermissions)
     def project_permissions(self, project_id: str) -> t.Dict[str, t.Any]:
-        """Get a project permissions."""
+        """Get a project permissions.
+
+        More info: https://api-docs.neon.tech/reference/listprojectpermissions
+        """
         return self._request("GET", f"projects/{ project_id }/permissions")
 
     @returns_model(schema.ProjectPermission)
     def project_permissions_grant(
         self, project_id: str, **json: dict
     ) -> t.Dict[str, t.Any]:
-        """Update a project permissions. Accepts all keyword arguments for json body."""
+        """Update a project permissions. Accepts all keyword arguments for json body.
+
+        More info: https://api-docs.neon.tech/reference/grantpermissiontoproject
+        """
         return self._request("POST", f"projects/{ project_id }/permissions", json=json)
 
     @returns_model(schema.ProjectPermission)
     def project_permissions_revoke(
         self, project_id: str, **json: dict
     ) -> t.Dict[str, t.Any]:
-        """Update a project permissions. Accepts all keyword arguments for json body."""
+        """Update a project permissions. Accepts all keyword arguments for json body.
+
+        More info: https://api-docs.neon.tech/reference/revokepermissionfromproject
+        """
         return self._request(
             "DELETE", f"projects/{ project_id }/permissions", json=json
         )
@@ -223,7 +255,10 @@ class NeonAPI:
         cursor: str | None = None,
         limit: int | None = None,
     ) -> t.Dict[str, t.Any]:
-        """Get a list of branches."""
+        """Get a list of branches.
+
+        More info: https://api-docs.neon.tech/reference/listprojectbranches
+        """
 
         # Construct the request path and parameters.
         r_path = self._url_join("projects", project_id, "branches")
@@ -234,7 +269,10 @@ class NeonAPI:
 
     @returns_model(schema.BranchResponse)
     def branch(self, project_id: str, branch_id: str) -> t.Dict[str, t.Any]:
-        """Get a branch."""
+        """Get a branch.
+
+        More info: https://api-docs.neon.tech/reference/getprojectbranch
+        """
 
         # Construct the request path.
         r_path = self._url_join("projects", project_id, "branches", branch_id)
@@ -244,14 +282,20 @@ class NeonAPI:
 
     @returns_model(schema.BranchOperations)
     def branch_create(self, project_id: str, **json: dict) -> t.Dict[str, t.Any]:
-        """Create a new branch. Accepts all keyword arguments for json body."""
+        """Create a new branch. Accepts all keyword arguments for json body.
+
+        More info: https://api-docs.neon.tech/reference/createprojectbranch
+        """
         return self._request("POST", f"projects/{ project_id }/branches", json=json)
 
     @returns_model(schema.BranchOperations)
     def branch_update(
         self, project_id: str, branch_id: str, **json: dict
     ) -> t.Dict[str, t.Any]:
-        """Update a branch by branch_id. Accepts all keyword arguments for json body."""
+        """Update a branch by branch_id. Accepts all keyword arguments for json body.
+
+        More info: https://api-docs.neon.tech/reference/updateprojectbranch
+        """
 
         return self._request(
             "PATCH", f"projects/{ project_id }/branches/{ branch_id }", json=json
@@ -259,7 +303,10 @@ class NeonAPI:
 
     @returns_model(schema.BranchOperations)
     def branch_delete(self, project_id: str, branch_id: str) -> t.Dict[str, t.Any]:
-        """Delete a branch by branch_id."""
+        """Delete a branch by branch_id.
+
+        More info: https://api-docs.neon.tech/reference/deleteprojectbranch
+        """
         return self._request(
             "DELETE", f"projects/{ project_id }/branches/{ branch_id }"
         )
@@ -268,7 +315,9 @@ class NeonAPI:
     def branch_set_as_primary(
         self, project_id: str, branch_id: str
     ) -> t.Dict[str, t.Any]:
-        """Set a branch as primary by branch_id."""
+        """Set a branch as primary by branch_id.
+
+        More info: https://api-docs.neon.tech/reference/setprimaryprojectbranch"""
 
         return self._request(
             "POST", f"projects/{ project_id }/branches/{ branch_id }/set_as_primary"
@@ -283,7 +332,10 @@ class NeonAPI:
         cursor: str | None = None,
         limit: int | None = None,
     ) -> t.Dict[str, t.Any]:
-        """Get a list of databases."""
+        """Get a list of databases.
+
+        More info: https://api-docs.neon.tech/reference/listprojectbranchdatabases
+        """
 
         # Construct the request path and parameters.
         r_path = self._url_join(
@@ -298,7 +350,10 @@ class NeonAPI:
     def database(
         self, project_id: str, branch_id: str, database_id: str
     ) -> t.Dict[str, t.Any]:
-        """Get a database."""
+        """Get a database.
+
+        More info: https://api-docs.neon.tech/reference/getprojectbranchdatabase
+        """
 
         # Construct the request path.
         r_path = self._url_join(
@@ -312,7 +367,10 @@ class NeonAPI:
     def database_create(
         self, project_id: str, branch_id: str, **json: dict
     ) -> t.Dict[str, t.Any]:
-        """Create a new database. Accepts all keyword arguments for json body."""
+        """Create a new database. Accepts all keyword arguments for json body.
+
+        More info: https://api-docs.neon.tech/reference/createprojectbranchdatabase
+        """
 
         return self._request(
             "POST",
@@ -324,7 +382,10 @@ class NeonAPI:
     def database_update(
         self, project_id: str, branch_id: str, database_id: str, **json: dict
     ) -> t.Dict[str, t.Any]:
-        """Update a database. Accepts all keyword arguments for json body."""
+        """Update a database. Accepts all keyword arguments for json body.
+
+        More info: https://api-docs.neon.tech/reference/updateprojectbranchdatabase
+        """
 
         return self._request(
             "PUT",
@@ -336,7 +397,10 @@ class NeonAPI:
     def database_delete(
         self, project_id: str, branch_id: str, database_id: str
     ) -> t.Dict[str, t.Any]:
-        """Delete a database by database_id."""
+        """Delete a database by database_id.
+
+        More info: https://api-docs.neon.tech/reference/deleteprojectbranchdatabase
+        """
 
         return self._request(
             "DELETE",
@@ -345,12 +409,18 @@ class NeonAPI:
 
     @returns_model(schema.EndpointsResponse)
     def endpoints(self, project_id: str) -> t.Dict[str, t.Any]:
-        """Get a list of endpoints for a given branch."""
+        """Get a list of endpoints for a given branch
+
+        More info: https://api-docs.neon.tech/reference/listprojectendpoints
+        """
         return self._request("GET", f"projects/{ project_id }/endpoints")
 
     @returns_model(schema.EndpointResponse)
     def endpoint(self, project_id: str, endpoint_id: str) -> t.Dict[str, t.Any]:
-        """Get an endpoint for a given branch."""
+        """Get an endpoint for a given branch.
+
+        More info: https://api-docs.neon.tech/reference/getprojectendpoint
+        """
         return self._request(
             "GET",
             f"projects/{ project_id }/endpoints/{ endpoint_id }",
@@ -362,13 +432,19 @@ class NeonAPI:
         project_id: str,
         **json: dict,
     ) -> t.Dict[str, t.Any]:
-        """Create a new endpoint. Accepts all keyword arguments for json body."""
+        """Create a new endpoint. Accepts all keyword arguments for json body.
+
+        More info: https://api-docs.neon.tech/reference/createprojectendpoint
+        """
 
         return self._request("POST", f"projects/{ project_id }/endpoints", json=json)
 
     @returns_model(schema.EndpointOperations)
     def endpoint_delete(self, project_id: str, endpoint_id: str) -> t.Dict[str, t.Any]:
-        """Delete an endpoint by endpoint_id."""
+        """Delete an endpoint by endpoint_id.
+
+        More info: https://api-docs.neon.tech/reference/deleteprojectendpoint
+        """
 
         return self._request(
             "DELETE",
@@ -379,7 +455,10 @@ class NeonAPI:
     def endpoint_update(
         self, project_id: str, endpoint_id: str, **json: dict
     ) -> t.Dict[str, t.Any]:
-        """Update an endpoint. Accepts all keyword arguments for json body."""
+        """Update an endpoint. Accepts all keyword arguments for json body.
+
+        More info: https://api-docs.neon.tech/reference/updateprojectendpoint
+        """
 
         return self._request(
             "PATCH",
@@ -389,7 +468,9 @@ class NeonAPI:
 
     @returns_model(schema.EndpointOperations)
     def endpoint_start(self, project_id: str, endpoint_id: str):
-        """Start an endpoint by endpoint_id."""
+        """Start an endpoint by endpoint_id.
+
+        More info: https://api-docs.neon.tech/reference/startprojectendpoint"""
 
         return self._request(
             "POST",
@@ -398,7 +479,10 @@ class NeonAPI:
 
     @returns_model(schema.EndpointOperations)
     def endpoint_suspend(self, project_id: str, endpoint_id: str):
-        """Suspend an endpoint by endpoint_id."""
+        """Suspend an endpoint by endpoint_id.
+
+        More info: https://api-docs.neon.tech/reference/suspendprojectendpoint
+        """
 
         return self._request(
             "POST",
@@ -407,7 +491,11 @@ class NeonAPI:
 
     @returns_model(schema.RolesResponse)
     def roles(self, project_id: str, branch_id: str) -> t.Dict[str, t.Any]:
-        """Get a list of roles for a given branch."""
+        """Get a list of roles for a given branch.
+
+        More info: https://api-docs.neon.tech/reference/listprojectbranchroles
+        """
+
         return self._request(
             "GET", f"projects/{ project_id }/branches/{ branch_id }/roles"
         )
@@ -416,7 +504,11 @@ class NeonAPI:
     def role(
         self, project_id: str, branch_id: str, role_name: str
     ) -> t.Dict[str, t.Any]:
-        """Get a role for a given branch."""
+        """Get a role for a given branch.
+
+        More info: https://api-docs.neon.tech/reference/getprojectbranchrole
+
+        """
         return self._request(
             "GET", f"projects/{ project_id }/branches/{ branch_id }/roles/{ role_name }"
         )
@@ -428,7 +520,10 @@ class NeonAPI:
         branch_id: str,
         role_name: str,
     ) -> t.Dict[str, t.Any]:
-        """Create a new role. Accepts all keyword arguments for json body."""
+        """Create a new role. Accepts all keyword arguments for json body.
+
+        More info: https://api-docs.neon.tech/reference/createprojectbranchrole
+        """
 
         return self._request(
             "POST",
@@ -443,7 +538,10 @@ class NeonAPI:
         branch_id: str,
         role_name: str,
     ) -> t.Dict[str, t.Any]:
-        """Delete a role by given role name."""
+        """Delete a role by given role name.
+
+        More info: https://api-docs.neon.tech/reference/deleteprojectbranchrole
+        """
 
         return self._request(
             "DELETE",
@@ -457,7 +555,9 @@ class NeonAPI:
         branch_id: str,
         role_name: str,
     ) -> t.Dict[str, t.Any]:
-        """Get a role password."""
+        """Get a role password.
+
+        More info: https://api-docs.neon.tech/reference/getprojectbranchrolepassword"""
 
         return self._request(
             "POST",
@@ -471,7 +571,10 @@ class NeonAPI:
         branch_id: str,
         role_name: str,
     ) -> t.Dict[str, t.Any]:
-        """Reset a role password."""
+        """Reset a role password.
+
+        More info: https://api-docs.neon.tech/reference/resetprojectbranchrolepassword
+        """
 
         return self._request(
             "POST",
@@ -486,7 +589,10 @@ class NeonAPI:
         cursor: str | None = None,
         limit: int | None = None,
     ) -> t.Dict[str, t.Any]:
-        """Get a list of operations."""
+        """Get a list of operations.
+
+        More info: https://api-docs.neon.tech/reference/listprojectoperations
+        """
 
         r_params = compact_mapping({"cursor": cursor, "limit": limit})
         return self._request(
@@ -495,7 +601,11 @@ class NeonAPI:
 
     @returns_model(schema.OperationResponse)
     def operation(self, project_id: str, operation_id: str) -> t.Dict[str, t.Any]:
-        """Get an operation."""
+        """Get an operation.
+
+        More info: https://api-docs.neon.tech/reference/getprojectoperation
+        """
+
         return self._request(
             "GET", f"projects/{ project_id }/operations/{ operation_id }"
         )
@@ -509,7 +619,10 @@ class NeonAPI:
         from_date: datetime | str | None = None,
         to_date: datetime | str | None = None,
     ) -> t.Dict[str, t.Any]:
-        """Experimental — get a list of consumption metrics for all projects."""
+        """Experimental — get a list of consumption metrics for all projects.
+
+        More info: https://api-docs.neon.tech/reference/listprojectsconsumption
+        """
 
         # Convert datetime objects to ISO 8601 strings.
         from_date = (
