@@ -19,9 +19,7 @@ With ``neon_client``, developers can:
 - Enhance application security by managing API keys and permissions through code.
 - Leverage the power of Neon's cloud database without the need for manual intervention or the Neon console.
 
-.. note::
 
-    This documentation is a work in progress. It is not yet complete.
 
 This project simplifies the complexity of interacting with the Neon API, making it more accessible for developers to 
 build scalable, data-driven applications with ease. Pydantic dataclasses are used to represent the data structures returned
@@ -35,6 +33,10 @@ To install the package, run the following command:
 .. code-block:: bash
 
     $ pip install neon-client
+
+.. note::
+
+    The package requires Python 3.10 or later.
 
 Usage
 -----
@@ -109,13 +111,6 @@ Classes
 ///////
 
 .. autoclass:: neon_client.NeonAPI
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
---------------------
-
-.. automodule:: neon_client.schema
     :members:
     :undoc-members:
     :show-inheritance:
