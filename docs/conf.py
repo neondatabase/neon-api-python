@@ -24,9 +24,13 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
     "sphinx.ext.autosectionlabel",
+    # "sphinx_immaterial",
 ]
+# html_theme = "sphinx_immaterial"
+html_theme_options = {}
 
-autodoc_typehints = "signature"
+
+# autodoc_typehints = "signature"
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
