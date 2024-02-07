@@ -37,7 +37,7 @@ class ApiKeyCreateResponse:
     id: int
     key: str
     name: str
-    created_at: str
+    created_at: datetime
 
 
 @dataclass
@@ -46,16 +46,16 @@ class ApiKeyRevokeResponse:
     name: str
     revoked: bool
     last_used_from_addr: str
-    last_used_at: Optional[str] = None
+    last_used_at: Optional[datetime] = None
 
 
 @dataclass
 class ApiKeysListResponseItem:
     id: int
     name: str
-    created_at: str
+    created_at: datetime
     last_used_from_addr: str
-    last_used_at: Optional[str] = None
+    last_used_at: Optional[datetime] = None
 
 
 class OperationAction(Enum):
@@ -94,8 +94,8 @@ class Branch:
 class ProjectPermission:
     id: str
     granted_to_email: str
-    granted_at: str
-    revoked_at: Optional[str] = None
+    granted_at: datetime
+    revoked_at: Optional[datetime] = None
 
 
 @dataclass
@@ -240,8 +240,8 @@ class ExplainData:
 class Role:
     branch_id: str
     name: str
-    created_at: str
-    updated_at: str
+    created_at: datetime
+    updated_at: datetime
     password: Optional[str] = None
     protected: Optional[bool] = None
 
@@ -323,8 +323,8 @@ class Database:
     branch_id: str
     name: str
     owner_name: str
-    created_at: str
-    updated_at: str
+    created_at: datetime
+    updated_at: datetime
 
 
 @dataclass
@@ -417,13 +417,13 @@ class Operation:
     action: OperationAction
     status: OperationStatus
     failures_count: int
-    created_at: str
-    updated_at: str
+    created_at: datetime
+    updated_at: datetime
     total_duration_ms: int
     branch_id: Optional[str] = None
     endpoint_id: Optional[str] = None
     error: Optional[str] = None
-    retry_at: Optional[str] = None
+    retry_at: Optional[datetime] = None
 
 
 @dataclass
@@ -462,14 +462,14 @@ class Branch1:
     active_time_seconds: int
     written_data_bytes: int
     data_transfer_bytes: int
-    created_at: str
-    updated_at: str
+    created_at: datetime
+    updated_at: datetime
     parent_id: Optional[str] = None
     parent_lsn: Optional[str] = None
     parent_timestamp: Optional[str] = None
     pending_state: Optional[BranchState] = None
     logical_size: Optional[int] = None
-    last_reset_at: Optional[str] = None
+    last_reset_at: Optional[datetime] = None
 
 
 @dataclass
@@ -594,15 +594,15 @@ class ProjectListItem:
     active_time: int
     cpu_used_sec: int
     creation_source: str
-    created_at: str
-    updated_at: str
+    created_at: datetime
+    updated_at: datetime
     owner_id: str
     default_endpoint_settings: Optional[DefaultEndpointSettings] = None
     settings: Optional[ProjectSettingsData] = None
-    maintenance_starts_at: Optional[str] = None
+    maintenance_starts_at: Optional[datetime] = None
     synthetic_storage_size: Optional[int] = None
-    quota_reset_at: Optional[str] = None
-    compute_last_active_at: Optional[str] = None
+    quota_reset_at: Optional[datetime] = None
+    compute_last_active_at: Optional[datetime] = None
 
 
 @dataclass
@@ -625,18 +625,18 @@ class Project:
     store_passwords: bool
     creation_source: str
     history_retention_seconds: int
-    created_at: str
-    updated_at: str
+    created_at: datetime
+    updated_at: datetime
     consumption_period_start: str
     consumption_period_end: str
     owner_id: str
     default_endpoint_settings: Optional[DefaultEndpointSettings] = None
     settings: Optional[ProjectSettingsData] = None
-    maintenance_starts_at: Optional[str] = None
+    maintenance_starts_at: Optional[datetime] = None
     synthetic_storage_size: Optional[int] = None
-    quota_reset_at: Optional[str] = None
+    quota_reset_at: Optional[datetime] = None
     owner: Optional[ProjectOwnerData] = None
-    compute_last_active_at: Optional[str] = None
+    compute_last_active_at: Optional[datetime] = None
 
 
 @dataclass
@@ -699,8 +699,8 @@ class Endpoint:
     disabled: bool
     passwordless_access: bool
     creation_source: str
-    created_at: str
-    updated_at: str
+    created_at: datetime
+    updated_at: datetime
     proxy_host: str
     suspend_timeout_seconds: int
     provisioner: Provisioner
