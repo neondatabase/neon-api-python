@@ -123,7 +123,7 @@ class NeonAPI:
     def _url_join(self, *args):
         """Join a list of URL components into a single URL."""
 
-        return "/".join(*args)
+        return "/".join(args)
 
     @classmethod
     def from_environ(cls):
