@@ -19,8 +19,6 @@ With ``neon_client``, developers can:
 - Enhance application security by managing API keys and permissions through code.
 - Leverage the power of Neon's cloud database without the need for manual intervention or the Neon console.
 
-
-
 This project simplifies the complexity of interacting with the Neon API, making it more accessible for developers to 
 build scalable, data-driven applications with ease. Pydantic dataclasses are used to represent the data structures returned
 by the API, and the client provides a relatively transparent interface to the Neon API.
@@ -47,7 +45,7 @@ Once you have an API key, you can use the ``neon_client`` package to interact wi
 There are two ways to initialize the client:
 
 1. By passing the API key directly to the client.
-2. By setting the API key as an environment variable and using the `from_environ` method.
+2. By setting the API key as an environment variable and using the ``from_environ`` method.
 
 We recommend using the second method to avoid exposing your API key in your codebase:
 
