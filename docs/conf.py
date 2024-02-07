@@ -22,11 +22,8 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
     "sphinx.ext.autosummary",
-    "sphinx.ext.intersphinx",
     "sphinx.ext.autosectionlabel",
-    # "sphinx_immaterial",
 ]
-# html_theme = "sphinx_immaterial"
 html_theme_options = {}
 
 
@@ -39,5 +36,6 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = "alabaster"
+# html_theme = "alabaster"
+html_theme = "renku"
 html_static_path = ["_static"]

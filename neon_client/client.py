@@ -160,9 +160,7 @@ class NeonAPI:
 
         Example usage:
 
-        ```python
-        >>> neon.api_key_create(name="My API Key")
-        ```
+            >>> neon.api_key_create(name="My API Key")
 
         More info: https://api-docs.neon.tech/reference/createapikey
         """
