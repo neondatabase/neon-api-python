@@ -3,15 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-``neon-client`` — Python client for the Neon API.
-=================================================
+``neon-api-python`` — Python client for the Neon API.
+==============================================
 
-This is the documentation for the ``neon_client`` package. It is a Python client for the Neon API. ``neon_client`` empowers 
+This is the documentation for the ``neon_api`` package. It is a Python client for the Neon API. ``neon_api`` empowers 
 developers by providing a comprehensive Python wrapper around the Neon API. This enables seamless integration of Neon's 
 cloud database capabilities into Python applications, facilitating a wide range of operations such as managing API keys, 
 projects, branches, databases, endpoints, roles, and operations directly from your codebase.
 
-With ``neon_client``, developers can:
+With ``neon_api``, developers can:
 
 - Automate the provisioning and management of Neon cloud databases.
 - Programmatically control and manipulate database endpoints and roles.
@@ -30,7 +30,7 @@ To install the package, run the following command:
 
 .. code-block:: bash
 
-    $ pip install neon-client
+    $ pip install neon-api
 
 .. note::
 
@@ -40,7 +40,7 @@ Usage
 -----
 
 To use the package, you need to have a valid API key. You can obtain an API key from the Neon console. 
-Once you have an API key, you can use the ``neon_client`` package to interact with the Neon API.
+Once you have an API key, you can use the ``neon_api`` package to interact with the Neon API.
 
 There are two ways to initialize the client:
 
@@ -57,7 +57,7 @@ Then, from Python…
 
 .. code-block:: python
 
-    from neon_client import NeonAPI
+    from neon_api import NeonAPI
 
     neon = NeonAPI.from_environ()
 
@@ -69,7 +69,7 @@ Below is an example of how to use the package to interact with the Neon API:
 
 .. code-block:: python
 
-    from neon_client import NeonAPI
+    from neon_api import NeonAPI
 
     # Initialize the client.
     neon = NeonAPI.from_environ() or NeonAPI(api_key='your_api_key')
@@ -100,7 +100,7 @@ The following sections provide detailed information about the classes and method
 Module–level functions
 //////////////////////
 
-.. automodule:: neon_client
+.. automodule:: neon_api
     :members:
     :undoc-members:
     :show-inheritance:
@@ -108,7 +108,7 @@ Module–level functions
 Classes
 ///////
 
-.. autoclass:: neon_client.NeonAPI
+.. autoclass:: neon_api.NeonAPI
     :members:
     :undoc-members:
     :show-inheritance:
