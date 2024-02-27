@@ -13,15 +13,15 @@ $ pip install neon-api
 
 ## Usage
 
-
-**[Documentation is available on ReadTheDocs](https://neon-api-python.readthedocs.io/)**.
-
 ```python
 from neon_api import NeonAPI
 
 # Initialize the client.
 neon = NeonAPI(api_key='your_api_key')
 ```
+
+**[Documentation is available on ReadTheDocs](https://neon-api-python.readthedocs.io/)**.
+
 
 Remember that you should never expose your api_key and handle it carefully since it gives access to sensitive data. It's better to set it as an environment variable (e.g. `NEON_API_KEY` + accompanying `neon_client.from_environ()`).
 
