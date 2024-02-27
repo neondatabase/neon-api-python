@@ -7,6 +7,8 @@ With `neon_api`, you can automate tasks, streamline workflows, and build powerfu
 
 ## Installation
 
+Installation of `neon_api` is easy, with pip:
+
 ```bash
 $ pip install neon-api
 ```
