@@ -11,10 +11,10 @@ With `neon_client`, you can automate tasks, streamline workflows, and build powe
 $ pip install neon-client
 ```
 
-**Please Note**: this repository is a work in progress.  The package is not yet available on PyPi.  The above command will not work.
-
-
 ## Usage
+
+
+**[Documentation is available on ReadTheDocs](https://neon-client-python.readthedocs.io/)**.
 
 ```python
 from neon_client import NeonAPI
@@ -25,7 +25,6 @@ neon = NeonAPI(api_key='your_api_key')
 
 Remember that you should never expose your api_key and handle it carefully since it gives access to sensitive data. It's better to set it as an environment variable (e.g. `NEON_API_KEY` + accompanying `neon_client.from_environ()`).
 
-**[Documentation is available on ReadTheDocs](https://neon-client-python.readthedocs.io/)**.
 
 -------
 
