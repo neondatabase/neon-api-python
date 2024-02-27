@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-``neon-api-python`` — Python client for the Neon API.
+``neon-api`` — Python client for the Neon API.
 ==============================================
 
 This is the documentation for the ``neon_api`` package. It is a Python client for the Neon API. ``neon_api`` empowers 
