@@ -1,14 +1,14 @@
-# `neon_client`: an api wrapper for the [Neon API](https://api-docs.neon.tech/reference/getting-started-with-neon-api).
+# `neon_api`: an api wrapper for the [Neon API](https://api-docs.neon.tech/reference/getting-started-with-neon-api).
 
-`neon_client` is a Python wrapper designed to simplify interactions with the [Neon API](https://api-docs.neon.tech/reference/getting-started-with-neon-api). It provides a convenient way for developers to integrate their Python applications with the Neon platform, offering methods to manage API keys, projects, branches, databases, endpoints, roles, and operations programmatically.
+`neon_api` is a Python wrapper designed to simplify interactions with the [Neon API](https://api-docs.neon.tech/reference/getting-started-with-neon-api). It provides a convenient way for developers to integrate their Python applications with the Neon platform, offering methods to manage API keys, projects, branches, databases, endpoints, roles, and operations programmatically.
 
-With `neon_client`, you can automate tasks, streamline workflows, and build powerful integrations with ease.
+With `neon_api`, you can automate tasks, streamline workflows, and build powerful integrations with ease.
 
 
 ## Installation
 
 ```bash
-$ pip install neon-client
+$ pip install neon-api
 ```
 
 ## Usage
@@ -17,7 +17,7 @@ $ pip install neon-client
 **[Documentation is available on ReadTheDocs](https://neon-client-python.readthedocs.io/)**.
 
 ```python
-from neon_client import NeonAPI
+from neon_api import NeonAPI
 
 # Initialize the client.
 neon = NeonAPI(api_key='your_api_key')
