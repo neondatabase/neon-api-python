@@ -14,7 +14,7 @@ $ pip install neon-api
 ## Usage
 
 
-**[Documentation is available on ReadTheDocs](https://neon-client-python.readthedocs.io/)**.
+**[Documentation is available on ReadTheDocs](https://neon-api-python.readthedocs.io/)**.
 
 ```python
 from neon_api import NeonAPI
