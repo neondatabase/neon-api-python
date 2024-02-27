@@ -2,5 +2,6 @@ __pycache__
 **.egg-info/**
 .coverage
 docs/_build/**
+build/**
 Pipfile
 Pipfile.lock
