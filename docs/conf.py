@@ -4,15 +4,15 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 
-import neon_client
+import neon_api
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "neon-client"
+project = "neon-api-python"
 copyright = "2024 Neon, Inc"
 author = "Neon, Inc"
-release = neon_client.__version__
+release = neon_api.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

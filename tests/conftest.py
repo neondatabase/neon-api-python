@@ -5,7 +5,7 @@ import pytest
 
 @pytest.fixture
 def neon():
-    from neon_client import NeonAPI
+    from neon_api import NeonAPI
 
     return NeonAPI.from_environ()
 

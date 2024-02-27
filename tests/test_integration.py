@@ -1,7 +1,7 @@
 from random import randint
 
 import pytest
-import neon_client
+import neon_api
 
 
 @pytest.fixture(scope="module")
@@ -13,7 +13,7 @@ def vcr_config():
 def test_me(neon):
     me = neon.me()
 
-    assert isinstance(me, neon_client.schema.CurrentUserInfoResponse)
+    assert isinstance(me, neon_api.schema.CurrentUserInfoResponse)
     assert me.email
 
 
