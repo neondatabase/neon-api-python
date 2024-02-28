@@ -101,10 +101,10 @@ View the [Neon API documentation](https://api-docs.neon.tech/reference/getting-s
 
 ## Development
 
-Installation is simple with `pipenv`. Just run the following command in the root directory of the repository:
+First, create a virtual environment, then install the dependencies of the library with `pip`:
 
 ```bash
-$ pipenv install --dev
+$ pip install -r requirements.txt
 ```
 
 This will install all the necessary dependencies for development.
