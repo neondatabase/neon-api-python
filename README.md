@@ -125,4 +125,4 @@ This will record new cassettes for the tests. Make sure to commit these cassette
 
 ## License & Copyright
 
-[MIT licensed](./LICENSE).
+[Apache 2.0 Licensed](./LICENSE).
