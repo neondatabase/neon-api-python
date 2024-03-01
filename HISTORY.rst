@@ -1,6 +1,10 @@
 History
 =======
 
+0.1.3
+-----
+
+- Added poetry tooling support. 
 
 0.1.2
 -----
