@@ -17,7 +17,7 @@ DESCRIPTION = "An API Client for the Neon API."
 URL = "https://github.com/kennethreitz/neon-api-python"
 EMAIL = "me@kennethreitz.org"
 AUTHOR = "Kenneth Reitz"
-REQUIRES_PYTHON = ">=3.10.0"
+REQUIRES_PYTHON = ">=3.9.0"
 VERSION = "0.1.1"
 
 # What packages are required for this module to be executed?
@@ -117,6 +117,7 @@ setup(
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",

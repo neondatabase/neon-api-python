@@ -183,8 +183,8 @@ class NeonAPI:
         self,
         *,
         shared: bool = False,
-        cursor: str | None = None,
-        limit: int | None = None,
+        cursor: str = None,
+        limit: int = None,
     ) -> t.List[t.Dict[str, t.Any]]:
         """Get a list of projects. If shared is True, get a list of shared projects.
 
@@ -297,8 +297,8 @@ class NeonAPI:
         self,
         project_id: str,
         *,
-        cursor: str | None = None,
-        limit: int | None = None,
+        cursor: str = None,
+        limit: int = None,
     ) -> t.Dict[str, t.Any]:
         """Get a list of branches.
 
@@ -400,8 +400,8 @@ class NeonAPI:
         project_id: str,
         branch_id: str,
         *,
-        cursor: str | None = None,
-        limit: int | None = None,
+        cursor: str = None,
+        limit: int = None,
     ) -> t.List[t.Dict[str, t.Any]]:
         """Get a list of databases.
 
@@ -741,8 +741,8 @@ class NeonAPI:
         self,
         project_id: str,
         *,
-        cursor: str | None = None,
-        limit: int | None = None,
+        cursor: str = None,
+        limit: int = None,
     ) -> t.Dict[str, t.Any]:
         """Get a list of operations.
 
@@ -778,10 +778,10 @@ class NeonAPI:
     def consumption(
         self,
         *,
-        cursor: str | None = None,
-        limit: int | None = None,
-        from_date: datetime | str | None = None,
-        to_date: datetime | str | None = None,
+        cursor: str = None,
+        limit: int = None,
+        from_date: datetime = None,
+        to_date: datetime = None,
     ) -> t.Dict[str, t.Any]:
         """Experimental — get a list of consumption metrics for all projects.
 
