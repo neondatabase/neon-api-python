@@ -14,7 +14,7 @@ from setuptools import find_packages, setup, Command
 # Package meta-data.
 NAME = "neon-api"
 DESCRIPTION = "An API Client for the Neon API."
-URL = "https://github.com/kennethreitz/neon-api-python"
+URL = "https://github.com/neondatabase/neon-api-python"
 EMAIL = "me@kennethreitz.org"
 AUTHOR = "Kenneth Reitz"
 REQUIRES_PYTHON = ">=3.9.0"

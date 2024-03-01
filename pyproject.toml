@@ -5,7 +5,7 @@ description = "An API Client for the Neon API."
 authors = ["Kenneth Reitz <me@kennethreitz.org>"]
 license = "Apache-2.0"
 readme = "README.md"
-homepage = "https://github.com/kennethreitz/neon-api-python"
+homepage = "https://github.com/neondatabase/neon-api-python"
 classifiers = [
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python",
