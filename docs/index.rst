@@ -34,7 +34,7 @@ To install the package, run the following command:
 
 .. note::
 
-    The package requires Python 3.10 or later.
+    The package requires Python 3.9 or later.
 
 Usage
 -----
