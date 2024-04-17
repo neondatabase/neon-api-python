@@ -1,5 +1,5 @@
 test:
-	pytest --record-mode=none tests/
+	source .env;pytest --record-mode=none tests/
 
 fmt:
 	ruff format .

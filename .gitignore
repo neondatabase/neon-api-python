@@ -6,3 +6,5 @@ build/**
 dist/**
 Pipfile
 Pipfile.lock
+.env
+.idea/**
