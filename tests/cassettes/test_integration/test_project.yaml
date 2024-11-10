@@ -272,6 +272,44 @@ interactions:
       - application/json
       User-Agent:
       - neon-client/python version=(0.1.0)
+    method: GET
+    uri: https://console.neon.tech/api/v2/projects/icy-dream-08641192/connection_uri?database_name=neondb&role_name=neondb_owner&pooled=True
+  response:
+    body:
+      string: '{"uri":"postgres://kennethreitz:SfveBzuq78bs@ep-floral-shape-a5lure6e.us-east-2.aws.neon.tech/neondb?sslmode=require"}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '965'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 07 Feb 2024 14:04:03 GMT
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Vary:
+      - Origin
+      X-Neon-Ret-Request-Id:
+      - c2dc90aab245f1de6f981b1b99e0adb6
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - neon-client/python version=(0.1.0)
     method: DELETE
     uri: https://console.neon.tech/api/v2/projects/icy-dream-08641192
   response:

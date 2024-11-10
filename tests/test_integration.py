@@ -54,6 +54,8 @@ def test_project(neon, ensure_no_projects, random_name):
     for project in neon.projects(shared=True).projects:
         assert hasattr(project, "id")
 
+    neon.connection_uri(project.id, "neondb", "neondb_owner", True)
+
     # Delete the project.
     neon.project_delete(project.id)
 

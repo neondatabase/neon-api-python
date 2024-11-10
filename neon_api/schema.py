@@ -185,6 +185,11 @@ class ConnectionDetails:
     connection_parameters: ConnectionParameters
 
 
+@dataclass
+class ConnectionUri:
+    uri: str
+
+
 class EndpointState(Enum):
     init = "init"
     active = "active"
