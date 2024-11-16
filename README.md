@@ -50,6 +50,7 @@ Remember that you should never expose your api_key and handle it carefully since
 - `project_permissions(project_id)`: Returns a list of permissions for a given project.
 - `project_permissions_grant(project_id, **json)`: Grant permissions to a given project.
 - `project_permissions_revoke(project_id, **json)`: Revoke permissions from a given project.
+- `connection_uri(project_id, database_name, role_name)`: Returns the connection string for a given project.
 
 **Manage branches**:
 
