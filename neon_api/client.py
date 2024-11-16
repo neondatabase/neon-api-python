@@ -215,6 +215,20 @@ class NeonAPI:
 
         return self._request("GET", r_path)
 
+    @returns_model(schema.ConnectionUri)
+    def connection_uri(self, project_id: str, database_name: str = None, role_name: str = None, pooled: bool = False) -> t.Dict[str, t.Any]:
+        """Get a connection URI for a project.
+
+        :param project_id: The ID of the project.
+        :param database_name: The name of the database.
+        :param role_name: The name of the role.
+        :return: A dataclass representing the connection URI.
+
+        More info: https://api-docs.neon.tech/reference/getconnectionuri
+        """
+        r_params = compact_mapping({"database_name": database_name, "role_name": role_name, "pooled": pooled})
+        return self._request("GET", f"projects/{project_id}/connection_uri", params=r_params)
+
     @returns_model(schema.ProjectResponse)
     def project_create(self, **json: dict) -> t.Dict[str, t.Any]:
         """Create a new project. Accepts all keyword arguments for json body.
