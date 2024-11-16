@@ -1,6 +1,11 @@
 History
 =======
 
+0.1.4
+-----
+
+- Added connection_uri GET request
+
 0.1.3
 -----
 
