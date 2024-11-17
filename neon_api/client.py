@@ -495,7 +495,7 @@ class NeonAPI:
         """
 
         return self._request(
-            "PUT",
+            "PATCH",
             f"projects/{ project_id }/branches/{ branch_id }/databases/{ database_id }",
             json=json,
         )
