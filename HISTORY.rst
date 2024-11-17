@@ -1,6 +1,11 @@
 History
 =======
 
+0.1.5
+-----
+
+- Fixes database update HTTP method
+
 0.1.4
 -----
 
