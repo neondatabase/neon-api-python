@@ -113,6 +113,7 @@ This will install all the necessary dependencies for development.
 To run the tests, use the following command:
 
 ```bash
+# set up a .env file with your API key as per `.env.example`
 $ make test
 ```
 

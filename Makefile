@@ -1,8 +1,9 @@
 test:
-	pytest --record-mode=none tests/
+	set -a && source .env && set +a; pytest --record-mode=none tests/
 
 fmt:
 	ruff format .
+
 ci: 
 	pytest --cov=neon_client --record-mode=none tests/
 
