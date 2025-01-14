@@ -1,7 +1,12 @@
 History
 =======
 
-0.1.5
+0.2.0
+-----
+
+- Bumps the OpenAPI schema used for the SDK
+
+0.1.6
 -----
 
 - Fixes database update HTTP method
