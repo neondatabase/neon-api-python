@@ -2,6 +2,7 @@ History
 =======
 
 0.3.0
+-----
 
 - Bumps the Python data types used for the SDK
 
