@@ -18,7 +18,7 @@ URL = "https://github.com/neondatabase/neon-api-python"
 EMAIL = "me@kennethreitz.org"
 AUTHOR = "Kenneth Reitz"
 REQUIRES_PYTHON = ">=3.9.0"
-VERSION = "0.2.0"
+VERSION = "0.3.0"
 
 # What packages are required for this module to be executed?
 REQUIRED = ["requests", "pydantic >= 2.0.0"]
