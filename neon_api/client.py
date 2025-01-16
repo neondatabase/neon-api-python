@@ -215,7 +215,7 @@ class NeonAPI:
 
         return self._request("GET", r_path)
 
-    @returns_model(schema.ConnectionUri)
+    @returns_model(schema.ConnectionURIResponse)
     def connection_uri(
         self,
         project_id: str,
@@ -797,37 +797,3 @@ class NeonAPI:
         return self._request(
             "GET", f"projects/{ project_id }/operations/{ operation_id }"
         )
-
-    @returns_model(schema.ProjectsConsumptionResponse)
-    def consumption(
-        self,
-        *,
-        cursor: str = None,
-        limit: int = None,
-        from_date: datetime = None,
-        to_date: datetime = None,
-    ) -> t.Dict[str, t.Any]:
-        """Experimental — get a list of consumption metrics for all projects.
-
-        :param cursor: The cursor for pagination (default is None).
-        :param limit: The maximum number of projects to retrieve (default is None).
-        :param from_date: The start date for the consumption metrics (default is None).
-        :param to_date: The end date for the consumption metrics (default is None).
-        :return: A dataclass representing the consumption metrics.
-
-        More info: https://api-docs.neon.tech/reference/listprojectsconsumption
-        """
-
-        # Convert datetime objects to ISO 8601 strings.
-        from_date = (
-            to_iso8601(from_date) if isinstance(from_date, datetime) else from_date
-        )
-        to_date = to_iso8601(to_date) if isinstance(to_date, datetime) else to_date
-
-        # Construct the request parameters.
-        r_params = compact_mapping(
-            {"cursor": cursor, "limit": limit, "from": from_date, "to": to_date}
-        )
-
-        # Make the request.
-        return self._request("GET", "consumption/projects", params=r_params)

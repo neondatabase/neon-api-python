@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"key_name": "pytest-3951"}'
+    body: '{"key_name": "pytest-8050"}'
     headers:
       Accept:
       - application/json
@@ -18,22 +18,36 @@ interactions:
     uri: https://console.neon.tech/api/v2/api_keys
   response:
     body:
-      string: '{"id":821303,"key":"z46yynhjt27n5eaif3l7hnn8fh1romg3dal6j6lh1c5wp1kg9wluz9ivu0qfkg87","name":"pytest-3951","created_at":"2024-02-07T14:04:01Z"}'
+      string: '{"id":1954948,"key":"m5azy6fs2cea9mr9b37e5k6wclu7olast37zrt3f1mjhha02gl8if38pb2tmdsot","name":"pytest-8050","created_at":"2025-01-16T21:01:58Z","created_by":"92cdd2ee-a6d8-4647-868f-124531123b03"}'
     headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 90310b393875de9b-EWR
       Connection:
       - keep-alive
-      Content-Length:
-      - '143'
+      Content-Encoding:
+      - gzip
       Content-Type:
-      - application/json
+      - application/json; charset=utf-8
       Date:
-      - Wed, 07 Feb 2024 14:04:01 GMT
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
-      Vary:
+      - Thu, 16 Jan 2025 21:01:58 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains; preload
+      vary:
       - Origin
-      X-Neon-Ret-Request-Id:
-      - 980e46c9d9405afa07b0a9d77e9042c7
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-neon-ret-request-id:
+      - 332164ee-24a6-440d-a486-77679f124fd4
     status:
       code: 200
       message: OK
@@ -54,22 +68,48 @@ interactions:
     uri: https://console.neon.tech/api/v2/api_keys
   response:
     body:
-      string: '[{"id":821303,"name":"pytest-3951","created_at":"2024-02-07T14:04:01Z","last_used_at":null,"last_used_from_addr":""},{"id":768620,"name":"neon_client","created_at":"2024-01-23T21:56:07Z","last_used_at":"2024-02-07T14:04:01Z","last_used_from_addr":"204.111.161.156"}]'
+      string: '[{"id":1954948,"name":"pytest-8050","created_at":"2025-01-16T21:01:58Z","created_by":{"id":"92cdd2ee-a6d8-4647-868f-124531123b03","name":"David
+        Gomes","image":"https://lh3.googleusercontent.com/a/ACg8ocIW4y_ki038IdI89ZxbbfuRuXtJyTuDYdTJZkMzWLaBHEdN7AY=s96-c"},"last_used_at":null,"last_used_from_addr":""},{"id":1937557,"name":"other
+        test","created_at":"2025-01-03T20:02:41Z","created_by":{"id":"92cdd2ee-a6d8-4647-868f-124531123b03","name":"David
+        Gomes","image":"https://lh3.googleusercontent.com/a/ACg8ocIW4y_ki038IdI89ZxbbfuRuXtJyTuDYdTJZkMzWLaBHEdN7AY=s96-c"},"last_used_at":"2025-01-03T20:06:28Z","last_used_from_addr":"52.200.136.63"},{"id":1934773,"name":"quick_test","created_at":"2025-01-01T21:15:36Z","created_by":{"id":"92cdd2ee-a6d8-4647-868f-124531123b03","name":"David
+        Gomes","image":"https://lh3.googleusercontent.com/a/ACg8ocIW4y_ki038IdI89ZxbbfuRuXtJyTuDYdTJZkMzWLaBHEdN7AY=s96-c"},"last_used_at":"2025-01-03T13:03:20Z","last_used_from_addr":"54.234.118.252"},{"id":1934772,"name":"composio","created_at":"2025-01-01T21:15:02Z","created_by":{"id":"92cdd2ee-a6d8-4647-868f-124531123b03","name":"David
+        Gomes","image":"https://lh3.googleusercontent.com/a/ACg8ocIW4y_ki038IdI89ZxbbfuRuXtJyTuDYdTJZkMzWLaBHEdN7AY=s96-c"},"last_used_at":null,"last_used_from_addr":""},{"id":1885316,"name":"claude","created_at":"2024-12-02T08:07:54Z","created_by":{"id":"92cdd2ee-a6d8-4647-868f-124531123b03","name":"David
+        Gomes","image":"https://lh3.googleusercontent.com/a/ACg8ocIW4y_ki038IdI89ZxbbfuRuXtJyTuDYdTJZkMzWLaBHEdN7AY=s96-c"},"last_used_at":null,"last_used_from_addr":""},{"id":1835348,"name":"another
+        one","created_at":"2024-11-17T17:48:24Z","created_by":{"id":"92cdd2ee-a6d8-4647-868f-124531123b03","name":"David
+        Gomes","image":"https://lh3.googleusercontent.com/a/ACg8ocIW4y_ki038IdI89ZxbbfuRuXtJyTuDYdTJZkMzWLaBHEdN7AY=s96-c"},"last_used_at":"2024-11-17T17:49:31Z","last_used_from_addr":"113.203.180.132,35.160.120.126"},{"id":1831722,"name":"agent","created_at":"2024-11-16T13:12:47Z","created_by":{"id":"92cdd2ee-a6d8-4647-868f-124531123b03","name":"David
+        Gomes","image":"https://lh3.googleusercontent.com/a/ACg8ocIW4y_ki038IdI89ZxbbfuRuXtJyTuDYdTJZkMzWLaBHEdN7AY=s96-c"},"last_used_at":"2025-01-14T21:21:34Z","last_used_from_addr":"172.56.167.151"},{"id":1813799,"name":"python
+        demo api key","created_at":"2024-11-10T16:44:30Z","created_by":{"id":"92cdd2ee-a6d8-4647-868f-124531123b03","name":"David
+        Gomes","image":"https://lh3.googleusercontent.com/a/ACg8ocIW4y_ki038IdI89ZxbbfuRuXtJyTuDYdTJZkMzWLaBHEdN7AY=s96-c"},"last_used_at":"2025-01-16T21:01:58Z","last_used_from_addr":"172.254.226.90"},{"id":1633393,"name":"test","created_at":"2024-09-21T19:51:43Z","created_by":{"id":"92cdd2ee-a6d8-4647-868f-124531123b03","name":"David
+        Gomes","image":"https://lh3.googleusercontent.com/a/ACg8ocIW4y_ki038IdI89ZxbbfuRuXtJyTuDYdTJZkMzWLaBHEdN7AY=s96-c"},"last_used_at":"2024-09-22T06:13:16Z","last_used_from_addr":"113.203.180.132"}]'
     headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 90310b3a988272b9-EWR
       Connection:
       - keep-alive
-      Content-Length:
-      - '266'
+      Content-Encoding:
+      - gzip
       Content-Type:
-      - application/json
+      - application/json; charset=utf-8
       Date:
-      - Wed, 07 Feb 2024 14:04:01 GMT
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
-      Vary:
+      - Thu, 16 Jan 2025 21:01:58 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains; preload
+      vary:
       - Origin
-      X-Neon-Ret-Request-Id:
-      - b4439d52416bca497dd5ce25fe598756
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-neon-ret-request-id:
+      - 929237b6-fa5d-4afb-bd37-c394f4180323
     status:
       code: 200
       message: OK
@@ -89,25 +129,39 @@ interactions:
       User-Agent:
       - neon-client/python version=(0.1.0)
     method: DELETE
-    uri: https://console.neon.tech/api/v2/api_keys/821303
+    uri: https://console.neon.tech/api/v2/api_keys/1954948
   response:
     body:
-      string: '{"id":821303,"name":"pytest-3951","revoked":true,"last_used_at":null,"last_used_from_addr":""}'
+      string: '{"id":1954948,"name":"pytest-8050","created_at":"2025-01-16T21:01:58Z","created_by":"92cdd2ee-a6d8-4647-868f-124531123b03","last_used_at":null,"last_used_from_addr":"","revoked":true}'
     headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 90310b3bbc9d7292-EWR
       Connection:
       - keep-alive
-      Content-Length:
-      - '94'
+      Content-Encoding:
+      - gzip
       Content-Type:
-      - application/json
+      - application/json; charset=utf-8
       Date:
-      - Wed, 07 Feb 2024 14:04:02 GMT
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
-      Vary:
+      - Thu, 16 Jan 2025 21:01:59 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains; preload
+      vary:
       - Origin
-      X-Neon-Ret-Request-Id:
-      - 5ba0f1a7236a57ed7f9d30e3631b2fef
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-neon-ret-request-id:
+      - fb342a59-a74a-47ce-a1da-46f8d6d1d2a1
     status:
       code: 200
       message: OK
