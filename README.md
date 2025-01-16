@@ -125,6 +125,19 @@ $ make record
 
 This will record new cassettes for the tests. Make sure to commit these cassettes along with your changes.
 
+### Updating the schema
+
+In order to update the Python data types from the OpenAPI schema, you need to:
+
+```
+$ mkdir neon_client/
+$ make schema
+# Now, take `neon_client/schema.py` and replace `neon_api/schema.py` with it.
+# Now, run:
+$ make test
+# You may have to run `make record` to update the fixtures.
+```
+
 ## License & Copyright
 
 [Apache 2.0 Licensed](./LICENSE).

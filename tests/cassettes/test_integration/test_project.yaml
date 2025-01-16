@@ -16,22 +16,36 @@ interactions:
     uri: https://console.neon.tech/api/v2/projects
   response:
     body:
-      string: '{"projects":[{"id":"bold-sun-73491519","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-4620","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0,"autoscaling_limit_max_cu":0,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"primary_branch_only":false},"enable_logical_replication":false},"pg_version":15,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":3072,"branch_logical_size_limit_bytes":3221225472,"store_passwords":true,"active_time":0,"cpu_used_sec":0,"creation_source":"console","created_at":"2024-01-25T15:57:50Z","updated_at":"2024-01-25T15:57:52Z","synthetic_storage_size":32658752,"quota_reset_at":"2024-03-01T00:00:00Z","owner_id":"838386f6-b5f1-4c3b-89a2-4f5a130ef3de"}],"pagination":{"cursor":"bold-sun-73491519"}}'
+      string: '{"projects":[{"id":"aged-salad-46255801","platform_id":"azure","region_id":"azure-eastus2","name":"test","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":2,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"ips":[],"protected_branches_only":false},"enable_logical_replication":false,"block_public_connections":false,"block_vpc_connections":false},"pg_version":16,"proxy_host":"eastus2.azure.neon.tech","branch_logical_size_limit":512,"branch_logical_size_limit_bytes":536870912,"store_passwords":true,"active_time":1340,"cpu_used_sec":343,"creation_source":"console","created_at":"2024-12-27T17:00:44Z","updated_at":"2025-01-13T04:08:18Z","synthetic_storage_size":46881408,"quota_reset_at":"2025-02-01T00:00:00Z","owner_id":"92cdd2ee-a6d8-4647-868f-124531123b03","compute_last_active_at":"2025-01-13T04:08:09Z"}],"pagination":{"cursor":"aged-salad-46255801"},"applications":{},"integrations":{}}'
     headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 90310b3cdc8b5e82-EWR
       Connection:
       - keep-alive
-      Content-Length:
-      - '802'
+      Content-Encoding:
+      - gzip
       Content-Type:
-      - application/json
+      - application/json; charset=utf-8
       Date:
-      - Wed, 07 Feb 2024 14:04:02 GMT
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
-      Vary:
+      - Thu, 16 Jan 2025 21:01:59 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains; preload
+      vary:
       - Origin
-      X-Neon-Ret-Request-Id:
-      - 8a01c8b658af42e163c5529ffd82490d
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-neon-ret-request-id:
+      - 000a25e6-8677-4268-a0ae-89d8fc72e7ee
     status:
       code: 200
       message: OK
@@ -51,30 +65,44 @@ interactions:
       User-Agent:
       - neon-client/python version=(0.1.0)
     method: DELETE
-    uri: https://console.neon.tech/api/v2/projects/bold-sun-73491519
+    uri: https://console.neon.tech/api/v2/projects/aged-salad-46255801
   response:
     body:
-      string: '{"project":{"data_storage_bytes_hour":130593648,"data_transfer_bytes":0,"written_data_bytes":32073120,"compute_time_seconds":86,"active_time_seconds":308,"cpu_used_sec":86,"id":"bold-sun-73491519","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-4620","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"ips":[],"primary_branch_only":false},"enable_logical_replication":false},"pg_version":15,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":3072,"branch_logical_size_limit_bytes":3221225472,"store_passwords":true,"creation_source":"console","history_retention_seconds":604800,"created_at":"2024-01-25T15:57:50Z","updated_at":"2024-01-25T15:57:52Z","synthetic_storage_size":32815400,"consumption_period_start":"0001-01-01T00:00:00Z","consumption_period_end":"0001-01-01T00:00:00Z","owner_id":"838386f6-b5f1-4c3b-89a2-4f5a130ef3de"}}'
+      string: '{"project":{"data_storage_bytes_hour":15807655176,"data_transfer_bytes":27735,"written_data_bytes":21858512,"compute_time_seconds":343,"active_time_seconds":1340,"cpu_used_sec":343,"id":"aged-salad-46255801","platform_id":"azure","region_id":"azure-eastus2","name":"test","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":2,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"ips":[],"protected_branches_only":false},"enable_logical_replication":false,"block_public_connections":false,"block_vpc_connections":false},"pg_version":16,"proxy_host":"eastus2.azure.neon.tech","branch_logical_size_limit":512,"branch_logical_size_limit_bytes":536870912,"store_passwords":true,"creation_source":"console","history_retention_seconds":86400,"created_at":"2024-12-27T17:00:44Z","updated_at":"2025-01-13T04:08:18Z","synthetic_storage_size":46881408,"consumption_period_start":"0001-01-01T00:00:00Z","consumption_period_end":"0001-01-01T00:00:00Z","owner_id":"92cdd2ee-a6d8-4647-868f-124531123b03","compute_last_active_at":"2025-01-13T04:08:09Z"}}'
     headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 90310b3e581e42bf-EWR
       Connection:
       - keep-alive
-      Content-Length:
-      - '990'
+      Content-Encoding:
+      - gzip
       Content-Type:
-      - application/json
+      - application/json; charset=utf-8
       Date:
-      - Wed, 07 Feb 2024 14:04:02 GMT
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
-      Vary:
+      - Thu, 16 Jan 2025 21:01:59 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains; preload
+      vary:
       - Origin
-      X-Neon-Ret-Request-Id:
-      - c3a3af09adbe473600ea21d28b42ae3f
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-neon-ret-request-id:
+      - 4fc0bdff-5ac4-4a41-b8af-d98ac8f2f7d1
     status:
       code: 200
       message: OK
 - request:
-    body: '{"project": {"name": "pytest-7002"}}'
+    body: '{"project": {"name": "pytest-6473"}}'
     headers:
       Accept:
       - application/json
@@ -92,22 +120,34 @@ interactions:
     uri: https://console.neon.tech/api/v2/projects
   response:
     body:
-      string: '{"project":{"data_storage_bytes_hour":0,"data_transfer_bytes":0,"written_data_bytes":0,"compute_time_seconds":0,"active_time_seconds":0,"cpu_used_sec":0,"id":"icy-dream-08641192","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-7002","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"ips":[],"primary_branch_only":false},"enable_logical_replication":false},"pg_version":15,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":3072,"branch_logical_size_limit_bytes":3221225472,"store_passwords":true,"creation_source":"console","history_retention_seconds":604800,"created_at":"2024-02-07T14:04:02Z","updated_at":"2024-02-07T14:04:02Z","consumption_period_start":"0001-01-01T00:00:00Z","consumption_period_end":"0001-01-01T00:00:00Z","owner_id":"838386f6-b5f1-4c3b-89a2-4f5a130ef3de"},"connection_uris":[{"connection_uri":"postgres://kennethreitz:SfveBzuq78bs@ep-floral-shape-a5lure6e.us-east-2.aws.neon.tech/neondb?sslmode=require","connection_parameters":{"database":"neondb","password":"SfveBzuq78bs","role":"kennethreitz","host":"ep-floral-shape-a5lure6e.us-east-2.aws.neon.tech","pooler_host":"ep-floral-shape-a5lure6e-pooler.us-east-2.aws.neon.tech"}}],"roles":[{"branch_id":"br-patient-block-a5ut6a96","name":"kennethreitz","password":"SfveBzuq78bs","protected":false,"created_at":"2024-02-07T14:04:02Z","updated_at":"2024-02-07T14:04:02Z"}],"databases":[{"id":32885819,"branch_id":"br-patient-block-a5ut6a96","name":"neondb","owner_name":"kennethreitz","created_at":"2024-02-07T14:04:02Z","updated_at":"2024-02-07T14:04:02Z"}],"operations":[{"id":"e55c0a28-45ae-43c3-bf9a-a355e4c0c044","project_id":"icy-dream-08641192","branch_id":"br-patient-block-a5ut6a96","action":"create_timeline","status":"running","failures_count":0,"created_at":"2024-02-07T14:04:02Z","updated_at":"2024-02-07T14:04:02Z","total_duration_ms":0},{"id":"ab5e9075-ea22-458a-b1cc-8d1299bc28c9","project_id":"icy-dream-08641192","branch_id":"br-patient-block-a5ut6a96","endpoint_id":"ep-floral-shape-a5lure6e","action":"start_compute","status":"scheduling","failures_count":0,"created_at":"2024-02-07T14:04:02Z","updated_at":"2024-02-07T14:04:02Z","total_duration_ms":0}],"branch":{"id":"br-patient-block-a5ut6a96","project_id":"icy-dream-08641192","name":"main","current_state":"init","pending_state":"ready","creation_source":"console","primary":true,"cpu_used_sec":0,"compute_time_seconds":0,"active_time_seconds":0,"written_data_bytes":0,"data_transfer_bytes":0,"created_at":"2024-02-07T14:04:02Z","updated_at":"2024-02-07T14:04:02Z"},"endpoints":[{"host":"ep-floral-shape-a5lure6e.us-east-2.aws.neon.tech","id":"ep-floral-shape-a5lure6e","project_id":"icy-dream-08641192","branch_id":"br-patient-block-a5ut6a96","autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"region_id":"aws-us-east-2","type":"read_write","current_state":"init","pending_state":"active","settings":{},"pooler_enabled":false,"pooler_mode":"transaction","disabled":false,"passwordless_access":true,"creation_source":"console","created_at":"2024-02-07T14:04:02Z","updated_at":"2024-02-07T14:04:02Z","proxy_host":"us-east-2.aws.neon.tech","suspend_timeout_seconds":0,"provisioner":"k8s-neonvm"}]}'
+      string: '{"project":{"data_storage_bytes_hour":0,"data_transfer_bytes":0,"written_data_bytes":0,"compute_time_seconds":0,"active_time_seconds":0,"cpu_used_sec":0,"id":"long-forest-06846227","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-6473","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"ips":[],"protected_branches_only":false},"enable_logical_replication":false,"block_public_connections":false,"block_vpc_connections":false},"pg_version":17,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":512,"branch_logical_size_limit_bytes":536870912,"store_passwords":true,"creation_source":"console","history_retention_seconds":86400,"created_at":"2025-01-16T21:01:59Z","updated_at":"2025-01-16T21:01:59Z","consumption_period_start":"0001-01-01T00:00:00Z","consumption_period_end":"0001-01-01T00:00:00Z","owner_id":"92cdd2ee-a6d8-4647-868f-124531123b03"},"connection_uris":[{"connection_uri":"postgresql://neondb_owner:GehbNIcf6tQ7@ep-jolly-frost-a57qv4wh.us-east-2.aws.neon.tech/neondb?sslmode=require","connection_parameters":{"database":"neondb","password":"GehbNIcf6tQ7","role":"neondb_owner","host":"ep-jolly-frost-a57qv4wh.us-east-2.aws.neon.tech","pooler_host":"ep-jolly-frost-a57qv4wh-pooler.us-east-2.aws.neon.tech"}}],"roles":[{"branch_id":"br-floral-wind-a5090hvr","name":"neondb_owner","password":"GehbNIcf6tQ7","protected":false,"created_at":"2025-01-16T21:01:59Z","updated_at":"2025-01-16T21:01:59Z"}],"databases":[{"id":39724307,"branch_id":"br-floral-wind-a5090hvr","name":"neondb","owner_name":"neondb_owner","created_at":"2025-01-16T21:01:59Z","updated_at":"2025-01-16T21:01:59Z"}],"operations":[{"id":"389d2336-3e9f-41b6-9042-5f06317b30d4","project_id":"long-forest-06846227","branch_id":"br-floral-wind-a5090hvr","action":"create_timeline","status":"running","failures_count":0,"created_at":"2025-01-16T21:02:00Z","updated_at":"2025-01-16T21:02:00Z","total_duration_ms":0},{"id":"4ddd4212-07ac-4264-aa43-d39702b504e5","project_id":"long-forest-06846227","branch_id":"br-floral-wind-a5090hvr","endpoint_id":"ep-jolly-frost-a57qv4wh","action":"start_compute","status":"scheduling","failures_count":0,"created_at":"2025-01-16T21:02:00Z","updated_at":"2025-01-16T21:02:00Z","total_duration_ms":0}],"branch":{"id":"br-floral-wind-a5090hvr","project_id":"long-forest-06846227","name":"main","current_state":"init","pending_state":"ready","state_changed_at":"2025-01-16T21:01:59Z","creation_source":"console","primary":true,"default":true,"protected":false,"cpu_used_sec":0,"compute_time_seconds":0,"active_time_seconds":0,"written_data_bytes":0,"data_transfer_bytes":0,"created_at":"2025-01-16T21:01:59Z","updated_at":"2025-01-16T21:01:59Z"},"endpoints":[{"host":"ep-jolly-frost-a57qv4wh.us-east-2.aws.neon.tech","id":"ep-jolly-frost-a57qv4wh","project_id":"long-forest-06846227","branch_id":"br-floral-wind-a5090hvr","autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"region_id":"aws-us-east-2","type":"read_write","current_state":"init","pending_state":"active","settings":{},"pooler_enabled":false,"pooler_mode":"transaction","disabled":false,"passwordless_access":true,"creation_source":"console","created_at":"2025-01-16T21:01:59Z","updated_at":"2025-01-16T21:01:59Z","proxy_host":"us-east-2.aws.neon.tech","suspend_timeout_seconds":0,"provisioner":"k8s-neonvm"}]}'
     headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 90310b40bb6f7cf0-EWR
       Connection:
       - keep-alive
+      Content-Length:
+      - '3446'
       Content-Type:
-      - application/json
+      - application/json; charset=utf-8
       Date:
-      - Wed, 07 Feb 2024 14:04:02 GMT
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
-      Transfer-Encoding:
-      - chunked
-      Vary:
+      - Thu, 16 Jan 2025 21:02:00 GMT
+      Server:
+      - cloudflare
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains; preload
+      vary:
       - Origin
-      X-Neon-Ret-Request-Id:
-      - fa793ced2650e06e79cb8bcbf28c5a0f
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-neon-ret-request-id:
+      - 0ff3a492-17ce-4304-9022-e4299c37acb2
     status:
       code: 201
       message: Created
@@ -125,30 +165,45 @@ interactions:
       User-Agent:
       - neon-client/python version=(0.1.0)
     method: GET
-    uri: https://console.neon.tech/api/v2/projects/icy-dream-08641192
+    uri: https://console.neon.tech/api/v2/projects/long-forest-06846227
   response:
     body:
-      string: '{"project":{"data_storage_bytes_hour":0,"data_transfer_bytes":0,"written_data_bytes":0,"compute_time_seconds":0,"active_time_seconds":0,"cpu_used_sec":0,"id":"icy-dream-08641192","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-7002","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"ips":[],"primary_branch_only":false},"enable_logical_replication":false},"pg_version":15,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":3072,"branch_logical_size_limit_bytes":3221225472,"store_passwords":true,"creation_source":"console","history_retention_seconds":604800,"created_at":"2024-02-07T14:04:02Z","updated_at":"2024-02-07T14:04:02Z","synthetic_storage_size":0,"consumption_period_start":"2024-01-13T02:10:30Z","consumption_period_end":"2024-03-01T00:00:00Z","quota_reset_at":"2024-03-01T00:00:00Z","owner_id":"838386f6-b5f1-4c3b-89a2-4f5a130ef3de","owner":{"email":"me@kennethreitz.org","branches_limit":10,"subscription_type":"free"}}}'
+      string: '{"project":{"data_storage_bytes_hour":0,"data_transfer_bytes":0,"written_data_bytes":0,"compute_time_seconds":0,"active_time_seconds":0,"cpu_used_sec":0,"id":"long-forest-06846227","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-6473","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"ips":[],"protected_branches_only":false},"enable_logical_replication":false,"block_public_connections":false,"block_vpc_connections":false},"pg_version":17,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":512,"branch_logical_size_limit_bytes":536870912,"store_passwords":true,"creation_source":"console","history_retention_seconds":86400,"created_at":"2025-01-16T21:01:59Z","updated_at":"2025-01-16T21:01:59Z","synthetic_storage_size":0,"consumption_period_start":"2025-01-01T00:00:00Z","consumption_period_end":"2025-02-01T00:00:00Z","owner_id":"92cdd2ee-a6d8-4647-868f-124531123b03","owner":{"email":"david@neon.tech","name":"David
+        Gomes","branches_limit":10,"subscription_type":"free_v2"}}}'
     headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 90310b43fb6c7c88-EWR
       Connection:
       - keep-alive
-      Content-Length:
-      - '1092'
+      Content-Encoding:
+      - gzip
       Content-Type:
-      - application/json
+      - application/json; charset=utf-8
       Date:
-      - Wed, 07 Feb 2024 14:04:02 GMT
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
-      Vary:
+      - Thu, 16 Jan 2025 21:02:00 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains; preload
+      vary:
       - Origin
-      X-Neon-Ret-Request-Id:
-      - a236ba010dafe0e8e281d54d6fd772a9
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-neon-ret-request-id:
+      - 90e48bfc-5d79-41a1-bca0-1fe865c625c8
     status:
       code: 200
       message: OK
 - request:
-    body: '{"project": {"name": "pytest-4134"}}'
+    body: '{"project": {"name": "pytest-3773"}}'
     headers:
       Accept:
       - application/json
@@ -163,25 +218,39 @@ interactions:
       User-Agent:
       - neon-client/python version=(0.1.0)
     method: PATCH
-    uri: https://console.neon.tech/api/v2/projects/icy-dream-08641192
+    uri: https://console.neon.tech/api/v2/projects/long-forest-06846227
   response:
     body:
-      string: '{"project":{"data_storage_bytes_hour":0,"data_transfer_bytes":0,"written_data_bytes":0,"compute_time_seconds":0,"active_time_seconds":0,"cpu_used_sec":0,"id":"icy-dream-08641192","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-4134","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"ips":[],"primary_branch_only":false},"enable_logical_replication":false},"pg_version":15,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":3072,"branch_logical_size_limit_bytes":3221225472,"store_passwords":true,"creation_source":"console","history_retention_seconds":604800,"created_at":"2024-02-07T14:04:02Z","updated_at":"2024-02-07T14:04:02Z","synthetic_storage_size":0,"consumption_period_start":"0001-01-01T00:00:00Z","consumption_period_end":"0001-01-01T00:00:00Z","owner_id":"838386f6-b5f1-4c3b-89a2-4f5a130ef3de"},"operations":[]}'
+      string: '{"project":{"data_storage_bytes_hour":0,"data_transfer_bytes":0,"written_data_bytes":0,"compute_time_seconds":0,"active_time_seconds":0,"cpu_used_sec":0,"id":"long-forest-06846227","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-3773","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"ips":[],"protected_branches_only":false},"enable_logical_replication":false,"block_public_connections":false,"block_vpc_connections":false},"pg_version":17,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":512,"branch_logical_size_limit_bytes":536870912,"store_passwords":true,"creation_source":"console","history_retention_seconds":86400,"created_at":"2025-01-16T21:01:59Z","updated_at":"2025-01-16T21:02:00Z","synthetic_storage_size":0,"consumption_period_start":"0001-01-01T00:00:00Z","consumption_period_end":"0001-01-01T00:00:00Z","owner_id":"92cdd2ee-a6d8-4647-868f-124531123b03"},"operations":[]}'
     headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 90310b451fe332ee-EWR
       Connection:
       - keep-alive
-      Content-Length:
-      - '981'
+      Content-Encoding:
+      - gzip
       Content-Type:
-      - application/json
+      - application/json; charset=utf-8
       Date:
-      - Wed, 07 Feb 2024 14:04:02 GMT
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
-      Vary:
+      - Thu, 16 Jan 2025 21:02:00 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains; preload
+      vary:
       - Origin
-      X-Neon-Ret-Request-Id:
-      - f966e4fe0c603e1215dffa6bcf44e8a6
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-neon-ret-request-id:
+      - 39ba66dd-55ae-423c-8574-3137fac75384
     status:
       code: 200
       message: OK
@@ -202,22 +271,36 @@ interactions:
     uri: https://console.neon.tech/api/v2/projects
   response:
     body:
-      string: '{"projects":[{"id":"icy-dream-08641192","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-4134","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0,"autoscaling_limit_max_cu":0,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"primary_branch_only":false},"enable_logical_replication":false},"pg_version":15,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":3072,"branch_logical_size_limit_bytes":3221225472,"store_passwords":true,"active_time":0,"cpu_used_sec":0,"creation_source":"console","created_at":"2024-02-07T14:04:02Z","updated_at":"2024-02-07T14:04:02Z","synthetic_storage_size":0,"quota_reset_at":"2024-03-01T00:00:00Z","owner_id":"838386f6-b5f1-4c3b-89a2-4f5a130ef3de"}],"pagination":{"cursor":"icy-dream-08641192"}}'
+      string: '{"projects":[{"id":"long-forest-06846227","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-3773","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"ips":[],"protected_branches_only":false},"enable_logical_replication":false,"block_public_connections":false,"block_vpc_connections":false},"pg_version":17,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":512,"branch_logical_size_limit_bytes":536870912,"store_passwords":true,"active_time":0,"cpu_used_sec":0,"creation_source":"console","created_at":"2025-01-16T21:01:59Z","updated_at":"2025-01-16T21:02:00Z","synthetic_storage_size":0,"quota_reset_at":"2025-02-01T00:00:00Z","owner_id":"92cdd2ee-a6d8-4647-868f-124531123b03"}],"pagination":{"cursor":"long-forest-06846227"},"applications":{},"integrations":{}}'
     headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 90310b468eb85e64-EWR
       Connection:
       - keep-alive
-      Content-Length:
-      - '797'
+      Content-Encoding:
+      - gzip
       Content-Type:
-      - application/json
+      - application/json; charset=utf-8
       Date:
-      - Wed, 07 Feb 2024 14:04:02 GMT
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
-      Vary:
+      - Thu, 16 Jan 2025 21:02:00 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains; preload
+      vary:
       - Origin
-      X-Neon-Ret-Request-Id:
-      - 3dc14683f27ce5081e9f603e036f66d9
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-neon-ret-request-id:
+      - c0c94635-52f3-44ea-829f-748f121e6b47
     status:
       code: 200
       message: OK
@@ -240,20 +323,32 @@ interactions:
     body:
       string: '{"projects":[]}'
     headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 90310b47edab43cb-EWR
       Connection:
       - keep-alive
       Content-Length:
       - '15'
       Content-Type:
-      - application/json
+      - application/json; charset=utf-8
       Date:
-      - Wed, 07 Feb 2024 14:04:03 GMT
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
-      Vary:
+      - Thu, 16 Jan 2025 21:02:01 GMT
+      Server:
+      - cloudflare
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains; preload
+      vary:
       - Origin
-      X-Neon-Ret-Request-Id:
-      - f9e5d9847e96d8b0b679c844bcf289c6
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-neon-ret-request-id:
+      - 277ee33d-9f6c-4a3a-a46d-ad45d599b3e5
     status:
       code: 200
       message: OK
@@ -266,32 +361,44 @@ interactions:
       - gzip, deflate
       Connection:
       - keep-alive
-      Content-Length:
-      - '0'
       Content-Type:
       - application/json
       User-Agent:
       - neon-client/python version=(0.1.0)
     method: GET
-    uri: https://console.neon.tech/api/v2/projects/icy-dream-08641192/connection_uri?database_name=neondb&role_name=neondb_owner&pooled=True
+    uri: https://console.neon.tech/api/v2/projects/long-forest-06846227/connection_uri?database_name=neondb&role_name=neondb_owner&pooled=True
   response:
     body:
-      string: '{"uri":"postgres://kennethreitz:SfveBzuq78bs@ep-floral-shape-a5lure6e.us-east-2.aws.neon.tech/neondb?sslmode=require"}'
+      string: '{"uri":"postgresql://neondb_owner:GehbNIcf6tQ7@ep-jolly-frost-a57qv4wh-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require"}'
     headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 90310b48f88842ce-EWR
       Connection:
       - keep-alive
-      Content-Length:
-      - '965'
+      Content-Encoding:
+      - gzip
       Content-Type:
-      - application/json
+      - application/json; charset=utf-8
       Date:
-      - Wed, 07 Feb 2024 14:04:03 GMT
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
-      Vary:
+      - Thu, 16 Jan 2025 21:02:01 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains; preload
+      vary:
       - Origin
-      X-Neon-Ret-Request-Id:
-      - c2dc90aab245f1de6f981b1b99e0adb6
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-neon-ret-request-id:
+      - 8944b8b4-5cd2-4aa0-9c76-b282be1262fa
     status:
       code: 200
       message: OK
@@ -311,25 +418,39 @@ interactions:
       User-Agent:
       - neon-client/python version=(0.1.0)
     method: DELETE
-    uri: https://console.neon.tech/api/v2/projects/icy-dream-08641192
+    uri: https://console.neon.tech/api/v2/projects/long-forest-06846227
   response:
     body:
-      string: '{"project":{"data_storage_bytes_hour":0,"data_transfer_bytes":0,"written_data_bytes":0,"compute_time_seconds":0,"active_time_seconds":0,"cpu_used_sec":0,"id":"icy-dream-08641192","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-4134","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"ips":[],"primary_branch_only":false},"enable_logical_replication":false},"pg_version":15,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":3072,"branch_logical_size_limit_bytes":3221225472,"store_passwords":true,"creation_source":"console","history_retention_seconds":604800,"created_at":"2024-02-07T14:04:02Z","updated_at":"2024-02-07T14:04:02Z","synthetic_storage_size":0,"consumption_period_start":"0001-01-01T00:00:00Z","consumption_period_end":"0001-01-01T00:00:00Z","owner_id":"838386f6-b5f1-4c3b-89a2-4f5a130ef3de"}}'
+      string: '{"project":{"data_storage_bytes_hour":0,"data_transfer_bytes":0,"written_data_bytes":0,"compute_time_seconds":0,"active_time_seconds":0,"cpu_used_sec":0,"id":"long-forest-06846227","platform_id":"aws","region_id":"aws-us-east-2","name":"pytest-3773","provisioner":"k8s-neonvm","default_endpoint_settings":{"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"suspend_timeout_seconds":0},"settings":{"allowed_ips":{"ips":[],"protected_branches_only":false},"enable_logical_replication":false,"block_public_connections":false,"block_vpc_connections":false},"pg_version":17,"proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":512,"branch_logical_size_limit_bytes":536870912,"store_passwords":true,"creation_source":"console","history_retention_seconds":86400,"created_at":"2025-01-16T21:01:59Z","updated_at":"2025-01-16T21:02:00Z","synthetic_storage_size":0,"consumption_period_start":"0001-01-01T00:00:00Z","consumption_period_end":"0001-01-01T00:00:00Z","owner_id":"92cdd2ee-a6d8-4647-868f-124531123b03"}}'
     headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 90310b4a4d8442a6-EWR
       Connection:
       - keep-alive
-      Content-Length:
-      - '965'
+      Content-Encoding:
+      - gzip
       Content-Type:
-      - application/json
+      - application/json; charset=utf-8
       Date:
-      - Wed, 07 Feb 2024 14:04:03 GMT
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
-      Vary:
+      - Thu, 16 Jan 2025 21:02:01 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains; preload
+      vary:
       - Origin
-      X-Neon-Ret-Request-Id:
-      - c2dc90aab245f1de6f981b1b99e0adb6
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-neon-ret-request-id:
+      - 4c0ee11b-a6a4-4ab0-bd54-92ed122d85f8
     status:
       code: 200
       message: OK
