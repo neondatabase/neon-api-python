@@ -432,6 +432,7 @@ class BillingSubscriptionType(Enum):
     scale = 'scale'
     business = 'business'
     vercel_pg_legacy = 'vercel_pg_legacy'
+    free_v3 = 'free_v3'
 
 
 class BillingPaymentMethod(Enum):
