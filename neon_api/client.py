@@ -418,6 +418,29 @@ class NeonAPI:
             "POST", f"projects/{ project_id }/branches/{ branch_id }/set_as_primary"
         )
 
+    @returns_model(schema.BranchOperations)
+    def branch_restore(
+        self, project_id: str, branch_id: str, source_branch_id: str
+    ) -> t.Dict[str, t.Any]:
+        """Restore a branch to match the state of another branch.
+
+        This is useful for resetting a branch (e.g., a development or preview branch)
+        to match its parent branch's current state, discarding all changes.
+
+        :param project_id: The ID of the project.
+        :param branch_id: The ID of the branch to restore.
+        :param source_branch_id: The ID of the source branch to restore from.
+        :return: A dataclass representing the branch operations.
+
+        More info: https://api-docs.neon.tech/reference/restoreprojectbranch
+        """
+
+        return self._request(
+            "POST",
+            f"projects/{ project_id }/branches/{ branch_id }/restore",
+            json={"source_branch_id": source_branch_id},
+        )
+
     @returns_model(schema.DatabasesResponse)
     def databases(
         self,
