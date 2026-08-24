@@ -1,6 +1,6 @@
-# `neon_api`: Python API wrapper for the [Neon API](https://api-docs.neon.tech/reference/getting-started-with-neon-api).
+# `neon_api`: Python API wrapper for the [Neon API](https://neon.com/docs/reference/api).
 
-`neon_api` is a Python wrapper designed to simplify interactions with the [Neon API](https://api-docs.neon.tech/reference/getting-started-with-neon-api). It provides a convenient way for developers to integrate their Python applications with the Neon platform, offering methods to manage API keys, projects, branches, databases, endpoints, roles, and operations programmatically.
+`neon_api` is a Python wrapper designed to simplify interactions with the [Neon API](https://neon.com/docs/reference/api). It provides a convenient way for developers to integrate their Python applications with the Neon platform, offering methods to manage API keys, projects, branches, databases, endpoints, roles, and operations programmatically.
 
 With `neon_api`, you can automate tasks, streamline workflows, and build powerful integrations with ease.
 
@@ -97,7 +97,7 @@ Remember that you should never expose your api_key and handle it carefully since
 - `consumption()`: Returns a list of project consumption metrics.
 
 
-View the [Neon API documentation](https://api-docs.neon.tech/reference/getting-started-with-neon-api) for more information on the available endpoints and their parameters.
+View the [Neon API documentation](https://neon.com/docs/reference/api) for more information on the available endpoints and their parameters.
 
 
 ## Development
