@@ -176,7 +176,7 @@ class NeonAPI:
 
         More info: https://api-docs.neon.tech/reference/revokeapikey
         """
-        return self._request("DELETE", f"api_keys/{ api_key_id }")
+        return self._request("DELETE", f"api_keys/{api_key_id}")
 
     @returns_model(schema.ProjectsResponse)
     def projects(
@@ -222,18 +222,25 @@ class NeonAPI:
         database_name: str = None,
         role_name: str = None,
         pooled: bool = False,
+        branch_id: str = None,
     ) -> t.Dict[str, t.Any]:
         """Get a connection URI for a project.
 
         :param project_id: The ID of the project.
         :param database_name: The name of the database.
         :param role_name: The name of the role.
+        :param branch_id: Optional branch ID for the connection URI.
         :return: A dataclass representing the connection URI.
 
         More info: https://api-docs.neon.tech/reference/getconnectionuri
         """
         r_params = compact_mapping(
-            {"database_name": database_name, "role_name": role_name, "pooled": pooled}
+            {
+                "database_name": database_name,
+                "role_name": role_name,
+                "pooled": pooled,
+                "branch_id": branch_id,
+            }
         )
         return self._request(
             "GET", f"projects/{project_id}/connection_uri", params=r_params
@@ -261,7 +268,7 @@ class NeonAPI:
 
         More info: https://api-docs.neon.tech/reference/updateproject"""
 
-        return self._request("PATCH", f"projects/{ project_id }", json=json)
+        return self._request("PATCH", f"projects/{project_id}", json=json)
 
     @returns_model(schema.ProjectResponse)
     def project_delete(self, project_id: str) -> t.Dict[str, t.Any]:
@@ -273,7 +280,7 @@ class NeonAPI:
         More info: https://api-docs.neon.tech/reference/deleteproject
         """
 
-        return self._request("DELETE", f"projects/{ project_id }")
+        return self._request("DELETE", f"projects/{project_id}")
 
     @returns_model(schema.ProjectPermissions)
     def project_permissions(self, project_id: str) -> t.Dict[str, t.Any]:
@@ -284,7 +291,7 @@ class NeonAPI:
 
         More info: https://api-docs.neon.tech/reference/listprojectpermissions
         """
-        return self._request("GET", f"projects/{ project_id }/permissions")
+        return self._request("GET", f"projects/{project_id}/permissions")
 
     @returns_model(schema.ProjectPermission)
     def project_permissions_grant(
@@ -298,7 +305,7 @@ class NeonAPI:
 
         More info: https://api-docs.neon.tech/reference/grantpermissiontoproject
         """
-        return self._request("POST", f"projects/{ project_id }/permissions", json=json)
+        return self._request("POST", f"projects/{project_id}/permissions", json=json)
 
     @returns_model(schema.ProjectPermission)
     def project_permissions_revoke(
@@ -312,9 +319,7 @@ class NeonAPI:
 
         More info: https://api-docs.neon.tech/reference/revokepermissionfromproject
         """
-        return self._request(
-            "DELETE", f"projects/{ project_id }/permissions", json=json
-        )
+        return self._request("DELETE", f"projects/{project_id}/permissions", json=json)
 
     @returns_model(schema.BranchesResponse)
     def branches(
@@ -368,7 +373,7 @@ class NeonAPI:
 
         More info: https://api-docs.neon.tech/reference/createprojectbranch
         """
-        return self._request("POST", f"projects/{ project_id }/branches", json=json)
+        return self._request("POST", f"projects/{project_id}/branches", json=json)
 
     @returns_model(schema.BranchOperations)
     def branch_update(
@@ -385,7 +390,7 @@ class NeonAPI:
         """
 
         return self._request(
-            "PATCH", f"projects/{ project_id }/branches/{ branch_id }", json=json
+            "PATCH", f"projects/{project_id}/branches/{branch_id}", json=json
         )
 
     @returns_model(schema.BranchOperations)
@@ -398,9 +403,7 @@ class NeonAPI:
 
         More info: https://api-docs.neon.tech/reference/deleteprojectbranch
         """
-        return self._request(
-            "DELETE", f"projects/{ project_id }/branches/{ branch_id }"
-        )
+        return self._request("DELETE", f"projects/{project_id}/branches/{branch_id}")
 
     @returns_model(schema.BranchOperations)
     def branch_set_as_primary(
@@ -415,7 +418,7 @@ class NeonAPI:
         More info: https://api-docs.neon.tech/reference/setprimaryprojectbranch"""
 
         return self._request(
-            "POST", f"projects/{ project_id }/branches/{ branch_id }/set_as_primary"
+            "POST", f"projects/{project_id}/branches/{branch_id}/set_as_primary"
         )
 
     @returns_model(schema.DatabasesResponse)
@@ -485,7 +488,7 @@ class NeonAPI:
 
         return self._request(
             "POST",
-            f"projects/{ project_id }/branches/{ branch_id }/databases",
+            f"projects/{project_id}/branches/{branch_id}/databases",
             json=json,
         )
 
@@ -506,7 +509,7 @@ class NeonAPI:
 
         return self._request(
             "PATCH",
-            f"projects/{ project_id }/branches/{ branch_id }/databases/{ database_id }",
+            f"projects/{project_id}/branches/{branch_id}/databases/{database_id}",
             json=json,
         )
 
@@ -526,7 +529,7 @@ class NeonAPI:
 
         return self._request(
             "DELETE",
-            f"projects/{ project_id }/branches/{ branch_id }/databases/{ database_id }",
+            f"projects/{project_id}/branches/{branch_id}/databases/{database_id}",
         )
 
     @returns_model(schema.EndpointsResponse)
@@ -538,7 +541,7 @@ class NeonAPI:
 
         More info: https://api-docs.neon.tech/reference/listprojectendpoints
         """
-        return self._request("GET", f"projects/{ project_id }/endpoints")
+        return self._request("GET", f"projects/{project_id}/endpoints")
 
     @returns_model(schema.EndpointResponse)
     def endpoint(self, project_id: str, endpoint_id: str) -> t.Dict[str, t.Any]:
@@ -552,7 +555,7 @@ class NeonAPI:
         """
         return self._request(
             "GET",
-            f"projects/{ project_id }/endpoints/{ endpoint_id }",
+            f"projects/{project_id}/endpoints/{endpoint_id}",
         )
 
     @returns_model(schema.EndpointOperations)
@@ -570,7 +573,7 @@ class NeonAPI:
         More info: https://api-docs.neon.tech/reference/createprojectendpoint
         """
 
-        return self._request("POST", f"projects/{ project_id }/endpoints", json=json)
+        return self._request("POST", f"projects/{project_id}/endpoints", json=json)
 
     @returns_model(schema.EndpointOperations)
     def endpoint_delete(self, project_id: str, endpoint_id: str) -> t.Dict[str, t.Any]:
@@ -585,7 +588,7 @@ class NeonAPI:
 
         return self._request(
             "DELETE",
-            f"projects/{ project_id }/endpoints/{ endpoint_id }",
+            f"projects/{project_id}/endpoints/{endpoint_id}",
         )
 
     @returns_model(schema.EndpointOperations)
@@ -604,7 +607,7 @@ class NeonAPI:
 
         return self._request(
             "PATCH",
-            f"projects/{ project_id }/endpoints/{ endpoint_id }",
+            f"projects/{project_id}/endpoints/{endpoint_id}",
             json=json,
         )
 
@@ -620,7 +623,7 @@ class NeonAPI:
 
         return self._request(
             "POST",
-            f"projects/{ project_id }/endpoints/{ endpoint_id }/start",
+            f"projects/{project_id}/endpoints/{endpoint_id}/start",
         )
 
     @returns_model(schema.EndpointOperations)
@@ -636,7 +639,7 @@ class NeonAPI:
 
         return self._request(
             "POST",
-            f"projects/{ project_id }/endpoints/{ endpoint_id }/suspend",
+            f"projects/{project_id}/endpoints/{endpoint_id}/suspend",
         )
 
     @returns_model(schema.RolesResponse)
@@ -650,9 +653,7 @@ class NeonAPI:
         More info: https://api-docs.neon.tech/reference/listprojectbranchroles
         """
 
-        return self._request(
-            "GET", f"projects/{ project_id }/branches/{ branch_id }/roles"
-        )
+        return self._request("GET", f"projects/{project_id}/branches/{branch_id}/roles")
 
     @returns_model(schema.RoleResponse)
     def role(
@@ -669,7 +670,7 @@ class NeonAPI:
 
         """
         return self._request(
-            "GET", f"projects/{ project_id }/branches/{ branch_id }/roles/{ role_name }"
+            "GET", f"projects/{project_id}/branches/{branch_id}/roles/{role_name}"
         )
 
     @returns_model(schema.RoleOperations)
@@ -691,7 +692,7 @@ class NeonAPI:
 
         return self._request(
             "POST",
-            f"projects/{ project_id }/branches/{ branch_id }/roles",
+            f"projects/{project_id}/branches/{branch_id}/roles",
             json={"role": {"name": role_name}},
         )
 
@@ -714,7 +715,7 @@ class NeonAPI:
 
         return self._request(
             "DELETE",
-            f"projects/{ project_id }/branches/{ branch_id }/roles/{ role_name }",
+            f"projects/{project_id}/branches/{branch_id}/roles/{role_name}",
         )
 
     @returns_model(schema.RolePasswordResponse)
@@ -734,8 +735,8 @@ class NeonAPI:
         More info: https://api-docs.neon.tech/reference/getprojectbranchrolepassword"""
 
         return self._request(
-            "POST",
-            f"projects/{ project_id }/branches/{ branch_id }/roles/{ role_name }/reveal_password",
+            "GET",
+            f"projects/{project_id}/branches/{branch_id}/roles/{role_name}/reveal_password",
         )
 
     @returns_model(schema.RoleOperations)
@@ -757,7 +758,7 @@ class NeonAPI:
 
         return self._request(
             "POST",
-            f"projects/{ project_id }/branches/{ branch_id }/roles/{ role_name }/reset_password",
+            f"projects/{project_id}/branches/{branch_id}/roles/{role_name}/reset_password",
         )
 
     @returns_model(schema.OperationsResponse)
@@ -780,7 +781,7 @@ class NeonAPI:
 
         r_params = compact_mapping({"cursor": cursor, "limit": limit})
         return self._request(
-            "GET", f"projects/{ project_id }/operations", params=r_params
+            "GET", f"projects/{project_id}/operations", params=r_params
         )
 
     @returns_model(schema.OperationResponse)
@@ -794,6 +795,4 @@ class NeonAPI:
         More info: https://api-docs.neon.tech/reference/getprojectoperation
         """
 
-        return self._request(
-            "GET", f"projects/{ project_id }/operations/{ operation_id }"
-        )
+        return self._request("GET", f"projects/{project_id}/operations/{operation_id}")
