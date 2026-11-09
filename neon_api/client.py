@@ -131,6 +131,15 @@ class NeonAPI:
 
         return cls(os.environ[NEON_API_KEY_ENVIRON])
 
+    @classmethod
+    def from_token(cls, token: str):
+        """Create a new Neon API client from an API key.
+
+        :param token: The API key to use for authentication.
+        """
+
+        return cls(token)
+
     @returns_model(schema.CurrentUserInfoResponse)
     def me(self) -> t.Dict[str, t.Any]:
         """Get the current user.
